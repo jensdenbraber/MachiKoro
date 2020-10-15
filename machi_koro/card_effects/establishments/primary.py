@@ -6,5 +6,5 @@ class CardEffectPrimary(establishment_effect_base.CardEffect):
         super().__init__()
         self.gold_amount = gold_amount
 
-    def activation(self, active_player):
+    def activate(self, active_player):
         active_player.gold_amount = active_player.gold_amount + self.gold_amount

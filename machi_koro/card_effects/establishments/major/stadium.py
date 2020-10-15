@@ -3,5 +3,5 @@ import machi_koro.player as Player
 
 
 class CardEffectStadium(major_base.CardEffectMajor):
-    def activation(self, active_player: Player.Player):
+    def activate(self, active_player: Player.Player):
         pass

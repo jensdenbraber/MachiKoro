@@ -19,6 +19,9 @@ class Player():
     def set_landmark_cards(self, landmark_cards: (landmark_card.LandmarkCard)):
         self.landmark_cards = landmark_cards
 
+    def is_constructed_landmark(self, landmark: landmark_card.LandmarkCard):
+        return next(zxc for zxc in self.landmark_cards if zxc.name == landmark.name).is_constructed
+
     def get_primary_cards(self):
         return list(filter(lambda elm: isinstance(elm, primary_industry.PrimaryIndustryCard), self.building_cards))
 

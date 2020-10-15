@@ -15,29 +15,29 @@ import machi_koro.card_effects.establishments.major.tv_station as card_effect_tv
 
 class CardDeckCreator():
 
-    def create_low(self, max_number_revealed):
+    def create_low(self, max_number_revealed=0):
         establishment_cards = []
 
         for _ in range(6):
             # BLUE
             establishment_cards.append(primary_industry.PrimaryIndustryCard(
-                "Wheat Field", 1, 1, utils.CardIcon.WHEAT, card_effect_primary.CardEffectPrimary(1)))
-            establishment_cards.append(
-                primary_industry.PrimaryIndustryCard("Ranch", 1, 2, utils.CardIcon.COW, card_effect_primary.CardEffectPrimary(1)))
-            establishment_cards.append(
-                primary_industry.PrimaryIndustryCard("Forest", 3, 5, utils.CardIcon.GEAR, card_effect_primary.CardEffectPrimary(1)))
+                "Wheat Field", card_icon=utils.CardIcon.WHEAT, construction_cost=1, activation_number=[1], card_effect=card_effect_primary.CardEffectPrimary(1)))
+            establishment_cards.append(primary_industry.PrimaryIndustryCard(
+                "Ranch", card_icon=utils.CardIcon.COW, construction_cost=1, activation_number=[2], card_effect=card_effect_primary.CardEffectPrimary(1)))
+            establishment_cards.append(primary_industry.PrimaryIndustryCard(
+                "Forest", card_icon=utils.CardIcon.GEAR, construction_cost=3, activation_number=[5], card_effect=card_effect_primary.CardEffectPrimary(1)))
             # GREEN
             establishment_cards.append(secondary_industry.SecondaryIndustryCard(
-                "Bakery", 1, [2, 3], utils.CardIcon.BREAD, card_effect_secondary.CardEffectSeconday(1)))
+                "Bakery", card_icon=utils.CardIcon.BREAD, construction_cost=1, activation_number=[2, 3], card_effect=card_effect_secondary.CardEffectSeconday(1)))
             establishment_cards.append(secondary_industry.SecondaryIndustryCard(
-                "Convenience Store", 2, 4, utils.CardIcon.BREAD, card_effect_secondary.CardEffectSeconday(3)))
+                "Convenience Store", card_icon=utils.CardIcon.BREAD, construction_cost=2, activation_number=[4], card_effect=card_effect_secondary.CardEffectSeconday(3)))
             # RED
             establishment_cards.append(restaurants.RestaurantsCard(
-                "Cafe", 2, 3, card_effect_restaurants.CardEffectRestaurants(1)))
+                "Cafe", construction_cost=2, activation_number=[3], card_effect=card_effect_restaurants.CardEffectRestaurants(1)))
 
         return card_deck.CardDeck(establishment_cards, max_number_revealed)
 
-    def create_high(self, max_number_revealed):
+    def create_high(self, max_number_revealed=0):
         establishment_cards = []
 
         for _ in range(6):
@@ -59,7 +59,7 @@ class CardDeckCreator():
 
         return card_deck.CardDeck(establishment_cards, max_number_revealed)
 
-    def create_major(self, max_number_revealed):
+    def create_major(self, max_number_revealed=0):
         establishment_cards = []
 
         for _ in range(4):

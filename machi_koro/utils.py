@@ -10,9 +10,10 @@ class CardIcon(Enum):
     FRUIT = 6
     TOWER = 7
     FACTORY = 8
+    UNKNOWN = 9
 
 
-class Color(Enum):
+class CardColor(Enum):
     BLUE = 1
     GREEN = 2
     RED = 3

@@ -8,7 +8,7 @@ class CardEffectRestaurants(establishment_effect_base.CardEffect):
 
         self.gold_amount = gold_amount
 
-    def activation(self, player, active_player):
+    def activate(self, player, active_player):
 
         bonus = 0
         if player.landmark_card['Shopping Mall'].is_constructed:

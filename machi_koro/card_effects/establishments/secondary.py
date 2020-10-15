@@ -8,8 +8,7 @@ class CardEffectSeconday(establishment_effect_base.CardEffect):
         self.gold_amount = gold_amount
         self.card_icon = card_icon
 
-    def activation(self, active_player):
-
+    def activate(self, active_player):
         if self.card_icon is not None:
             for secondary_card in active_player.get_secondary_cards():
                 if secondary_card.card_icon == self.card_icon:

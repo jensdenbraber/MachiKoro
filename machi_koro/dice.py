@@ -2,9 +2,10 @@ import random
 
 
 class Dice():
-    def __init__(self):
-        self.value = -1
+    @staticmethod
+    def roll_dice():
+        return [random.randint(1, 6), 0]
 
-    def roll_dice(self):
-        self.value = random.randint(1, 6)
-        return self.value
+    @staticmethod
+    def roll_2_dice():
+        return [random.randint(1, 6), random.randint(1, 6)]
