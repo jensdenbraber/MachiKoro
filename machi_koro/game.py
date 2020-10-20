@@ -11,6 +11,8 @@ import machi_koro.cards.landmark_card as landmark_card
 import machi_koro.cards.primary_industry as primary_industry
 import machi_koro.cards.secondary_industry as secondary_industry
 import machi_koro.cards.major_establishment as major_establishment
+import machi_koro.cards.establishment_base as establishment_base
+
 
 import machi_koro.card_effects.establishments.primary as card_effect_primary
 import machi_koro.card_effects.establishments.secondary as card_effect_secondary
@@ -28,6 +30,8 @@ class Game():
 
     def __init__(self, game_id, players: (player.Player), game_type: utils.GameType = utils.GameType.BASEGAME, deck_cards_low_revealed=4, deck_cards_high_revealed=4, deck_cards_major_revealed=2):
         self.game_id = game_id
+        self.dice1 = dice.Dice()
+        self.dice2 = dice.Dice()
         self.players = collections.deque(players)
         self.active_player = self.players[0]
         self.game_type = game_type
@@ -41,6 +45,8 @@ class Game():
         self.number_of_orbits = 1
 
         for p in self.players:
+            p.game = self
+
             p.building_cards = [
                 primary_industry.PrimaryIndustryCard(
                     "Wheat Field", construction_cost=1, activation_number=1, card_icon=utils.CardIcon.WHEAT, card_effect=card_effect_primary.CardEffectPrimary(1)),
@@ -72,17 +78,69 @@ class Game():
         self.players.rotate(-1)
         self.active_player = self.players[0]
 
+    def roll_dice(self):
+        dices = list(dice.Dice)
+        dices.append(self.dice1)
+        can_throw_with_two_dices = self.active_player.can_throw_with_two_dices()
+        if can_throw_with_two_dices:
+            with_2_dices = self.active_player.choice_two_dices()
+            if with_2_dices:
+                dices.append(self.dice2)
+
+        return dice.DiceRoll(dices)
+
+    def get_active_buyable_establishments(self):
+        buyable_cards = list()
+        for card in self.lower_card_deck.revealed_cards:
+            if card.construction_cost <= self.active_player.amount_gold:
+                buyable_cards.append(card)
+
+        for card in self.higher_card_deck.revealed_cards:
+            if card.construction_cost <= self.active_player.amount_gold:
+                buyable_cards.append(card)
+
+        for card in self.major_card_deck.revealed_cards:
+            if card.construction_cost <= self.active_player.amount_gold:
+                buyable_cards.append(card)
+
+        return buyable_cards
+
+    def get_active_buyable_landmarks(self):
+        buyable_cards = list()
+        for landmark_card in self.active_player.landmark_cards:
+            if not landmark_card.LandmarkCard.is_constructed and landmark_card.LandmarkCard.completion_cost <= self.active_player.amount_gold:
+                buyable_cards.append(landmark_card.LandmarkCard)
+        return buyable_cards
+
+    def give_establishment_card_to_player(self, card_to_give: establishment_base.EstablishmentBase):
+        self.active_player.receive_establishment(card_to_give)
+        deck = card_to_give.deck
+        deck.removeCard(card_to_give)
+        deck.reveal_top_card()
+
     def play_turn(self, dice_number=None):
 
-        if dice_number == None:
-            [dice_number1, dice_number2] = self.active_player.roll_dice(
-                dice.Dice)
-            dice_number = dice_number1 + dice_number2
+        dice_roll = self.roll_dice()
+        dice_number = dice_roll.total()
 
         self.earn_income_restaurants(dice_number)
         self.earn_income_primary(dice_number)
         self.earn_income_secondary(dice_number)
         self.earn_income_major_establishment(dice_number)
+
+        # build stage
+        # filter revealed cards for purchase for player
+        establishments = self.get_active_buyable_establishments()
+        landmarks = self.get_active_buyable_landmarks()
+        if establishments.count() != 0 and landmarks.count() != 0:
+            card_to_buy = self.active_player.choice_build(
+                establishments, landmarks)
+            if isinstance(card_to_buy, landmark_card.LandmarkCard):
+                self.active_player.amount_gold = self.active_player.amount_gold - card_to_buy.cost
+                card_to_buy.is_constructed = True
+            elif isinstance(card_to_buy, establishment_base.EstablishmentBase):
+                self.active_player.amount_gold = self.active_player.amount_gold - card_to_buy.cost
+                give_establishment_card_to_player(card_to_buy)
 
         if(self.is_winner()):
             return
@@ -92,8 +150,8 @@ class Game():
         landmark = landmark_card.LandmarkCard
         landmark.name = 'Amusement Park'
 
-        # if dice_number1 == dice_number2 and self.active_player.is_constructed_landmark(landmark):
-        #     continue
+        if dice_roll.is_same() and self.active_player.is_constructed_landmark(landmark):
+            continue
 
     def end_turn(self):
         self.number_of_turns = self.number_of_turns + 1

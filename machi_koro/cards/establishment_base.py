@@ -1,9 +1,9 @@
-from typing import List
+from dataclasses import dataclass
 import machi_koro.cards.base_card as base_card
 import machi_koro.card_effects.establishments.establishment_effect_base as establishment_effect_base
 import machi_koro.utils as utils
 
-from dataclasses import dataclass
+
 
 
 @dataclass

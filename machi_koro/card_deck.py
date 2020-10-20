@@ -8,7 +8,7 @@ class CardDeck():
         del self.cards[0:max_number_revealed]
 
     def reveal_top_card(self):
-        if len(self.revealed_cards) <= self.max_number_revealed and len(self.cards) != 0:
+        if len(self.revealed_cards) <= self.max_number_revealed and not self.is_empty():
             self.last_revealed_card = self.cards.pop()
             self.revealed_cards.append(self.last_revealed_card)
 
@@ -17,4 +17,4 @@ class CardDeck():
             self.revealed_cards.remove(card)
 
     def is_empty(self):
-        return len(self.cards) == 0
+        return self.cards.count() == 0

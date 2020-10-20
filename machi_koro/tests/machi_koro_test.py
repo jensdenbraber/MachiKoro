@@ -2,9 +2,13 @@ import pytest
 from machi_koro.utils import GameType
 import machi_koro.game as game
 import machi_koro.player as player
+import machi_koro.player_choices as player_choices
 
 
-@pytest.mark.parametrize('players', [[player.Player(0, "player 1"), player.Player(1, "player 2")], [player.Player(0, "player 1"), player.Player(1, "player 2"), player.Player(2, "player 3")], [player.Player(0, "player 1"), player.Player(1, "player 2"), player.Player(2, "player 3"), player.Player(3, "player 4")]])
+@pytest.mark.parametrize('players', [[player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(1, "player 2", player_choices.PlayerChoices)],
+                                     [player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(
+                                         1, "player 2", player_choices.PlayerChoices), player.Player(2, "player 3", player_choices.PlayerChoices)],
+                                     [player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(1, "player 2", player_choices.PlayerChoices), player.Player(2, "player 3", player_choices.PlayerChoices), player.Player(3, "player 4", player_choices.PlayerChoices)]])
 def test_machi_koro_game_setup(players):
     """
     docstring
@@ -40,7 +44,10 @@ def test_machi_koro_game_setup(players):
         assert len(game1.players[3].landmark_cards) == 4
 
 
-@pytest.mark.parametrize('players', [[player.Player(0, "player 1"), player.Player(1, "player 2")], [player.Player(0, "player 1"), player.Player(1, "player 2"), player.Player(2, "player 3")], [player.Player(0, "player 1"), player.Player(1, "player 2"), player.Player(2, "player 3"), player.Player(3, "player 4")]])
+@pytest.mark.parametrize('players', [[player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(1, "player 2", player_choices.PlayerChoices)],
+                                     [player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(
+                                         1, "player 2", player_choices.PlayerChoices), player.Player(2, "player 3", player_choices.PlayerChoices)],
+                                     [player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(1, "player 2", player_choices.PlayerChoices), player.Player(2, "player 3", player_choices.PlayerChoices), player.Player(3, "player 4", player_choices.PlayerChoices)]])
 @pytest.mark.parametrize('dice', [*range(1, 13)])
 def test_machi_koro_game_first_turn(players, dice):
     """

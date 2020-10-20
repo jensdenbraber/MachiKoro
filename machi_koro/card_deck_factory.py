@@ -21,19 +21,19 @@ class CardDeckCreator():
         for _ in range(6):
             # BLUE
             establishment_cards.append(primary_industry.PrimaryIndustryCard(
-                "Wheat Field", card_icon=utils.CardIcon.WHEAT, construction_cost=1, activation_number=[1], card_effect=card_effect_primary.CardEffectPrimary(1)))
+                "Wheat Field", card_icon=utils.CardIcon.WHEAT, construction_cost=1, activation_number=[1], card_effect=card_effect_primary.CardEffectPrimary(1), deck=establishment_cards))
             establishment_cards.append(primary_industry.PrimaryIndustryCard(
-                "Ranch", card_icon=utils.CardIcon.COW, construction_cost=1, activation_number=[2], card_effect=card_effect_primary.CardEffectPrimary(1)))
+                "Ranch", card_icon=utils.CardIcon.COW, construction_cost=1, activation_number=[2], card_effect=card_effect_primary.CardEffectPrimary(1), deck=establishment_cards))
             establishment_cards.append(primary_industry.PrimaryIndustryCard(
-                "Forest", card_icon=utils.CardIcon.GEAR, construction_cost=3, activation_number=[5], card_effect=card_effect_primary.CardEffectPrimary(1)))
+                "Forest", card_icon=utils.CardIcon.GEAR, construction_cost=3, activation_number=[5], card_effect=card_effect_primary.CardEffectPrimary(1), deck=establishment_cards))
             # GREEN
             establishment_cards.append(secondary_industry.SecondaryIndustryCard(
-                "Bakery", card_icon=utils.CardIcon.BREAD, construction_cost=1, activation_number=[2, 3], card_effect=card_effect_secondary.CardEffectSeconday(1)))
+                "Bakery", card_icon=utils.CardIcon.BREAD, construction_cost=1, activation_number=[2, 3], card_effect=card_effect_secondary.CardEffectSeconday(1), deck=establishment_cards))
             establishment_cards.append(secondary_industry.SecondaryIndustryCard(
-                "Convenience Store", card_icon=utils.CardIcon.BREAD, construction_cost=2, activation_number=[4], card_effect=card_effect_secondary.CardEffectSeconday(3)))
+                "Convenience Store", card_icon=utils.CardIcon.BREAD, construction_cost=2, activation_number=[4], card_effect=card_effect_secondary.CardEffectSeconday(3), deck=establishment_cards))
             # RED
             establishment_cards.append(restaurants.RestaurantsCard(
-                "Cafe", construction_cost=2, activation_number=[3], card_effect=card_effect_restaurants.CardEffectRestaurants(1)))
+                "Cafe", construction_cost=2, activation_number=[3], card_effect=card_effect_restaurants.CardEffectRestaurants(1), deck=establishment_cards))
 
         return card_deck.CardDeck(establishment_cards, max_number_revealed)
 
@@ -43,19 +43,19 @@ class CardDeckCreator():
         for _ in range(6):
             # BLUE
             establishment_cards.append(
-                primary_industry.PrimaryIndustryCard("Mine", 6, 9, utils.CardIcon.GEAR, card_effect_primary.CardEffectPrimary(5)))
+                primary_industry.PrimaryIndustryCard("Mine", 6, 9, utils.CardIcon.GEAR, card_effect_primary.CardEffectPrimary(5), deck=establishment_cards))
             establishment_cards.append(primary_industry.PrimaryIndustryCard(
-                "Apple Orchard", 3, 10, utils.CardIcon.WHEAT, card_effect_primary.CardEffectPrimary(3)))
+                "Apple Orchard", 3, 10, utils.CardIcon.WHEAT, card_effect_primary.CardEffectPrimary(3), deck=establishment_cards))
             # GREEN
             establishment_cards.append(secondary_industry.SecondaryIndustryCard(
-                "Cheese Factory", 5, 7, utils.CardIcon.FACTORY, card_effect_secondary.CardEffectSeconday(3, utils.CardIcon.COW)))
+                "Cheese Factory", 5, 7, utils.CardIcon.FACTORY, card_effect_secondary.CardEffectSeconday(3, utils.CardIcon.COW), deck=establishment_cards))
             establishment_cards.append(secondary_industry.SecondaryIndustryCard(
-                "Furniture Factory", 3, 8, utils.CardIcon.FACTORY, card_effect_secondary.CardEffectSeconday(3, utils.CardIcon.GEAR)))
+                "Furniture Factory", 3, 8, utils.CardIcon.FACTORY, card_effect_secondary.CardEffectSeconday(3, utils.CardIcon.GEAR), deck=establishment_cards))
             establishment_cards.append(secondary_industry.SecondaryIndustryCard(
-                "Fruit and Vegetable Market", 2, [11, 12], utils.CardIcon.FRUIT, card_effect_secondary.CardEffectSeconday(3, utils.CardIcon.WHEAT)))
+                "Fruit and Vegetable Market", 2, [11, 12], utils.CardIcon.FRUIT, card_effect_secondary.CardEffectSeconday(3, utils.CardIcon.WHEAT), deck=establishment_cards))
             # RED
             establishment_cards.append(
-                restaurants.RestaurantsCard("Family Restaurant", 3, [9, 10], card_effect_restaurants.CardEffectRestaurants(2)))
+                restaurants.RestaurantsCard("Family Restaurant", 3, [9, 10], card_effect_restaurants.CardEffectRestaurants(2), deck=establishment_cards))
 
         return card_deck.CardDeck(establishment_cards, max_number_revealed)
 
@@ -64,10 +64,10 @@ class CardDeckCreator():
 
         for _ in range(4):
             establishment_cards.append(major_establishment.MajorEstablishment(
-                "Stadium", 6, 6, card_effect_stadium.CardEffectStadium()))
+                "Stadium", 6, 6, card_effect_stadium.CardEffectStadium(), deck=establishment_cards))
             establishment_cards.append(major_establishment.MajorEstablishment(
-                "TV Station", 7, 6, card_effect_tv_station.CardEffectTvStation()))
+                "TV Station", 7, 6, card_effect_tv_station.CardEffectTvStation(), deck=establishment_cards))
             establishment_cards.append(
-                major_establishment.MajorEstablishment("Business Center", 8, 6, card_effect_business_center.CardEffectBusinessCenter()))
+                major_establishment.MajorEstablishment("Business Center", 8, 6, card_effect_business_center.CardEffectBusinessCenter(), deck=establishment_cards))
 
         return card_deck.CardDeck(establishment_cards, max_number_revealed)

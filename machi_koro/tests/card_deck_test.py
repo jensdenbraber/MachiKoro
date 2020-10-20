@@ -97,13 +97,13 @@ def test_category_cards_major():
 
     stadium = list(filter(lambda x: x.name == "Stadium",
                           major_establishment_cards))
-    tv_Station = list(
+    tv_station = list(
         filter(lambda x: x.name == "TV Station", major_establishment_cards))
     business_center = list(
         filter(lambda x: x.name == "Business Center", major_establishment_cards))
 
     assert len(stadium) == 4
-    assert len(tv_Station) == 4
+    assert len(tv_station) == 4
     assert len(business_center) == 4
 
 

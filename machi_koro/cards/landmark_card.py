@@ -1,9 +1,8 @@
+from dataclasses import dataclass
 import machi_koro.cards.base_card as base_card
 import machi_koro.card_effects.landmarks.landmark_effect_base as landmark_effect_base
 
 import machi_koro.utils as utils
-
-from dataclasses import dataclass
 
 
 @dataclass
