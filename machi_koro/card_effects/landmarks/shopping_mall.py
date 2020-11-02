@@ -1,6 +1,6 @@
-import machi_koro.card_effects.landmarks.landmark_effect_base as landmark_effect_base
+from .landmark_effect_base import LandmarkEffectBase
 
 
-class ShoppingMall(landmark_effect_base.LandmarkEffectBase):
+class ShoppingMall(LandmarkEffectBase):
     def effect(self):
         pass

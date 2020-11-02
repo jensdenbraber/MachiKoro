@@ -1,20 +1,20 @@
 import pytest
 from machi_koro.utils import GameType
-import machi_koro.game as game
-import machi_koro.player as player
-import machi_koro.player_choices as player_choices
+from machi_koro.game import Game
+from machi_koro.player import Player
+from machi_koro.player_choices import PlayerChoices
 
 
-@pytest.mark.parametrize('players', [[player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(1, "player 2", player_choices.PlayerChoices)],
-                                     [player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(
-                                         1, "player 2", player_choices.PlayerChoices), player.Player(2, "player 3", player_choices.PlayerChoices)],
-                                     [player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(1, "player 2", player_choices.PlayerChoices), player.Player(2, "player 3", player_choices.PlayerChoices), player.Player(3, "player 4", player_choices.PlayerChoices)]])
+@pytest.mark.parametrize('players', [[Player(0, "player 1", PlayerChoices), Player(1, "player 2", PlayerChoices)],
+                                     [Player(0, "player 1", PlayerChoices), Player(
+                                         1, "player 2", PlayerChoices), Player(2, "player 3", PlayerChoices)],
+                                     [Player(0, "player 1", PlayerChoices), Player(1, "player 2", PlayerChoices), Player(2, "player 3", PlayerChoices), Player(3, "player 4", PlayerChoices)]])
 def test_machi_koro_game_setup(players):
     """
     docstring
     """
 
-    game1 = game.Game(0, players)
+    game1 = Game(0, players)
     assert game1.active_player.player_id == 0
     assert game1.active_player.name == "player 1"
     assert game1.game_id == 0
@@ -44,17 +44,17 @@ def test_machi_koro_game_setup(players):
         assert len(game1.players[3].landmark_cards) == 4
 
 
-@pytest.mark.parametrize('players', [[player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(1, "player 2", player_choices.PlayerChoices)],
-                                     [player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(
-                                         1, "player 2", player_choices.PlayerChoices), player.Player(2, "player 3", player_choices.PlayerChoices)],
-                                     [player.Player(0, "player 1", player_choices.PlayerChoices), player.Player(1, "player 2", player_choices.PlayerChoices), player.Player(2, "player 3", player_choices.PlayerChoices), player.Player(3, "player 4", player_choices.PlayerChoices)]])
+@pytest.mark.parametrize('players', [[Player(0, "player 1", PlayerChoices), Player(1, "player 2", PlayerChoices)],
+                                     [Player(0, "player 1", PlayerChoices), Player(
+                                         1, "player 2", PlayerChoices), Player(2, "player 3", PlayerChoices)],
+                                     [Player(0, "player 1", PlayerChoices), Player(1, "player 2", PlayerChoices), Player(2, "player 3", PlayerChoices), Player(3, "player 4", PlayerChoices)]])
 @pytest.mark.parametrize('dice', [*range(1, 13)])
 def test_machi_koro_game_first_turn(players, dice):
     """
     docstring
     """
 
-    game1 = game.Game(0, players)
+    game1 = Game(0, players)
     assert game1.active_player.player_id == 0
     assert game1.active_player.name == "player 1"
 

@@ -1,14 +1,14 @@
 from dataclasses import dataclass
-import machi_koro.cards.base_card as base_card
-import machi_koro.card_effects.establishments.establishment_effect_base as establishment_effect_base
-import machi_koro.utils as utils
-
-
+from machi_koro.card_deck import CardDeck
+from machi_koro.cards.base_card import BaseCard
+from machi_koro.card_effects.establishments.establishment_effect_base import CardEffect
+from machi_koro.utils import CardIcon
 
 
 @dataclass
-class EstablishmentBase(base_card.BaseCard):
-    card_icon: utils.CardIcon = utils.CardIcon.UNKNOWN
+class EstablishmentBase(BaseCard):
+    card_icon: CardIcon = CardIcon.UNKNOWN
     construction_cost: int = None
-    activation_number: [int] = None
-    card_effect: establishment_effect_base.CardEffect = None
+    activation_number: list() = None
+    card_effect: CardEffect = None
+    deck: CardDeck = None
