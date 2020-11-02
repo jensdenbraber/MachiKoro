@@ -3,11 +3,11 @@ from machi_koro.cards.primary_industry import PrimaryIndustryCard
 from machi_koro.cards.secondary_industry import SecondaryIndustryCard
 from machi_koro.cards.restaurants import RestaurantsCard
 from machi_koro.cards.major_establishment import MajorEstablishment
-import machi_koro.card_deck_factory as card_deck_factory
+from machi_koro.card_deck_factory import CardDeckCreator
 
 
 def test_category_cards_low():
-    card_deck_creator = card_deck_factory.CardDeckCreator()
+    card_deck_creator = CardDeckCreator()
     cards = card_deck_creator.create_low().cards
     assert len(cards) == 36
 
@@ -46,7 +46,7 @@ def test_category_cards_low():
 
 
 def test_category_cards_high():
-    card_deck_creator = card_deck_factory.CardDeckCreator()
+    card_deck_creator = CardDeckCreator()
     cards = card_deck_creator.create_high().cards
     assert len(cards) == 36
 
@@ -86,7 +86,7 @@ def test_category_cards_high():
 
 
 def test_category_cards_major():
-    card_deck_creator = card_deck_factory.CardDeckCreator()
+    card_deck_creator = CardDeckCreator()
     cards = card_deck_creator.create_major().cards
     assert len(cards) == 12
 
@@ -109,21 +109,21 @@ def test_category_cards_major():
 
 @ pytest.mark.parametrize('revealed_amount', [*range(0, 37)])
 def test_revealed_deck_low(revealed_amount):
-    card_deck_creator = card_deck_factory.CardDeckCreator()
+    card_deck_creator = CardDeckCreator()
     card_deck = card_deck_creator.create_low(revealed_amount)
     assert len(card_deck.revealed_cards) == revealed_amount
 
 
 @ pytest.mark.parametrize('revealed_amount', [*range(0, 37)])
 def test_revealed_deck_high(revealed_amount):
-    card_deck_creator = card_deck_factory.CardDeckCreator()
+    card_deck_creator = CardDeckCreator()
     card_deck = card_deck_creator.create_high(revealed_amount)
     assert len(card_deck.revealed_cards) == revealed_amount
 
 
 @ pytest.mark.parametrize('revealed_amount', [*range(0, 13)])
 def test_revealed_deck_major(revealed_amount):
-    card_deck_creator = card_deck_factory.CardDeckCreator()
+    card_deck_creator = CardDeckCreator()
     card_deck = card_deck_creator.create_major(revealed_amount)
     assert len(card_deck.revealed_cards) == revealed_amount
 

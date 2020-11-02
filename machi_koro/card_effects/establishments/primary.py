@@ -1,7 +1,7 @@
-import machi_koro.card_effects.establishments.establishment_effect_base as establishment_effect_base
+from .establishment_effect_base import CardEffect
 
 
-class CardEffectPrimary(establishment_effect_base.CardEffect):
+class CardEffectPrimary(CardEffect):
     def __init__(self, gold_amount: int):
         super().__init__()
         self.gold_amount = gold_amount

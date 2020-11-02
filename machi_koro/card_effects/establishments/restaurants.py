@@ -1,15 +1,13 @@
-import machi_koro.card_effects.establishments.establishment_effect_base as establishment_effect_base
-# import machi_koro.cards.restaurants import RestaurantsCard
+from .establishment_effect_base import CardEffect
 
 
-class CardEffectRestaurants(establishment_effect_base.CardEffect):
+class CardEffectRestaurants(CardEffect):
     def __init__(self, gold_amount: int):
         super().__init__()
 
         self.gold_amount = gold_amount
 
     def activate(self, player, active_player):
-
         bonus = 0
         if player.landmark_card['Shopping Mall'].is_constructed:
             bonus = 1

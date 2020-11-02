@@ -1,5 +1,5 @@
-import machi_koro.game as game
-import machi_koro.player as player
+from machi_koro.game import Game
+from machi_koro.player import Player
 
 
 class Lobby():
@@ -19,7 +19,7 @@ class Lobby():
         else:
             Lobby.__instance = self
 
-    def setup_new_game(self, players: [player.Player], deck_cards_low_revealed=4, deck_cards_high_revealed=4, deck_cards_major_revealed=2):
+    def setup_new_game(self, players: list(Player), deck_cards_low_revealed=4, deck_cards_high_revealed=4, deck_cards_major_revealed=2):
         game_id = 0
-        game.Game(game_id, players, deck_cards_low_revealed,
-                  deck_cards_high_revealed, deck_cards_major_revealed).start()
+        Game(game_id, players, deck_cards_low_revealed,
+             deck_cards_high_revealed, deck_cards_major_revealed).start()

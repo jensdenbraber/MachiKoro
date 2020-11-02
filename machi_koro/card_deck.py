@@ -17,4 +17,4 @@ class CardDeck():
             self.revealed_cards.remove(card)
 
     def is_empty(self):
-        return self.cards.count() == 0
+        return len(self.cards) == 0

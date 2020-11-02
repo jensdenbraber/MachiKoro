@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-
-import machi_koro.utils as utils
+from machi_koro.utils import CardColor, CardIcon, CardType
 
 
 @dataclass
 class BaseCard:
     name: str
-    card_type: utils.CardType
-    card_color: utils.CardColor
-    card_icon: utils.CardIcon
+    card_type: CardType
+    card_color: CardColor
+    card_icon: CardIcon

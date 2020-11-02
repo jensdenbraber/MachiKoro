@@ -1,14 +1,14 @@
-import machi_koro.cards.establishment_base as establishment_base
-import machi_koro.card_effects.establishments.secondary as card_effect_secondary
-import machi_koro.utils as utils
-
-
 from dataclasses import dataclass
+from machi_koro.card_deck import CardDeck
+from .establishment_base import EstablishmentBase
+from machi_koro.card_effects.establishments.secondary import CardEffectSeconday
+from machi_koro.utils import CardColor, CardIcon, CardType
 
 
 @dataclass
-class MajorEstablishment(establishment_base.EstablishmentBase):
-    card_type: utils.CardType.MajorEstablishment
-    card_color: utils.CardColor.PURPLE
-    card_icon: utils.CardIcon.TOWER
-    card_effect: card_effect_secondary.CardEffectSeconday
+class MajorEstablishment(EstablishmentBase):
+    card_type: CardType = CardType.MajorEstablishment
+    card_color: CardColor = CardColor.PURPLE
+    card_icon: CardIcon = CardIcon.TOWER
+    card_effect: CardEffectSeconday = None
+    deck: CardDeck = CardDeck

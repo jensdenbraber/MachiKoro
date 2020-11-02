@@ -1,15 +1,14 @@
 from dataclasses import dataclass
-import machi_koro.cards.base_card as base_card
-import machi_koro.card_effects.landmarks.landmark_effect_base as landmark_effect_base
-
-import machi_koro.utils as utils
+from machi_koro.cards.base_card import BaseCard
+from machi_koro.card_effects.landmarks.landmark_effect_base import LandmarkEffectBase
+from machi_koro.utils import CardType, CardColor, CardIcon
 
 
 @dataclass
-class LandmarkCard(base_card.BaseCard):
-    card_type: utils.CardType = utils.CardType.LandMark
-    card_color: utils.CardColor = utils.CardColor.YELLOW
-    card_icon: utils.CardIcon = utils.CardIcon.TOWER
+class LandmarkCard(BaseCard):
+    card_type: CardType = CardType.LandMark
+    card_color: CardColor = CardColor.YELLOW
+    card_icon: CardIcon = CardIcon.TOWER
     is_constructed: bool = False
-    effect: landmark_effect_base.LandmarkEffectBase = None
+    effect: LandmarkEffectBase = None
     completion_cost: int = None

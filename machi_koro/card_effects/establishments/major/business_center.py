@@ -1,7 +1,7 @@
-import machi_koro.card_effects.establishments.major.major_base as major_base
-import machi_koro.player as Player
+from machi_koro.card_effects.establishments.major.major_base import CardEffectMajor
+from machi_koro.player import Player
 
 
-class CardEffectBusinessCenter(major_base.CardEffectMajor):
-    def activate(self, active_player: Player.Player):
+class CardEffectBusinessCenter(CardEffectMajor):
+    def activate(self, active_player: Player):
         pass

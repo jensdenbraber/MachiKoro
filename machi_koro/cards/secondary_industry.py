@@ -1,12 +1,13 @@
-import machi_koro.cards.establishment_base as establishment_base
-import machi_koro.utils as utils
-import machi_koro.card_effects.establishments.secondary as card_effect_secondary
-
 from dataclasses import dataclass
+from machi_koro.card_deck import CardDeck
+from .establishment_base import EstablishmentBase
+from machi_koro.utils import CardColor, CardType
+from machi_koro.card_effects.establishments.secondary import CardEffectSeconday
 
 
 @dataclass
-class SecondaryIndustryCard(establishment_base.EstablishmentBase):
-    card_type: utils.CardType = utils.CardType.SecondaryIndustry
-    card_color: utils.CardColor = utils.CardColor.GREEN
-    card_effect: card_effect_secondary = card_effect_secondary.CardEffectSeconday
+class SecondaryIndustryCard(EstablishmentBase):
+    card_type: CardType = CardType.SecondaryIndustry
+    card_color: CardColor = CardColor.GREEN
+    card_effect: CardEffectSeconday = CardEffectSeconday
+    deck: CardDeck = None

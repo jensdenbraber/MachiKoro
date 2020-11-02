@@ -1,6 +1,6 @@
-import machi_koro.card_effects.landmarks.landmark_effect_base as landmark_effect_base
+from .landmark_effect_base import LandmarkEffectBase
 
 
-class AmusementPark(landmark_effect_base.LandmarkEffectBase):
+class AmusementPark(LandmarkEffectBase):
     def effect(self):
         pass
