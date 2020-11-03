@@ -24,16 +24,16 @@ class Player():
         self.landmark_cards = landmark_cards
 
     def is_constructed_landmark(self, landmark: LandmarkCard):
-        return next(zxc for zxc in self.landmark_cards if zxc.name == landmark.name).is_constructed
+        return next(lm for lm in self.landmark_cards if lm.name == landmark.name).is_constructed
 
     def get_primary_cards(self):
-        return list(filter(lambda elm: isinstance(elm, PrimaryIndustryCard), self.building_cards))
+        return list(filter(lambda card: isinstance(card, PrimaryIndustryCard), self.building_cards))
 
     def get_secondary_cards(self):
-        return list(filter(lambda elm: isinstance(elm, SecondaryIndustryCard), self.building_cards))
+        return list(filter(lambda card: isinstance(card, SecondaryIndustryCard), self.building_cards))
 
     def get_restaurant_cards(self):
-        return list(filter(lambda elm: isinstance(elm, RestaurantsCard), self.building_cards))
+        return list(filter(lambda card: isinstance(card, RestaurantsCard), self.building_cards))
 
     def get_landmark_card(self, name):
         return next(landmark for landmark in self.landmark_cards if landmark.name == name)

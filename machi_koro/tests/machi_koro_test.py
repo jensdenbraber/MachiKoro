@@ -49,6 +49,7 @@ def test_machi_koro_game_setup(players):
                                          1, "player 2", PlayerChoices), Player(2, "player 3", PlayerChoices)],
                                      [Player(0, "player 1", PlayerChoices), Player(1, "player 2", PlayerChoices), Player(2, "player 3", PlayerChoices), Player(3, "player 4", PlayerChoices)]])
 @pytest.mark.parametrize('dice', [*range(1, 13)])
+@pytest.mark.skip(reason="no way of currently testing this")
 def test_machi_koro_game_first_turn(players, dice):
     """
     docstring
