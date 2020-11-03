@@ -88,32 +88,32 @@ class Game():
         return DiceRoll(dices)
 
     def get_active_buyable_establishments(self):
-        buyable_cards = list()
+        buyable_establishments = list()
         for card in self.lower_card_deck.revealed_cards:
             if card.construction_cost <= self.active_player.gold_amount:
-                buyable_cards.append(card)
+                buyable_establishments.append(card)
 
         for card in self.higher_card_deck.revealed_cards:
             if card.construction_cost <= self.active_player.gold_amount:
-                buyable_cards.append(card)
+                buyable_establishments.append(card)
 
         for card in self.major_card_deck.revealed_cards:
             if card.construction_cost <= self.active_player.gold_amount:
-                buyable_cards.append(card)
+                buyable_establishments.append(card)
 
-        return buyable_cards
+        return buyable_establishments
 
     def get_active_buyable_landmarks(self):
-        buyable_cards = list()
+        buyable_landmarks = list()
         for landmark_card in self.active_player.landmark_cards:
-            if not landmark_card.LandmarkCard.is_constructed and landmark_card.LandmarkCard.completion_cost <= self.active_player.amount_gold:
-                buyable_cards.append(landmark_card.LandmarkCard)
-        return buyable_cards
+            if not landmark_card.is_constructed and landmark_card.completion_cost <= self.active_player.gold_amount:
+                buyable_landmarks.append(landmark_card)
+        return buyable_landmarks
 
     def give_establishment_card_to_player(self, card_to_give: EstablishmentBase):
         self.active_player.receive_establishment(card_to_give)
         deck = card_to_give.deck
-        deck.removeCard(card_to_give)
+        deck.remove_card(card_to_give)
         deck.reveal_top_card()
 
     def play_turn(self, dice_number=None):
