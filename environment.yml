@@ -29,7 +29,6 @@ dependencies:
   - sqlite=3.31.1
   - toml=0.10.0=py_0
   - wheel=0.34.2=py38_0
-  - wincertstore=0.2
   - wrapt=1.11.2
   - zlib=1.2.11
   - pip:
