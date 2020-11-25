@@ -76,14 +76,16 @@ class Game():
         self.players.rotate(-1)
         self.active_player = self.players[0]
 
-    def roll_dice(self):
-        dices = list(Dice)
-        dices.append(self.dice1)
+    def roll_dice(self, dice1: Dice, dice2: Dice):
+
+        dices = list()
+        dices.append(dice1)
+
         can_throw_with_two_dices = self.active_player.can_throw_with_two_dices()
         if can_throw_with_two_dices:
             with_2_dices = self.active_player.choice_two_dices()
             if with_2_dices:
-                dices.append(self.dice2)
+                dices.append(dice2)
 
         return DiceRoll(dices)
 
@@ -112,16 +114,12 @@ class Game():
 
     def give_establishment_card_to_player(self, card_to_give: EstablishmentBase):
         self.active_player.receive_establishment(card_to_give)
-        deck = card_to_give.deck
-        deck.remove_card(card_to_give)
-        deck.reveal_top_card()
+        card_to_give.deck.remove_card(card_to_give)
 
-    def play_turn(self, dice_number=None):
+    def play_turn(self, dice1: Dice, dice2: Dice):
 
-        dice_roll = None
-        if dice_number is None:
-            dice_roll = self.roll_dice()
-            dice_number = dice_roll.total()
+        dice_roll = self.roll_dice(dice1, dice2)
+        dice_number = dice_roll.total()
 
         self.earn_income_restaurants(dice_number)
         self.earn_income_primary(dice_number)
@@ -136,13 +134,15 @@ class Game():
             card_to_buy = self.active_player.choice_build(
                 establishments, landmarks)
             if isinstance(card_to_buy, LandmarkCard):
-                self.active_player.amount_gold = self.active_player.amount_gold - card_to_buy.cost
+                self.active_player.gold_amount = self.active_player.gold_amount - \
+                    card_to_buy.completion_cost
                 card_to_buy.is_constructed = True
             elif isinstance(card_to_buy, EstablishmentBase):
-                self.active_player.amount_gold = self.active_player.amount_gold - card_to_buy.cost
+                self.active_player.gold_amount = self.active_player.gold_amount - \
+                    card_to_buy.construction_cost
                 self.give_establishment_card_to_player(card_to_buy)
 
-        if(self.is_winner()):
+        if self.is_winner():
             return
 
         self.next_player_turn()
@@ -165,7 +165,7 @@ class Game():
     def start(self):
 
         while True:
-            # play_turn()
+            self.play_turn(self.dice1, self.dice2)
             # check_for_winner()
             # next_player_turn()
 
@@ -201,7 +201,7 @@ class Game():
 
     def is_winner(self):
 
-        if all(landmark.is_constructed == True for landmark in self.active_player.landmark_cards):
+        if all(landmark.is_constructed for landmark in self.active_player.landmark_cards):
             # game ends, this player wins the game
             print("Player: " + str(self.active_player.player_id) +
                   " " + self.active_player.name + "WINS!")
