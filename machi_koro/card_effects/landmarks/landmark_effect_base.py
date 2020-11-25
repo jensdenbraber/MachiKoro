@@ -9,4 +9,4 @@ class LandmarkEffectBase(ABC):
     """
     @abstractmethod
     def effect(self):
-        pass
+        raise NotImplementedError

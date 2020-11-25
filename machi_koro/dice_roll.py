@@ -13,6 +13,6 @@ class DiceRoll():
         return sum(self.values)
 
     def is_same(self):
-        if(len(self.values) < 2):
+        if len(self.values) < 2:
             return False
         return all(value == self.values[0] for value in self.values)
