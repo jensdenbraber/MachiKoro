@@ -4,18 +4,50 @@ from .cards.secondary_industry import SecondaryIndustryCard
 from .cards.restaurants import RestaurantsCard
 from .cards.landmark_card import LandmarkCard
 from .player_choices import PlayerChoices
+from .utils import PlayerType
 
 
-class Player():
-    def __init__(self, player_id: int, name: str, player_choices: PlayerChoices):
-        self.player_id = player_id
-        self.name = name
+class Player(object):
+    def __init__(self, player_id: int, name: str, player_choices: PlayerChoices, player_type: PlayerType):
+        self.__player_id = player_id
+        self.__name = name
         self.gold_amount = None
         self.building_cards = list()
         self.landmark_cards = list()
         self.game = None
         player_choices.player = self
         self.player_choices = player_choices
+        self.__player_type = player_type
+
+    @property
+    def player_id(self):
+        """
+        Id of the player
+
+        Returns:
+            int: Id of the player
+        """
+        return self.__player_id
+
+    @property
+    def name(self):
+        """
+        Name of the player
+
+        Returns:
+            str: Name of the player
+        """
+        return self.__name
+
+    @property
+    def player_type(self):
+        """
+        Type of the player, human or ai
+
+        Returns:
+            PlayerType: PlayerType
+        """
+        return self.__player_type
 
     def set_building_cards(self, building_cards: EstablishmentBase):
         self.building_cards = building_cards

@@ -4,16 +4,16 @@ from machi_koro.dice import Dice
 from machi_koro.cards import landmark_card
 from machi_koro.cards.establishment_base import EstablishmentBase
 
-from machi_koro.utils import GameType
+from machi_koro.utils import GameType, PlayerType
 from machi_koro.game import Game
 from machi_koro.player import Player
 from machi_koro.player_choices import PlayerChoices
 
 
-@pytest.mark.parametrize('players', [[Player(0, "player 1", PlayerChoices), Player(1, "player 2", PlayerChoices)],
-                                     [Player(0, "player 1", PlayerChoices), Player(
-                                         1, "player 2", PlayerChoices), Player(2, "player 3", PlayerChoices)],
-                                     [Player(0, "player 1", PlayerChoices), Player(1, "player 2", PlayerChoices), Player(2, "player 3", PlayerChoices), Player(3, "player 4", PlayerChoices)]])
+@pytest.mark.parametrize('players', [[Player(0, "player 1", PlayerChoices, PlayerType.HUMAN), Player(1, "player 2", PlayerChoices, PlayerType.HUMAN)],
+                                     [Player(0, "player 1", PlayerChoices, PlayerType.HUMAN), Player(
+                                         1, "player 2", PlayerChoices, PlayerType.HUMAN), Player(2, "player 3", PlayerChoices, PlayerType.HUMAN)],
+                                     [Player(0, "player 1", PlayerChoices, PlayerType.HUMAN), Player(1, "player 2", PlayerChoices, PlayerType.HUMAN), Player(2, "player 3", PlayerChoices, PlayerType.HUMAN), Player(3, "player 4", PlayerChoices, PlayerType.HUMAN)]])
 def test_machi_koro_game_setup(players):
     """
     docstring
@@ -57,10 +57,10 @@ class PlayerChoiceTest(PlayerChoices):
         return buyable_establishments[0]
 
 
-@pytest.mark.parametrize('players', [[Player(0, "player 1", PlayerChoiceTest()), Player(1, "player 2", PlayerChoiceTest())],
-                                     [Player(0, "player 1", PlayerChoiceTest()), Player(
-                                         1, "player 2", PlayerChoiceTest()), Player(2, "player 3", PlayerChoiceTest())],
-                                     [Player(0, "player 1", PlayerChoiceTest()), Player(1, "player 2", PlayerChoiceTest()), Player(2, "player 3", PlayerChoiceTest()), Player(3, "player 4", PlayerChoiceTest())]])
+@pytest.mark.parametrize('players', [[Player(0, "player 1", PlayerChoiceTest(), PlayerType.HUMAN), Player(1, "player 2", PlayerChoiceTest(), PlayerType.HUMAN)],
+                                     [Player(0, "player 1", PlayerChoiceTest(), PlayerType.HUMAN), Player(
+                                         1, "player 2", PlayerChoiceTest(), PlayerType.HUMAN), Player(2, "player 3", PlayerChoiceTest(), PlayerType.HUMAN)],
+                                     [Player(0, "player 1", PlayerChoiceTest(), PlayerType.HUMAN), Player(1, "player 2", PlayerChoiceTest(), PlayerType.HUMAN), Player(2, "player 3", PlayerChoiceTest(), PlayerType.HUMAN), Player(3, "player 4", PlayerChoiceTest(), PlayerType.HUMAN)]])
 @pytest.mark.parametrize('dice_seed', [1, 3, 9, 5, 6, 2])
 # @pytest.mark.parametrize('dice', [*range(1, 13)])
 # @pytest.mark.skip(reason="no way of currently testing this")

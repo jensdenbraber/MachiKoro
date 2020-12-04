@@ -32,3 +32,8 @@ class CardType(Enum):
 class GameType(Enum):
     BASEGAME = 1
     HARBOR_EXPANSION = 2
+
+
+class PlayerType(Enum):
+    HUMAN = 1
+    AI = 2
