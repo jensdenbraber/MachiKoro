@@ -9,6 +9,7 @@ class DiceRoll():
         for dice_index in range(0, len(dices)):
             self.values[dice_index] = dices[dice_index].roll_dice()
 
+    @property
     def total(self):
         return sum(self.values)
 

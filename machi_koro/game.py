@@ -22,17 +22,17 @@ from machi_koro.card_effects.landmarks.amusement_park import AmusementPark
 from machi_koro.card_effects.landmarks.radio_tower import RadioTower
 
 
-class Game():
+class Game(object):
     """Game object
     """
 
     def __init__(self, game_id, players: Iterable[Player], game_type: GameType = GameType.BASEGAME, deck_cards_low_revealed=4, deck_cards_high_revealed=4, deck_cards_major_revealed=2):
-        self.game_id = game_id
+        self.__game_id = game_id
         self.dice1 = Dice()
         self.dice2 = Dice()
         self.players = deque(players)
         self.active_player = self.players[0]
-        self.game_type = game_type
+        self.__game_type = game_type
         self.lower_card_deck = self.__create_lower_card_deck(
             deck_cards_low_revealed)
         self.higher_card_deck = self.__create_higher_card_decks(
@@ -62,6 +62,36 @@ class Game():
                     "Radio Tower", effect=RadioTower(), completion_cost=22)
             ]
             player.gold_amount = 3
+
+    @property
+    def game_id(self):
+        """
+        Id of the game
+
+        Returns:
+            int: Id of the game
+        """
+        return self.__game_id
+
+    @property
+    def number_of_players(self):
+        """
+        Number of players
+
+        Returns:
+            int: Number of the players
+        """
+        return len(self.players)
+
+    @property
+    def game_type(self):
+        """
+        The type of the game
+
+        Returns:
+            GameType: GameType
+        """
+        return self.__game_type
 
     def __create_lower_card_deck(self, deck_cards_revealed):
         return CardDeckCreator.create_low(self, deck_cards_revealed)
@@ -119,7 +149,7 @@ class Game():
     def play_turn(self, dice1: Dice, dice2: Dice):
 
         dice_roll = self.roll_dice(dice1, dice2)
-        dice_number = dice_roll.total()
+        dice_number = dice_roll.total
 
         self.earn_income_restaurants(dice_number)
         self.earn_income_primary(dice_number)
