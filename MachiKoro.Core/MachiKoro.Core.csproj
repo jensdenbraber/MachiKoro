@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="CardEffects\Establishments\Harbor\" />
+    <Folder Include="CardEffects\Landmarks\Harbor\" />
+    <Folder Include="Cards\Establishments\Harbor\" />
+    <Folder Include="Cards\Landmarks\Harbor\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MachiKoro.Utilities\MachiKoro.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>
