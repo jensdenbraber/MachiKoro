@@ -1,11 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Data.Repositories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MachiKoro.Persistence.Extensions
 {
@@ -14,6 +11,8 @@ namespace MachiKoro.Persistence.Extensions
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<IGamesRepository, GamesRepository>();
+            services.AddTransient<IPlayersRepository, PlayersRepository>();
             return services;
         }
     }

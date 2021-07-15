@@ -26,8 +26,8 @@ namespace MachiKoro.Api.Installers
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<IdentityDataContext>();
 
-            services.AddScoped<IGamesRepository, GamesRepository>();
-            services.AddScoped<IPlayersRepository, PlayersRepository>();
+            //services.AddScoped<IGamesRepository, GamesRepository>();
+            //services.AddScoped<IPlayersRepository, PlayersRepository>();
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using MachiKoro.Api.Hubs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -16,7 +17,7 @@ namespace MachiKoro.Api.Installers
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new OpenApiInfo{ Title = "MachiKoro API", Version = "v1" });
-                x.DocumentFilter<SignalRSwaggerGen.SignalRSwaggerGen>(new List<Assembly> { typeof(SomeHub).Assembly, typeof(SomeHubFromAnotherAssembly).Assembly });
+                x.DocumentFilter<SignalRSwaggerGen.SignalRSwaggerGen>(new List<Assembly> { typeof(GameHub).Assembly, typeof(GameHub).Assembly });
                 x.ExampleFilters();
                 
                 x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

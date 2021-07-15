@@ -1,15 +1,14 @@
 ﻿using MachiKoro.Utilities;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace MachiKoro.Contracts.v1.Requests
+namespace MachiKoro.Api.DomainModels.CreateGame
 {
     public class CreateGameRequest
     {
-        [Required]
-        [Range(2, 5)]
         public int MaxNumberOfPlayers { get; set; }
-
-        [Required]
         public ExpensionType ExpensionType { get; set; }
     }
 }

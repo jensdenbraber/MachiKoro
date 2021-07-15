@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MachiKoro.Api.DomainModels;
+using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,11 @@ namespace MachiKoro.Api.Services
 
         public async Task<bool> CreateAsync(Game game)
         {
-            var gameData = _mapper.Map<Data.Models.Game>(game);
-            var isCreated = await _gameRepository.CreateAsync(gameData);
-            return isCreated;
+            throw new NotImplementedException();
+
+            //var gameData = _mapper.Map<Data.Models.Game>(game);
+            //var isCreated = await _gameRepository.CreateAsync(gameData);
+            //return isCreated;
         }
 
         public async Task<bool> DeleteGameAsync(Guid gameId)
@@ -72,9 +75,10 @@ namespace MachiKoro.Api.Services
 
         public async Task<bool> UpdateGameAsync(Game game)
         {
-            var gameData = _mapper.Map<Data.Models.Game>(game);
-            var isUpdated = await _gameRepository.UpdateAsync(gameData);
-            return isUpdated;
+            throw new NotImplementedException();
+            //var gameData = _mapper.Map<Data.Models.Game>(game);
+            //var isUpdated = await _gameRepository.UpdateAsync(gameData);
+            //return isUpdated;
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using MachiKoro.Data.Models;
+﻿using MachiKoro.Core;
+using MachiKoro.Core.Players;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Data.Repositories
+namespace MachiKoro.Application.v1.Interfaces
 {
     public interface IGamesRepository
     {

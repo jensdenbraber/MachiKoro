@@ -20,9 +20,10 @@ namespace MachiKoro.Api.Services
 
         public async Task<bool> CreatePlayerAsync(Player player)
         {
-            var playerData = _mapper.Map<Data.Models.Player>(player);
-            bool isCreated = await _playersRepository.Create(playerData);
-            return isCreated;
+            throw new NotImplementedException();
+            //var playerData = _mapper.Map<Data.Models.Player>(player);
+            //bool isCreated = await _playersRepository.Create(playerData);
+            //return isCreated;
         }
 
         public async Task<bool> DeletePlayerAsync(Guid playerId)
@@ -57,16 +58,18 @@ namespace MachiKoro.Api.Services
 
         public async Task<PlayerProfile> GetPlayerProfileAsync(Guid playerId)
         {
-            var playerProfileData = await _playersRepository.GetPlayerProfile(playerId);
-            var playerProfile = _mapper.Map<PlayerProfile>(playerProfileData);
-            return playerProfile;
+            throw new NotImplementedException();
+            //var playerProfileData = await _playersRepository.GetPlayerProfile(playerId);
+            //var playerProfile = _mapper.Map<PlayerProfile>(playerProfileData);
+            //return playerProfile;
         }
 
         public async Task<bool> UpdatePlayerAsync(Player player)
         {
-            var playerData = _mapper.Map<Data.Models.Player>(player);
-            var isUpdated = await _playersRepository.Update(playerData);
-            return isUpdated;
+            throw new NotImplementedException();
+            //var playerData = _mapper.Map<Data.Models.Player>(player);
+            //var isUpdated = await _playersRepository.Update(playerData);
+            //return isUpdated;
         }
     }
 }

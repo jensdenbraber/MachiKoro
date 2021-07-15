@@ -1,4 +1,5 @@
-﻿using MachiKoro.Data.Models;
+﻿using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,31 @@ namespace MachiKoro.Data.Repositories
 
             var updated = await _gameDataContext.SaveChangesAsync();
             return updated > 0;
+        }
+
+        Task<bool> IGamesRepository.CreateAsync(Core.Game gameData)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Core.Game>> IGamesRepository.GetGamesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Core.Game> IGamesRepository.GetGameAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Core.Players.Player>> IGamesRepository.GetPlayersFromGame(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IGamesRepository.UpdateAsync(Core.Game gameData)
+        {
+            throw new NotImplementedException();
         }
     }
 }

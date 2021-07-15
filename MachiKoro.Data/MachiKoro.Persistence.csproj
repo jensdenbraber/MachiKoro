@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MachiKoro.Utilities\MachiKoro.Utilities.csproj" />
+    <ProjectReference Include="..\MachiKoro.Application\MachiKoro.Application.csproj" />
   </ItemGroup>
 
 </Project>

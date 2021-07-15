@@ -41,26 +41,27 @@ namespace MachiKoro.Api.Controllers.v1
                 });
             }
 
-            var player = new Player() 
-            { 
-                Id = Guid.NewGuid(),
-                UserName = playerRequest.UserName
-            };
+            //var player = new Player() 
+            //{ 
+            //    Id = Guid.NewGuid(),
+            //    UserName = playerRequest.UserName
+            //};
 
-            var coreRequest = _mapper.Map<Core.Models.CreatePlayerRequest>(request);
+            var coreRequest = _mapper.Map<Core.Models.CreateGame.CreateGameRequest>(request);
 
             var coreResponse = await _mediator.Send(coreRequest);
 
-            var created = await _playerService.CreatePlayerAsync(player);
+            //var created = await _playerService.CreatePlayerAsync(player);
 
-            if (!created)
-            {
-                return BadRequest(new ErrorResponse(new ErrorModel { Message = "Unable to create Player" }));
-            }
+            //if (!created)
+            //{
+            //    return BadRequest(new ErrorResponse(new ErrorModel { Message = "Unable to create Player" }));
+            //}
 
-            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var locationUri = baseUrl + "/" + ApiRoutes.Players.Get.Replace("{playerId}", player.Id.ToString());
-            return Created(locationUri, _mapper.Map<PlayerResponse>(player));
+            //var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
+            //var locationUri = baseUrl + "/" + ApiRoutes.Players.Get.Replace("{playerId}", player.Id.ToString());
+            //return Created(locationUri, _mapper.Map<PlayerResponse>(player));
+            return Ok();
         }
 
 

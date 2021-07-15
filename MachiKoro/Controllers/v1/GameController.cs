@@ -12,6 +12,7 @@ using MachiKoro.Api.DomainModels;
 using MachiKoro.Api.Exceptions;
 using System.ComponentModel.DataAnnotations;
 using MediatR;
+using MachiKoro.Api.DomainModels.CreateGame;
 
 namespace MachiKoro.Api.Controllers.v1
 {
@@ -96,7 +97,7 @@ namespace MachiKoro.Api.Controllers.v1
 
             
 
-            var coreResponse = await _mediator.Send(coreRequest);
+            //var coreResponse = await _mediator.Send(coreRequest);
 
             if (game == null)
                 return NotFound(gameId);

@@ -9,11 +9,6 @@ namespace MachiKoro.Core.Models.CreateGame
 {
     public class CreateGameResponse
     {
-        public CreateGameResponse(Guid? scenarioId = default)
-        {
-            Id = scenarioId;
-        }
-
         public Guid? Id { get; set; }
     }
 }
