@@ -2,6 +2,8 @@
 using MachiKoro.Contracts.v1.Requests;
 using MachiKoro.Contracts.v1.Responses;
 using MachiKoro.Core;
+using MachiKoro.Core.Dice;
+using MachiKoro.Core.Game;
 using MachiKoro.Core.Models.CreateGame;
 using MediatR;
 using System;
@@ -24,7 +26,7 @@ namespace MachiKoro.Application.v1.CreateGame
 
         public async Task<CreateGameResponse> Handle(CreateGameRequest request, CancellationToken cancellationToken)
         {
-            Game game = new Game(new List<Core.CardDecks.CardDeck>(), new List<Dice>())
+            Game game = new Game(new List<Core.CardDecks.CardDeck>())
             {
                 Id = Guid.NewGuid()
             };
