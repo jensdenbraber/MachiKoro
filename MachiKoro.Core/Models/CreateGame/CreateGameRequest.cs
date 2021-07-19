@@ -1,5 +1,4 @@
-﻿using MachiKoro.Utilities;
-using MediatR;
+﻿using MediatR;
 
 namespace MachiKoro.Core.Models.CreateGame
 {

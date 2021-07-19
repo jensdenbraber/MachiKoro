@@ -1,5 +1,4 @@
 using MachiKoro.Core.CardEffects.Landmarks.Basic;
-using MachiKoro.Utilities;
 
 namespace MachiKoro.Core.Cards.Landmarks.Basic
 {

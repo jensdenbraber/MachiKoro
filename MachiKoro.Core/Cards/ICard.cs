@@ -1,5 +1,3 @@
-using MachiKoro.Utilities;
-
 namespace MachiKoro.Core.Cards
 {
     public interface ICard
@@ -9,4 +7,3 @@ namespace MachiKoro.Core.Cards
         public CardCategory CardIcon { get; }
     }
 }
-
