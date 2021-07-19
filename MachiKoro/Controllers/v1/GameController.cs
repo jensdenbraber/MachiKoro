@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
-using MachiKoro.Contracts.v1;
-using MachiKoro.Contracts.v1.Requests;
 using MachiKoro.Contracts.v1.Responses;
 using MachiKoro.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MachiKoro.Api.Models;
-using MachiKoro.Api.Exceptions;
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 using MachiKoro.Api.Models.CreateGame;
+using MachiKoro.Application.v1;
 
 namespace MachiKoro.Api.Controllers.v1
 {

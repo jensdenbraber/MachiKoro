@@ -1,4 +1,7 @@
 ﻿using MachiKoro.Api.Models;
+using MachiKoro.Api.Models.GetPlayerProfile;
+using MachiKoro.Core;
+using MachiKoro.Core.Players;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,7 +12,7 @@ namespace MachiKoro.Api.Services
     {
         Task<bool> CreatePlayerAsync(Player player);
         Task<Player> GetPlayerByIdAsync(Guid playerId);
-        Task<PlayerProfile> GetPlayerProfileAsync(Guid playerId);
+        Task<GetPlayerProfileResponse> GetPlayerProfileAsync(Guid playerId);
         Task<List<Player>> GetAllPlayersAsync();
         Task<List<Game>> GetGamesAsync(Guid playerId);
         Task<Game> GetGameAsync(Guid playerId, Guid gameId);

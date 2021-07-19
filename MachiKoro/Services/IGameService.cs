@@ -1,4 +1,6 @@
 ﻿using MachiKoro.Api.Models;
+using MachiKoro.Core;
+using MachiKoro.Core.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,9 @@
-using System.Linq;
 using AutoMapper;
 using MachiKoro.Contracts.v1.Responses;
 using MachiKoro.Api.Models;
+using MachiKoro.Core;
+using MachiKoro.Core.Players;
+using MachiKoro.Api.Models.GetPlayerProfile;
 
 namespace MachiKoro.Api.MappingProfiles
 {
@@ -17,7 +19,7 @@ namespace MachiKoro.Api.MappingProfiles
 
             CreateMap<Game, GameResponse>();
             CreateMap<Player, PlayerResponse>();
-            CreateMap<PlayerProfile, PlayerProfileResponse>();
+            CreateMap<GetPlayerProfileResponse, PlayerProfileResponse>();
         }
     }
 }
