@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Api.DomainModels.CreateGame
+namespace MachiKoro.Api.Models.CreateGame
 {
     public class CreateGameRequest
     {

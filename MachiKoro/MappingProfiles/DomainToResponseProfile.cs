@@ -1,7 +1,7 @@
 using System.Linq;
 using AutoMapper;
 using MachiKoro.Contracts.v1.Responses;
-using MachiKoro.Api.DomainModels;
+using MachiKoro.Api.Models;
 
 namespace MachiKoro.Api.MappingProfiles
 {

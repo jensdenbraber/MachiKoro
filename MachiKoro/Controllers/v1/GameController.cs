@@ -8,11 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MachiKoro.Api.DomainModels;
+using MachiKoro.Api.Models;
 using MachiKoro.Api.Exceptions;
 using System.ComponentModel.DataAnnotations;
 using MediatR;
-using MachiKoro.Api.DomainModels.CreateGame;
+using MachiKoro.Api.Models.CreateGame;
 
 namespace MachiKoro.Api.Controllers.v1
 {

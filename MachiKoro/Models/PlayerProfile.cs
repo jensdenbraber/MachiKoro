@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MachiKoro.Api.DomainModels
+namespace MachiKoro.Api.Models
 {
     public class PlayerProfile
     {

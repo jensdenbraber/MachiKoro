@@ -1,4 +1,4 @@
-﻿using MachiKoro.Api.DomainModels;
+﻿using MachiKoro.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

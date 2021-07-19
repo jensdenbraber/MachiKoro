@@ -6,9 +6,9 @@ namespace MachiKoro.Api.MappingProfiles
     {
         public DataObjectToDomainProfile()
         {
-            CreateMap<Data.Models.Game, DomainModels.Game>();
-            CreateMap<Data.Models.Player, DomainModels.Player>();
-            CreateMap<Data.Models.PlayerProfile, DomainModels.PlayerProfile>();
+            CreateMap<Data.Models.Game, Models.Game>();
+            CreateMap<Data.Models.Player, Models.Player>();
+            CreateMap<Data.Models.PlayerProfile, Models.PlayerProfile>();
         }
     }
 }

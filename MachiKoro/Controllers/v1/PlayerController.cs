@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MachiKoro.Api.DomainModels;
+using MachiKoro.Api.Models;
 using MachiKoro.Api.Services;
 using MachiKoro.Contracts.v1;
 using MachiKoro.Contracts.v1.Requests;
