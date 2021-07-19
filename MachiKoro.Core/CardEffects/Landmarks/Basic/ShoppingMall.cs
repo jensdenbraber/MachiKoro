@@ -9,8 +9,8 @@ namespace MachiKoro.Core.CardEffects.Landmarks.Basic
 
         public void Effect(IGame game)
         {
-            if(game.ActivePlayer.EstablishmentCards[0].CardIcon == Utilities.CardCategory.CUP || 
-                game.ActivePlayer.EstablishmentCards[0].CardIcon == Utilities.CardCategory.BREAD)
+            if(game.ActivePlayer.EstablishmentCards[0].CardIcon == CardCategory.CUP || 
+                game.ActivePlayer.EstablishmentCards[0].CardIcon == CardCategory.BREAD)
             {
 
             }

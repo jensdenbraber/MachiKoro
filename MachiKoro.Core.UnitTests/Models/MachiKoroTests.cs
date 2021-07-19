@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace MachiKoro.Core.TestModelFactory
@@ -11,10 +10,10 @@ namespace MachiKoro.Core.TestModelFactory
     {
         private readonly List<Player> players = new List<Player>()
         {
-            new Player(Guid.NewGuid(), Utilities.PlayerType.Computer, 3, null, null),
-            new Player(Guid.NewGuid(), Utilities.PlayerType.Computer, 3, null, null),
-            new Player(Guid.NewGuid(), Utilities.PlayerType.Computer, 3, null, null),
-            new Player(Guid.NewGuid(), Utilities.PlayerType.Computer, 3, null, null)
+            new Player(Guid.NewGuid(), PlayerType.Computer, 3, null, null),
+            new Player(Guid.NewGuid(), PlayerType.Computer, 3, null, null),
+            new Player(Guid.NewGuid(), PlayerType.Computer, 3, null, null),
+            new Player(Guid.NewGuid(), PlayerType.Computer, 3, null, null)
         };
 
         [Fact (Skip = "Disabled to due restructure of the program, test not supported at the moment.") ]
