@@ -8,7 +8,7 @@ namespace MachiKoro.Api.Models.GetGame
     {
         public int NumberOfTurns { get; private set; }
         public int NumberOfOrbits { get; private set; }
-        public readonly List<CardDeck> CardDecks;
-        private List<Guid> PlayersList { get; set; }
+        public List<CardDeck> CardDecks;
+        public List<Guid> PlayersList { get; set; }
     }
 }
