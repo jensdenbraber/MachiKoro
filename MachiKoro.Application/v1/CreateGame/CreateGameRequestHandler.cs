@@ -1,6 +1,4 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Contracts.v1.Requests;
-using MachiKoro.Contracts.v1.Responses;
 using MachiKoro.Core;
 using MachiKoro.Core.Models.CreateGame;
 using MediatR;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MachiKoro.Api.DomainModels
+namespace MachiKoro.Api.Models
 {
     public class AuthenticationResult
     {

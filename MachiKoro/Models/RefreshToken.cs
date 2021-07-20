@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace MachiKoro.Api.DomainModels
+namespace MachiKoro.Api.Models
 {
     public class RefreshToken
     {

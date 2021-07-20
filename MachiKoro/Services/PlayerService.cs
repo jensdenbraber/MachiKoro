@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
-using MachiKoro.Api.DomainModels;
+using MachiKoro.Api.Models;
+using MachiKoro.Api.Models.GetPlayerProfile;
+using MachiKoro.Core;
+using MachiKoro.Core.Players;
 using MachiKoro.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -56,7 +59,7 @@ namespace MachiKoro.Api.Services
             return player;
         }
 
-        public async Task<PlayerProfile> GetPlayerProfileAsync(Guid playerId)
+        public async Task<GetPlayerProfileResponse> GetPlayerProfileAsync(Guid playerId)
         {
             throw new NotImplementedException();
             //var playerProfileData = await _playersRepository.GetPlayerProfile(playerId);

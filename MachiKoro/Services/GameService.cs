@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
-using MachiKoro.Api.DomainModels;
+using MachiKoro.Api.Models;
 using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Core;
+using MachiKoro.Core.Players;
 using MachiKoro.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -59,7 +61,7 @@ namespace MachiKoro.Api.Services
         {
             var game = await GetGameByIdAsync(gameId);
 
-            game.Players.Add(player);
+            //game.Players.Add(player);
 
             return await UpdateGameAsync(game);
         }
@@ -68,7 +70,7 @@ namespace MachiKoro.Api.Services
         {
             var game = await GetGameByIdAsync(gameId);
 
-            game.Players.RemoveAll(p => p.Id == playerId);
+            //game.Players.RemoveAll(p => p.Id == playerId);
 
             return await UpdateGameAsync(game);
         }

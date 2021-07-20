@@ -1,4 +1,4 @@
-﻿namespace MachiKoro.Contracts.v1
+﻿namespace MachiKoro.Application.v1
 {
     public static class ApiRoutes
     {

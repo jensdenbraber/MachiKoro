@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using MachiKoro.Application.v1;
 
 namespace MachiKoro.Api.Controllers.v1
 {
@@ -19,7 +20,7 @@ namespace MachiKoro.Api.Controllers.v1
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
         }
 
-        [HttpPost(Contracts.v1.ApiRoutes.Identity.Register)]
+        [HttpPost(ApiRoutes.Identity.Register)]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest request)
         {
@@ -48,7 +49,7 @@ namespace MachiKoro.Api.Controllers.v1
             });
         }
 
-        [HttpPost(Contracts.v1.ApiRoutes.Identity.Login)]
+        [HttpPost(ApiRoutes.Identity.Login)]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
@@ -69,7 +70,7 @@ namespace MachiKoro.Api.Controllers.v1
             });
         }
 
-        [HttpPost(Contracts.v1.ApiRoutes.Identity.Refresh)]
+        [HttpPost(ApiRoutes.Identity.Refresh)]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request)
         {
             var authResponse = await _identityService.RefreshTokenAsync(request.Token, request.RefreshToken);
