@@ -26,11 +26,14 @@ namespace MachiKoro.Application.v1.CreateGame
                 GameId = Guid.NewGuid()
             };
 
-            await _gameRepository.CreateAsync(game);
+            bool created = await _gameRepository.CreateAsync(game);
+
+            if (!created)
+                return null;
 
             return new CreateGameResponse()
             {
-                Id = game.GameId
+                GameId = game.GameId
             };
         }
     }

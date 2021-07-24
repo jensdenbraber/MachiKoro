@@ -20,5 +20,6 @@ namespace MachiKoro.Application.v1.Interfaces
         Task<bool> DeleteAsync(Guid gameId);
         
         Task<bool> UpdateAsync(Game gameData);
+        Task<bool> AddPlayerToGame(Guid playerId, Guid gameId);
     }
 }

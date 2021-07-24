@@ -1,6 +1,8 @@
 using AutoMapper;
 using MachiKoro.Contracts.v1.Responses;
 using MachiKoro.Core.Players;
+using MachiKoro.Api.Models.CreateGame;
+using MachiKoro.Api.Models.GetGame;
 using MachiKoro.Api.Models.GetPlayerProfile;
 using MachiKoro.Core.Models.Game;
 
@@ -16,9 +18,10 @@ namespace MachiKoro.Api.MappingProfiles
 
             //CreateMap<Tag, TagResponse>();
 
-            CreateMap<Game, GameResponse>();
-            CreateMap<Player, PlayerResponse>();
-            CreateMap<GetPlayerProfileResponse, PlayerProfileResponse>();
+            CreateMap<CreateGameRequest, CreateGameResponse>();
+            CreateMap<GetGameRequest, GetGameResponse>();
+            //CreateMap<Player, PlayerResponse>();
+            CreateMap<GetPlayerProfileResponse, GetPlayerProfileResponse>();
         }
     }
 }

@@ -86,5 +86,10 @@ namespace MachiKoro.Data.Repositories
         {
             throw new NotImplementedException();
         }
+
+        Task<bool> IGamesRepository.AddPlayerToGame(Guid playerId, Guid gameId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
