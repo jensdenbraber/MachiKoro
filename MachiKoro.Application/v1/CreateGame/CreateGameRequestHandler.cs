@@ -1,10 +1,8 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core;
 using MachiKoro.Core.Models.CreateGame;
 using MachiKoro.Core.Models.Game;
 using MediatR;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -15,4 +15,8 @@
     <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MachiKoro.Utilities\MachiKoro.Utilities.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using MachiKoro.Core.Players;
+using MachiKoro.Core.TestModelFactory.Models.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;

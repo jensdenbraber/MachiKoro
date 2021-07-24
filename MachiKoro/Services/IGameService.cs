@@ -4,7 +4,6 @@ using MachiKoro.Core.Models.Game;
 using MachiKoro.Core.Players;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Services
