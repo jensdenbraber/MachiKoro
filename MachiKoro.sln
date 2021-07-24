@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Api", "MachiKoro\MachiKoro.Api.csproj", "{1EEAB1BD-09B8-4CBB-966B-DA9F888BD402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Api", "MachiKoro.Api\MachiKoro.Api.csproj", "{1EEAB1BD-09B8-4CBB-966B-DA9F888BD402}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Persistence", "MachiKoro.Data\MachiKoro.Persistence.csproj", "{D3E7C6F0-97C9-4473-B072-744159696E8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Persistence", "MachiKoro.Persistence\MachiKoro.Persistence.csproj", "{D3E7C6F0-97C9-4473-B072-744159696E8B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7BE1B11E-BC42-4FCE-9925-018C712DB484}"
 EndProject
