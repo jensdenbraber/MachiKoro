@@ -132,10 +132,10 @@ namespace MachiKoro.Core.Game
             {
                 foreach (var establishment in player.EstablishmentCards)
                 {
-                    if(establishment.ActivationNumbers.Contains(diceNumber))
-                    {
-                        establishment.Activate(this);
-                    }
+                    //if(establishment.ActivationNumbers.Contains(diceNumber))
+                    //{
+                    //    establishment.Activate(this);
+                    //}
                 }
             }
         }

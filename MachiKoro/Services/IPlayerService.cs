@@ -1,6 +1,5 @@
-﻿using MachiKoro.Api.Models;
-using MachiKoro.Api.Models.GetPlayerProfile;
-using MachiKoro.Core;
+﻿using MachiKoro.Api.Models.GetPlayerProfile;
+using MachiKoro.Core.Game;
 using MachiKoro.Core.Players;
 using System;
 using System.Collections.Generic;
