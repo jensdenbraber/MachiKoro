@@ -1,5 +1,4 @@
-﻿using MachiKoro.Core;
-using MachiKoro.Core.Models.Game;
+﻿using MachiKoro.Core.Models.Game;
 using MachiKoro.Core.Players;
 using System;
 using System.Collections.Generic;
@@ -20,6 +19,7 @@ namespace MachiKoro.Application.v1.Interfaces
         Task<bool> DeleteAsync(Guid gameId);
         
         Task<bool> UpdateAsync(Game gameData);
-        Task<bool> AddPlayerToGame(Guid playerId, Guid gameId);
+        Task<bool> AddPlayerToGameAsync(Guid playerId, Guid gameId);
+        Task<bool> RemovePlayerFromGameAsync(Guid playerId, Guid gameId);
     }
 }

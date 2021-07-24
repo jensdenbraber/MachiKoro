@@ -11,14 +11,14 @@ namespace MachiKoro.Application.v1.AddPlayerToGame
     {
         private readonly IGamesRepository _gameRepository;
 
-        public AddPlayerToGameRequestHandler(IGamesRepository scenarioWonenRepository)
+        public AddPlayerToGameRequestHandler(IGamesRepository gameRepository)
         {
-            _gameRepository = scenarioWonenRepository ?? throw new ArgumentNullException(nameof(scenarioWonenRepository));
+            _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
         }
 
         public async Task<AddPlayerToGameResponse> Handle(AddPlayerToGameRequest request, CancellationToken cancellationToken)
         {
-            bool added = await _gameRepository.AddPlayerToGame(request.PlayerId, request.GameId);
+            bool added = await _gameRepository.AddPlayerToGameAsync(request.PlayerId, request.GameId);
 
             if (!added)
                 return null;

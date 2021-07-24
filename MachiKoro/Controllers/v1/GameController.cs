@@ -9,6 +9,7 @@ using MachiKoro.Api.Models.CreateGame;
 using MachiKoro.Application.v1;
 using MachiKoro.Api.Models.GetGame;
 using MachiKoro.Core.Models.AddPlayerToGame;
+using MachiKoro.Core.Models.RemovePlayerFromGame;
 
 namespace MachiKoro.Api.Controllers.v1
 {
@@ -72,11 +73,14 @@ namespace MachiKoro.Api.Controllers.v1
         [Consumes("application/json")]
         public async Task<IActionResult> AddPlayer([FromRoute][Required] AddPlayerToGameRequest request)
         {
-            var coreRequest = _mapper.Map<Core.Models.AddPlayerToGame.AddPlayerToGameRequest>(request);
+            var coreRequest = _mapper.Map<AddPlayerToGameRequest>(request);
 
             var coreResponse = await _mediator.Send(coreRequest);
 
-            if(coreResponse.GameId == null)
+            if (coreResponse == null)
+                return NotFound();
+
+            if (coreResponse.GameId == null)
                 return NotFound(request.GameId);
 
             if (coreResponse.PlayerId == null)
@@ -87,18 +91,22 @@ namespace MachiKoro.Api.Controllers.v1
             return Created(locationUri, coreResponse.GameId);
         }
 
-        //[HttpDelete(ApiRoutes.Games.RemovePlayer)]
-        //public async Task<IActionResult> RemovePlayer([FromRoute] [Required] Guid gameId, [FromRoute] [Required] Guid playerId)
-        //{
-        //    bool isRemoved = await _gameService.RemovePlayerAsync(gameId, playerId);
+        [HttpDelete(ApiRoutes.Games.RemovePlayer)]
+        [Consumes("application/json")]
+        public async Task<IActionResult> RemovePlayer([FromRoute][Required] RemovePlayerFromGameRequest request)
+        {
+            var coreRequest = _mapper.Map<RemovePlayerFromGameRequest>(request);
 
-        //    if(!isRemoved)
-        //        return BadRequest(new ErrorResponse(new ErrorModel { Message = $"Unable to remove the player with id: {playerId}" }));
+            var coreResponse = await _mediator.Send(coreRequest);
 
-        //    return Ok(playerId);
-        //}
+            if (coreResponse == null)
+                return NotFound();
+
+            return NoContent();
+        }
 
         [HttpDelete(ApiRoutes.Games.Delete)]
+        [Consumes("application/json")]
         public async Task<IActionResult> Delete([FromRoute] [Required] Guid gameId)
         {
             var isDeleted = await _gameService.DeleteGameAsync(gameId);
