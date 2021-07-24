@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MachiKoro.Core\MachiKoro.Core.csproj" />
-    <ProjectReference Include="..\MachiKoro.Utilities\MachiKoro.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

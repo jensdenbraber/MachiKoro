@@ -1,5 +1,5 @@
 ﻿using MachiKoro.Data;
-using MachiKoro.Api.DomainModels;
+using MachiKoro.Api.Models;
 using MachiKoro.Api.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

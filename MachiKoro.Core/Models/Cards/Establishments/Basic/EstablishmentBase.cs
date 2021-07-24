@@ -1,6 +1,4 @@
 using MachiKoro.Core.CardEffects.Establishments.Basic;
-using MachiKoro.Core.Interfaces;
-using MachiKoro.Utilities;
 using System.Collections.Generic;
 
 namespace MachiKoro.Core.Cards.Establishments.Basic

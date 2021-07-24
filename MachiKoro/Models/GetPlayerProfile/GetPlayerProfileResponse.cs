@@ -1,10 +1,7 @@
-﻿using System;
-
-namespace MachiKoro.Api.DomainModels
+﻿namespace MachiKoro.Api.Models.GetPlayerProfile
 {
-    public class PlayerProfile
+    public class GetPlayerProfileResponse
     {
-        public Guid Id { get; set; }
         public string UserName { get; set; }
         public int GamesPlayed { get; set; }
         public int GamesWon { get; set; }

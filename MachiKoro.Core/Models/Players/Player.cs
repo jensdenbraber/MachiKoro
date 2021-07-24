@@ -2,7 +2,6 @@
 using MachiKoro.Core.Cards.Landmarks.Basic;
 using MachiKoro.Core.Interfaces;
 using MachiKoro.Core.Players.Events;
-using MachiKoro.Utilities;
 using System;
 using System.Collections.Generic;
 

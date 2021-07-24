@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using MachiKoro.Api.DomainModels;
 using MachiKoro.Api.Services;
-using MachiKoro.Contracts.v1;
+using MachiKoro.Application.v1;
 using MachiKoro.Contracts.v1.Requests;
 using MachiKoro.Contracts.v1.Responses;
+using MachiKoro.Core;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,7 +25,7 @@ namespace MachiKoro.Api.Controllers.v1
         {
             _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _mediator = mediator;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpPost(ApiRoutes.Players.Create)]
@@ -129,7 +128,7 @@ namespace MachiKoro.Api.Controllers.v1
             if (player == null)
                 return NotFound();
 
-            player.UserName = userRequest.UserName;
+            //player.UserName = userRequest.UserName;
 
             var isUpdated = await _playerService.UpdatePlayerAsync(player);
             if (isUpdated)

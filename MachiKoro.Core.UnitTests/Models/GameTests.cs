@@ -21,38 +21,38 @@ namespace MachiKoro.Core.UnitTests
 
             var player1Id = new Guid("90C24ED4-39B4-43AC-B4F5-F3A3A2A1B000");
 
-            players.Add(new Player(player1Id, Utilities.PlayerType.Computer, 3,
+            players.Add(new Player(player1Id, PlayerType.Computer, 3,
                 new List<EstablishmentBase>()
             {
-                new PrimaryIndustry("Wheat Field", Utilities.CardCategory.WHEAT, new List<int>() { 1 }, 1, new PrimaryCardEffect(1)),
-                new SecondaryIndustryCard("Bakery", Utilities.CardCategory.BREAD, new List<int>() { 2, 3 }, 1, new SecondayCardEffect(1)),
+                new PrimaryIndustry("Wheat Field", CardCategory.WHEAT, new List<int>() { 1 }, 1, new PrimaryCardEffect(1)),
+                new SecondaryIndustryCard("Bakery", CardCategory.BREAD, new List<int>() { 2, 3 }, 1, new SecondayCardEffect(1)),
             },
                 new List<LandMark>()
             {
-                new LandMark("Train Station", Utilities.CardCategory.TOWER, 4, new TrainStation()),
-                new LandMark("Shopping Mall", Utilities.CardCategory.TOWER, 10, new ShoppingMall()),
-                new LandMark("Amusement Park", Utilities.CardCategory.TOWER, 16, new AmusementPark()),
-                new LandMark("Radio Tower", Utilities.CardCategory.TOWER, 22, new RadioTower()),
+                new LandMark("Train Station", CardCategory.TOWER, 4, new TrainStation()),
+                new LandMark("Shopping Mall", CardCategory.TOWER, 10, new ShoppingMall()),
+                new LandMark("Amusement Park", CardCategory.TOWER, 16, new AmusementPark()),
+                new LandMark("Radio Tower", CardCategory.TOWER, 22, new RadioTower()),
             }));
-            players.Add(new Player(Guid.NewGuid(), Utilities.PlayerType.Computer, 3,
+            players.Add(new Player(Guid.NewGuid(), PlayerType.Computer, 3,
                 new List<EstablishmentBase>()
             {
-                new PrimaryIndustry("Wheat Field", Utilities.CardCategory.WHEAT, new List<int>() { 1 }, 1, new PrimaryCardEffect(1)),
-                new SecondaryIndustryCard("Bakery", Utilities.CardCategory.BREAD, new List<int>() { 2, 3 }, 1, new SecondayCardEffect(1)),
+                new PrimaryIndustry("Wheat Field", CardCategory.WHEAT, new List<int>() { 1 }, 1, new PrimaryCardEffect(1)),
+                new SecondaryIndustryCard("Bakery", CardCategory.BREAD, new List<int>() { 2, 3 }, 1, new SecondayCardEffect(1)),
             },
                 new List<LandMark>()
             {
-                new LandMark("Train Station", Utilities.CardCategory.TOWER, 4, new TrainStation()),
-                new LandMark("Shopping Mall", Utilities.CardCategory.TOWER, 10, new ShoppingMall()),
-                new LandMark("Amusement Park", Utilities.CardCategory.TOWER, 16, new AmusementPark()),
-                new LandMark("Radio Tower", Utilities.CardCategory.TOWER, 22, new RadioTower()),
+                new LandMark("Train Station", CardCategory.TOWER, 4, new TrainStation()),
+                new LandMark("Shopping Mall", CardCategory.TOWER, 10, new ShoppingMall()),
+                new LandMark("Amusement Park", CardCategory.TOWER, 16, new AmusementPark()),
+                new LandMark("Radio Tower", CardCategory.TOWER, 22, new RadioTower()),
             }));            
             
             var game = new Game.Game(cardDecks);
 
             Assert.Equal(player1Id, game.ActivePlayer.Id);
 
-            game.ActivePlayer.ConstructLandmark(new LandMark("Train Station", Utilities.CardCategory.TOWER, 4, new TrainStation()));
+            game.ActivePlayer.ConstructLandmark(new LandMark("Train Station", CardCategory.TOWER, 4, new TrainStation()));
 
             List<PlayerChoice> playerChoicesUpkeep = game.PlayerUpkeep();
 
