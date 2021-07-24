@@ -39,15 +39,15 @@ namespace MachiKoro.Core
             //GameList.SingleOrDefault(g => g.Id == gameId).Start();
         }
 
-        private static Queue<Player> InitializePlayerBasic(Player player, List<EstablishmentBase> EstablishmentCards, List<LandMark> LandmarkCards)
-        {
-            var gamePlayers = new Queue<Player>();
+        //private static Queue<Player> InitializePlayerBasic(Player player, List<EstablishmentBase> EstablishmentCards, List<LandMark> LandmarkCards)
+        //{
+        //    var gamePlayers = new Queue<Player>();
             
-            var p = new Player(player.Id, player.PlayerType, 3, EstablishmentCards, LandmarkCards);
+        //    var p = new Player(player.Id, player.PlayerType, 3, EstablishmentCards, LandmarkCards);
 
-            gamePlayers.Enqueue(p);
+        //    gamePlayers.Enqueue(p);
 
-            return gamePlayers;
-        }
+        //    return gamePlayers;
+        //}
     }
 }

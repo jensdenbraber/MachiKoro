@@ -1,14 +1,16 @@
-﻿using MachiKoro.Core.CardDecks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MachiKoro.Core.TestModelFactory.Models.Game
 {
     public class GameFactory
     {
-        public static Core.Game.Game ValidInstance(int numberOfPlayers)
+        public static Core.Models.Game.Game ValidInstance()
         {
-            var cardDecks = new CardDeckBuilder().BuildCardDecksBasicGame();
-
-            Core.Game.Game game = new Core.Game.Game(cardDecks);
+            Core.Models.Game.Game game = new Core.Models.Game.Game();
 
             return game;
         }

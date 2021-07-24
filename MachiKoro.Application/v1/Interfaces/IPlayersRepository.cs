@@ -1,9 +1,10 @@
-﻿using MachiKoro.Core.Players;
+﻿using MachiKoro.Core.Models.PlayerProfile;
+using MachiKoro.Core.Players;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Data.Repositories
+namespace MachiKoro.Application.v1.Interfaces
 {
     public interface IPlayersRepository
     {
@@ -12,7 +13,7 @@ namespace MachiKoro.Data.Repositories
         public Task<Player> GetPlayerById(Guid id);
         public Task<Player> GetPlayerByUserName(string userName);
         public Task<bool> Delete(Guid playerId);
-        //public Task<PlayerProfile> GetPlayerProfile(Guid userId);
+        public Task<PlayerProfile> GetPlayerProfile(Guid userId);
         //public Task<PlayersStatistics> GetPlayerStatistics(Guid userId);
         public Task<bool> Update(Player player);
         public Task<Player> GetPlayerWithMostGamesWon();
