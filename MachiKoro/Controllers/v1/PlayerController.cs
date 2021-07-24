@@ -4,6 +4,7 @@ using MachiKoro.Application.v1;
 using MachiKoro.Contracts.v1.Requests;
 using MachiKoro.Contracts.v1.Responses;
 using MachiKoro.Core;
+using MachiKoro.Core.Models.Game;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;

@@ -2,6 +2,7 @@
 using MachiKoro.Api.Models;
 using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Core;
+using MachiKoro.Core.Models.Game;
 using MachiKoro.Core.Players;
 using MachiKoro.Data.Repositories;
 using System;

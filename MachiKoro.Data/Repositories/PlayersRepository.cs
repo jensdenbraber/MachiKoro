@@ -1,8 +1,8 @@
-﻿using MachiKoro.Data.Models;
+﻿using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Data.Repositories
@@ -112,6 +112,11 @@ namespace MachiKoro.Data.Repositories
         }
 
         Task<Core.Players.Player> IPlayersRepository.GetPlayerWithMostGamesLost()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Core.Models.PlayerProfile.PlayerProfile> IPlayersRepository.GetPlayerProfile(Guid userId)
         {
             throw new NotImplementedException();
         }
