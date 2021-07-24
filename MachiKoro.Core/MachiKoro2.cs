@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using MachiKoro.Core.CardDecks;
 using MachiKoro.Core.Players;
 using System.Linq;
-
+using MachiKoro.Core.Models.Game;
 
 namespace MachiKoro.Core
 {
@@ -41,7 +41,7 @@ namespace MachiKoro.Core
                 new Dice()
             };
 
-            var game = new Game(cardDecks, dices);
+            var game = new Game();
 
             //var game = new Game(gamePlayers, cardDecks, dices);
 
@@ -50,31 +50,31 @@ namespace MachiKoro.Core
             return game;
         }
 
-        public static void RemoveGame(Guid gameId)
-        {
-            GameList.RemoveAll(g => g.Id == gameId);
-        }
+        //public static void RemoveGame(Guid gameId)
+        //{
+        //    GameList.RemoveAll(g => g.Id == gameId);
+        //}
 
-        public static void PlayerJoinGame(Player player, Guid gameId)
-        {
-            //TODO get game, check is exists
-            // check if not full/started
-            // 
-            GameList.SingleOrDefault(g => g.Id == gameId).AddPlayer(player);
-        }
+        //public static void PlayerJoinGame(Player player, Guid gameId)
+        //{
+        //    //TODO get game, check is exists
+        //    // check if not full/started
+        //    // 
+        //    GameList.SingleOrDefault(g => g.Id == gameId).AddPlayer(player);
+        //}
 
-        public static void PlayerLeavesGame(Player player, Guid gameId)
-        {
-            //TODO get game, check is exists
-            // check if not full/started
-            // 
-            GameList.SingleOrDefault(g => g.Id == gameId).RemovePlayer(player);
-        }
+        //public static void PlayerLeavesGame(Player player, Guid gameId)
+        //{
+        //    //TODO get game, check is exists
+        //    // check if not full/started
+        //    // 
+        //    GameList.SingleOrDefault(g => g.Id == gameId).RemovePlayer(player);
+        //}
 
-        public static void StartGame(Guid gameId)
-        {
-            GameList.SingleOrDefault(g => g.Id == gameId).Start();
-        }
+        //public static void StartGame(Guid gameId)
+        //{
+        //    GameList.SingleOrDefault(g => g.Id == gameId).Start();
+        //}
 
         private static Queue<Player> InitializePlayerBasic(Player player, List<EstablishmentBase> EstablishmentCards, List<LandMark> LandmarkCards)
         {

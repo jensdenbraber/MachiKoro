@@ -1,9 +1,10 @@
-﻿using MachiKoro.Core.Players;
+﻿using MachiKoro.Core.Models.PlayerProfile;
+using MachiKoro.Core.Players;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Data.Repositories
+namespace MachiKoro.Application.v1.Interfaces
 {
     public interface IPlayersRepository
     {
@@ -17,5 +18,6 @@ namespace MachiKoro.Data.Repositories
         public Task<bool> Update(Player player);
         public Task<Player> GetPlayerWithMostGamesWon();
         public Task<Player> GetPlayerWithMostGamesLost();
+        Task<PlayerProfile> GetPlayerProfile(Guid playerId);
     }
 }

@@ -137,7 +137,7 @@ namespace MachiKoro.Api.Controllers.v1
                 return BadRequest(new ErrorResponse(new ErrorModel { Message = $"Unable to add the player: {player}" }));
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var locationUri = baseUrl + "/" + ApiRoutes.Games.AddPlayer.Replace("{gameId}", game.Id.ToString());
+            var locationUri = baseUrl + "/" + ApiRoutes.Games.AddPlayer.Replace("{gameId}", game.GameId.ToString());
             return Created(locationUri, _mapper.Map<GameResponse>(game));
         }
 

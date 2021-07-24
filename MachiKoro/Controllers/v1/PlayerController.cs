@@ -4,6 +4,7 @@ using MachiKoro.Application.v1;
 using MachiKoro.Contracts.v1.Requests;
 using MachiKoro.Contracts.v1.Responses;
 using MachiKoro.Core;
+using MachiKoro.Core.Models.Game;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -46,7 +47,7 @@ namespace MachiKoro.Api.Controllers.v1
             //    UserName = playerRequest.UserName
             //};
 
-            var coreRequest = _mapper.Map<Core.Models.CreateGame.CreateGameRequest>(request);
+            var coreRequest = _mapper.Map<Core.Models.GetPlayerProfile.GetPlayerProfileRequest>(request);
 
             var coreResponse = await _mediator.Send(coreRequest);
 

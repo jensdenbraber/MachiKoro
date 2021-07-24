@@ -62,27 +62,27 @@ namespace MachiKoro.Data.Repositories
             return updated > 0;
         }
 
-        Task<bool> IGamesRepository.CreateAsync(Core.Game gameData)
+        Task<bool> IGamesRepository.CreateAsync(Core.Models.Game.Game gameData)
         {
             throw new NotImplementedException();
         }
 
-        Task<List<Core.Game>> IGamesRepository.GetGamesAsync()
+        Task<List<Core.Models.Game.Game>> IGamesRepository.GetGamesAsync()
         {
             throw new NotImplementedException();
         }
 
-        Task<Core.Game> IGamesRepository.GetGameAsync(Guid id)
+        Task<Core.Models.Game.Game> IGamesRepository.GetGameAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IGamesRepository.UpdateAsync(Core.Models.Game.Game gameData)
         {
             throw new NotImplementedException();
         }
 
         Task<List<Core.Players.Player>> IGamesRepository.GetPlayersFromGame(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IGamesRepository.UpdateAsync(Core.Game gameData)
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,7 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Core;
 using MachiKoro.Core.Models.CreateGame;
+using MachiKoro.Core.Models.Game;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -22,16 +23,21 @@ namespace MachiKoro.Application.v1.CreateGame
 
         public async Task<CreateGameResponse> Handle(CreateGameRequest request, CancellationToken cancellationToken)
         {
-            Game game = new Game(new List<Core.CardDecks.CardDeck>(), new List<Dice>())
+            Game game = new Game()
             {
-                Id = Guid.NewGuid()
+                GameId = Guid.NewGuid()
             };
 
-            await _gameRepository.CreateAsync(game);
+            bool isCreated = await _gameRepository.CreateAsync(game);
+
+            if(!isCreated)
+            {
+                throw new NotImplementedException("return bad request"); 
+            }
 
             return new CreateGameResponse()
             {
-                Id = game.Id
+                Id = game.GameId
             };
         }
     }
