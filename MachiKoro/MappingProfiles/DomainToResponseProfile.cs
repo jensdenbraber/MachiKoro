@@ -1,9 +1,8 @@
 using AutoMapper;
 using MachiKoro.Contracts.v1.Responses;
-using MachiKoro.Api.Models;
-using MachiKoro.Core;
 using MachiKoro.Core.Players;
 using MachiKoro.Api.Models.GetPlayerProfile;
+using MachiKoro.Core.Game;
 
 namespace MachiKoro.Api.MappingProfiles
 {

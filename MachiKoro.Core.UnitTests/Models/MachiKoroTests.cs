@@ -1,4 +1,5 @@
 ﻿using MachiKoro.Core.Players;
+using MachiKoro.Core.TestModelFactory.Models.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,7 @@ namespace MachiKoro.Core.TestModelFactory
         [Fact (Skip = "Disabled to due restructure of the program, test not supported at the moment.") ]
         public void MachiKoroNewGameTest()
         {
-            Game game = MachiKoro2.SetupBasicGame(4);
-
-            
+            Game.Game game = GameFactory.ValidInstance(4);
 
             Assert.Equal(4, game.Players.Count);
             Assert.Equal(players.First(), game.ActivePlayer);

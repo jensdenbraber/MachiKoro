@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using MachiKoro.Api.Models;
 using MachiKoro.Api.Models.GetPlayerProfile;
-using MachiKoro.Core;
+using MachiKoro.Core.Game;
 using MachiKoro.Core.Players;
 using MachiKoro.Data.Repositories;
 using System;

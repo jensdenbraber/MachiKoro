@@ -16,11 +16,6 @@ namespace MachiKoro.Core.UnitTests
         public void InitializeGameBasic()
         {
             var cardDecks = new CardDeckBuilder().BuildCardDecksBasicGame();
-            var dices = new List<Dice>()
-            {
-                new Dice(),
-                new Dice()
-            };
 
             var players = new List<Player>();
 
@@ -53,7 +48,7 @@ namespace MachiKoro.Core.UnitTests
                 new LandMark("Radio Tower", CardCategory.TOWER, 22, new RadioTower()),
             }));            
             
-            var game = new Game(players, cardDecks, dices);
+            var game = new Game.Game(cardDecks);
 
             Assert.Equal(player1Id, game.ActivePlayer.Id);
 
