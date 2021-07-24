@@ -1,5 +1,5 @@
-﻿using MachiKoro.Data;
-using MachiKoro.Data.Repositories;
+﻿using MachiKoro.Persistence;
+using MachiKoro.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

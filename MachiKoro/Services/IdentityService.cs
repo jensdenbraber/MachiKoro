@@ -1,4 +1,4 @@
-﻿using MachiKoro.Data;
+﻿using MachiKoro.Persistence;
 using MachiKoro.Api.Models;
 using MachiKoro.Api.Options;
 using Microsoft.AspNetCore.Identity;
@@ -234,7 +234,7 @@ namespace MachiKoro.Api.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            var refreshToken = new Data.Models.RefreshToken
+            var refreshToken = new Persistence.Models.RefreshToken
             {
                 JwtId = token.Id,
                 UserId = user.Id,
