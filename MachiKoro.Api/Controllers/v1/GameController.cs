@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MachiKoro.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -10,21 +9,18 @@ using MachiKoro.Application.v1;
 using MachiKoro.Api.Models.GetGame;
 using MachiKoro.Core.Models.AddPlayerToGame;
 using MachiKoro.Core.Models.RemovePlayerFromGame;
+using MachiKoro.Core.Models.DeleteGame;
 
 namespace MachiKoro.Api.Controllers.v1
 {
     [ApiController]
     public class GameController : ControllerBase
     {
-        private readonly IGameService _gameService;
-        private readonly IPlayerService _playerService;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public GameController(IGameService gameService, IPlayerService playerService, IMapper mapper, IMediator mediator)
+        public GameController(IMapper mapper, IMediator mediator)
         {
-            _gameService = gameService ?? throw new ArgumentNullException(nameof(gameService));
-            _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
@@ -107,14 +103,16 @@ namespace MachiKoro.Api.Controllers.v1
 
         [HttpDelete(ApiRoutes.Games.Delete)]
         [Consumes("application/json")]
-        public async Task<IActionResult> Delete([FromRoute] [Required] Guid gameId)
+        public async Task<IActionResult> Delete([FromRoute][Required] DeleteGameRequest request)
         {
-            var isDeleted = await _gameService.DeleteGameAsync(gameId);
+            var coreRequest = _mapper.Map<DeleteGameRequest>(request);
 
-            if (isDeleted)
-                return NoContent();
+            var coreResponse = await _mediator.Send(coreRequest);
 
-            return NotFound();
+            if (coreResponse == null)
+                return NotFound(request);
+
+            return NoContent();
         }
     }
 }
