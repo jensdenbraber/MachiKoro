@@ -100,7 +100,7 @@ namespace MachiKoro.Api.Controllers.v1
             var coreResponse = await _mediator.Send(coreRequest);
 
             if (coreResponse == null)
-                return NotFound();
+                return NotFound(request);
 
             return NoContent();
         }
