@@ -2,14 +2,13 @@
 {
     public enum CardCategory
     {
-        WHEAT = 1,
-        BREAD = 2,
-        COW = 3,
-        CUP = 4,
-        GEAR = 5,
-        FRUIT = 6,
-        TOWER = 7,
-        FACTORY = 8,
-        UNKNOWN = 9
+        Wheat = 1,
+        Bread = 2,
+        Cow = 3,
+        Cup = 4,
+        Gear = 5,
+        Fruit = 6,
+        Tower = 7,
+        Factory = 8
     }
 }

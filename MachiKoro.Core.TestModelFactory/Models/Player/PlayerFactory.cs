@@ -13,16 +13,16 @@ namespace MachiKoro.Core.TestModelFactory.Models.Player
         {
             var establishmentCards = new List<EstablishmentBase>()
             {
-                new PrimaryIndustry("Wheat Field", CardCategory.WHEAT, new List<int>() { 1 }, 1, new PrimaryCardEffect(1)),
-                new SecondaryIndustryCard("Bakery", CardCategory.BREAD, new List<int>() { 2, 3 }, 1, new SecondayCardEffect(1)),
+                new PrimaryIndustry("Wheat Field", CardCategory.Wheat, new List<int>() { 1 }, 1, new PrimaryCardEffect(1)),
+                new SecondaryIndustryCard("Bakery", CardCategory.Bread, new List<int>() { 2, 3 }, 1, new SecondayCardEffect(1)),
             };
 
             var landmarkCards = new List<LandMark>()
             {
-                new LandMark("Train Station", CardCategory.TOWER, 4, new TrainStation()),
-                new LandMark("Shopping Mall", CardCategory.TOWER, 10, new ShoppingMall()),
-                new LandMark("Amusement Park", CardCategory.TOWER, 16, new AmusementPark()),
-                new LandMark("Radio Tower", CardCategory.TOWER, 22, new RadioTower()),
+                new LandMark("Train Station", CardCategory.Tower, 4, new TrainStation()),
+                new LandMark("Shopping Mall", CardCategory.Tower, 10, new ShoppingMall()),
+                new LandMark("Amusement Park", CardCategory.Tower, 16, new AmusementPark()),
+                new LandMark("Radio Tower", CardCategory.Tower, 22, new RadioTower()),
             };
 
             return new Players.Player(Guid.NewGuid(), PlayerType.Computer, 3, establishmentCards, landmarkCards);
