@@ -34,7 +34,7 @@ namespace MachiKoro.Persistence.Repositories
             return await _gameDataContext.Games.FirstOrDefaultAsync(g => g.Id == id);
         }
 
-        public async Task<List<Player>> GetPlayersFromGame(Guid id)
+        public async Task<List<Player>> GetPlayersFromGameAsync(Guid id)
         {
             //return await _gameDataContext.Games.FirstOrDefaultAsync(g => g.Id == id).Players;
 
@@ -77,7 +77,7 @@ namespace MachiKoro.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        Task<List<Core.Players.Player>> IGamesRepository.GetPlayersFromGame(Guid id)
+        Task<List<Core.Players.Player>> IGamesRepository.GetPlayersFromGameAsync(Guid id)
         {
             throw new NotImplementedException();
         }

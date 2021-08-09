@@ -51,7 +51,7 @@ namespace MachiKoro.Api.Services
 
         public async Task<List<Player>> GetPlayersFromGameAsync(Guid gameId)
         {
-            var playersData = await _gameRepository.GetPlayersFromGame(gameId);
+            var playersData = await _gameRepository.GetPlayersFromGameAsync(gameId);
             var players = _mapper.Map<List<Player>>(playersData);
             return players;
         }
