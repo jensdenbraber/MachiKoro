@@ -1,7 +1,5 @@
 using AutoMapper;
-//using MachiKoro.Contracts.v1.Requests.Queries;
-using MachiKoro.Contracts.v1.Responses;
-using MachiKoro.Api.Models;
+using MachiKoro.Api.Models.CreateGame;
 
 namespace MachiKoro.Api.MappingProfiles
 {
@@ -9,6 +7,8 @@ namespace MachiKoro.Api.MappingProfiles
     {
         public RequestToDomainProfile()
         {
+            CreateMap<CreateGameRequest, Core.Models.CreateGame.CreateGameRequest>();
+
             //CreateMap<PaginationQuery, PaginationFilter>();
             //CreateMap<GetAllPostsQuery, GetAllPostsFilter>();
 

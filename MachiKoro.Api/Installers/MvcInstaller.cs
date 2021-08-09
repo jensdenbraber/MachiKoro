@@ -1,9 +1,12 @@
 ﻿using MachiKoro.Api.Options;
 using MachiKoro.Api.Services;
+using MachiKoro.Application.v1.CreateGame;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
 using System.Text;
 
 namespace MachiKoro.Api.Installers
@@ -18,6 +21,14 @@ namespace MachiKoro.Api.Installers
 
 
             //services.AddSingleton<IGameLobby, GameLobby>();
+
+            Assembly[] assemblies = new Assembly[]
+            {
+                            Assembly.GetAssembly(typeof(Startup)),
+                            Assembly.GetAssembly(typeof(CreateGameRequestHandler))
+            };
+
+            services.AddMediatR(assemblies);
 
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IPlayerService, PlayerService>();
