@@ -18,10 +18,14 @@ namespace MachiKoro.Application.v1.RemovePlayerFromGame
 
         public async Task<RemovePlayerFromGameResponse> Handle(RemovePlayerFromGameRequest request, CancellationToken cancellationToken)
         {
+            request = request ?? throw new ArgumentNullException(nameof(request));
+
             bool removed = await _gameRepository.RemovePlayerFromGameAsync(request.PlayerId, request.GameId);
 
             if (!removed)
+            {
                 return null;
+            }
 
             return new RemovePlayerFromGameResponse()
             {

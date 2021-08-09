@@ -20,10 +20,12 @@ namespace MachiKoro.Application.v1.CreateGame
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            bool created = await _gameRepository.DeleteAsync(request.GameId);
+            bool deleted = await _gameRepository.DeleteAsync(request.GameId);
 
-            if (!created)
+            if (!deleted)
+            {
                 return null;
+            }
 
             return new DeleteGameResponse()
             {

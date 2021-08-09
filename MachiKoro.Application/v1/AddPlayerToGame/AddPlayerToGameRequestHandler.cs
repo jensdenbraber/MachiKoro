@@ -18,10 +18,14 @@ namespace MachiKoro.Application.v1.AddPlayerToGame
 
         public async Task<AddPlayerToGameResponse> Handle(AddPlayerToGameRequest request, CancellationToken cancellationToken)
         {
+            request = request ?? throw new ArgumentNullException(nameof(request));
+
             bool added = await _gameRepository.AddPlayerToGameAsync(request.PlayerId, request.GameId);
 
             if (!added)
+            {
                 return null;
+            }
 
             return new AddPlayerToGameResponse()
             {

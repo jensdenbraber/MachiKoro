@@ -22,6 +22,11 @@ namespace MachiKoro.Application.v1.CreateGame
 
             var game = await _gameRepository.GetGameAsync(request.GameId);
 
+            if(game == null)
+            {
+                return null;
+            }
+
             return new GetGameResponse()
             {
                 Game = game

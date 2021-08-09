@@ -21,6 +21,11 @@ namespace MachiKoro.Application.v1.CreateGame
             request = request ?? throw new ArgumentNullException(nameof(request));
 
             var playerProfile = await _playerRepository.GetPlayerProfile(request.PlayerId);
+
+            if (playerProfile == null)
+            {
+                return null;
+            }
                        
             return new GetPlayerProfileResponse()
             {
