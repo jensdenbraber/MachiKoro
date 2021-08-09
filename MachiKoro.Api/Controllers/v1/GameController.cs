@@ -32,6 +32,7 @@ namespace MachiKoro.Api.Controllers.v1
         /// <response code="400">Unable to create the game due to validation error</response>
         [HttpPost(ApiRoutes.Games.Create)]
         [Consumes("application/json")]
+        [Produces("application/json")]
         [ProducesResponseType(typeof(CreateGameResponse), 201)]
         public async Task<IActionResult> CreateAsync([FromBody][Required] CreateGameRequest request)
         {

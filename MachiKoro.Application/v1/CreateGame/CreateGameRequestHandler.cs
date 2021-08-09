@@ -11,19 +11,21 @@ namespace MachiKoro.Application.v1.CreateGame
     public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest, CreateGameResponse>
     {
         private readonly IGamesRepository _gameRepository;
-        private readonly IMediator _mediator;
 
-        public CreateGameRequestHandler(IGamesRepository scenarioWonenRepository, IMediator mediator)
+        public CreateGameRequestHandler(IGamesRepository gameRepository)
         {
-            _gameRepository = scenarioWonenRepository ?? throw new ArgumentNullException(nameof(scenarioWonenRepository));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
         }
 
         public async Task<CreateGameResponse> Handle(CreateGameRequest request, CancellationToken cancellationToken)
         {
-            Game game = new Game()
+            request = request ?? throw new ArgumentNullException(nameof(request));
+
+            var game = new Game()
             {
-                GameId = Guid.NewGuid()
+                GameId = Guid.NewGuid(),
+                MaxNumberOfPlayers = request.MaxNumberOfPlayers,
+                ExpensionType = request.ExpensionType
             };
 
             bool created = await _gameRepository.CreateAsync(game);
