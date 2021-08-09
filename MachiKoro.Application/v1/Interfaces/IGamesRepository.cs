@@ -14,7 +14,7 @@ namespace MachiKoro.Application.v1.Interfaces
 
         Task<Game> GetGameAsync(Guid id);
 
-        Task<List<Player>> GetPlayersFromGame(Guid id);
+        Task<List<Player>> GetPlayersFromGameAsync(Guid id);
 
         Task<bool> DeleteAsync(Guid gameId);
         

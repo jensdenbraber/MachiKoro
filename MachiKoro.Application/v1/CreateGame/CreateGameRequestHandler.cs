@@ -31,7 +31,9 @@ namespace MachiKoro.Application.v1.CreateGame
             bool created = await _gameRepository.CreateAsync(game);
 
             if (!created)
+            {
                 return null;
+            }
 
             return new CreateGameResponse()
             {
