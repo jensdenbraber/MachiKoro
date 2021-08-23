@@ -1,25 +1,41 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using MachiKoro.Api.Hubs;
+﻿using MachiKoro.Api.Hubs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
-namespace MachiKoro.Api.Installers
+namespace MachiKoro.Api.Extensions
 {
-    public class SwaggerInstaller : IInstaller
+    public static class SwaggerServicesExtensions
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
-        {
+		public static IServiceCollection AddSwaggerServices(this IServiceCollection services, IConfiguration configuration)
+		{
             services.AddSwaggerGen(x =>
             {
-                x.SwaggerDoc("v1", new OpenApiInfo{ Title = "MachiKoro API", Version = "v1" });
+                x.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Machi Koro API",
+                    Description = "An API implementation of the Machi Koro cardgame.",
+                    Version = "v1",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Jens den Braber",
+                        Email = "jens.denbraber@gmail.com",
+                        Url = new Uri("https://github.com/jensdenbraber/MachiKoro/"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "License information comes here",
+                        Url = new Uri("https://example.com/license"),
+                    }
+                });
                 x.DocumentFilter<SignalRSwaggerGen.SignalRSwaggerGen>(new List<Assembly> { typeof(GameHub).Assembly, typeof(GameHub).Assembly });
                 x.ExampleFilters();
-                
+
                 x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the bearer scheme",
@@ -33,7 +49,7 @@ namespace MachiKoro.Api.Installers
                     {
                         Id = "Bearer",
                         Type = ReferenceType.SecurityScheme
-                    }}, new List<string>()} 
+                    }}, new List<string>()}
                 });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -42,6 +58,8 @@ namespace MachiKoro.Api.Installers
             });
 
             services.AddSwaggerExamplesFromAssemblyOf<Startup>();
-        }
-    }
+
+            return services;
+		}
+	}
 }
