@@ -63,7 +63,7 @@ namespace MachiKoro.Persistence.Repositories
         }
 
         Task<bool> IGamesRepository.CreateAsync(Core.Models.Game.Game gameData)
-        {
+        {          
             throw new NotImplementedException();
         }
 

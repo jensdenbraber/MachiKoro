@@ -1,39 +1,26 @@
 ﻿using MachiKoro.Api.Options;
-using MachiKoro.Api.Services;
-using MachiKoro.Application.v1.CreateGame;
-using MediatR;
+using MachiKoro.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Reflection;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace MachiKoro.Api.Installers
+namespace MachiKoro.Api.Extensions
 {
-    public class MvcInstaller : IInstaller
+    [ExcludeFromCodeCoverage]
+    public static class AuthenticationServicesExtensions
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<IdentityDataContext>();
+
             var jwtSettings = new JwtSettings();
             configuration.Bind(nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
-
-
-            //services.AddSingleton<IGameLobby, GameLobby>();
-
-            Assembly[] assemblies = new Assembly[]
-            {
-                            Assembly.GetAssembly(typeof(Startup)),
-                            Assembly.GetAssembly(typeof(CreateGameRequestHandler))
-            };
-
-            services.AddMediatR(assemblies);
-
-            services.AddTransient<IGameService, GameService>();
-            services.AddTransient<IPlayerService, PlayerService>();
-
-            services.AddScoped<IIdentityService, IdentityService>();
 
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -58,6 +45,8 @@ namespace MachiKoro.Api.Installers
                     x.SaveToken = true;
                     x.TokenValidationParameters = tokenValidationParameters;
                 });
+
+            return services;
         }
     }
 }

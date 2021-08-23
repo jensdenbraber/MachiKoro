@@ -40,6 +40,9 @@ namespace MachiKoro.Api.Controllers.v1
             
             var coreResponse = await _mediator.Send(coreRequest);
             
+            if (coreResponse == null)
+                return NotFound();
+            
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationUri = baseUrl + "/" + ApiRoutes.Games.Get.Replace("{gameId}", coreResponse.GameId.ToString());
             return Created(locationUri, coreResponse.GameId);

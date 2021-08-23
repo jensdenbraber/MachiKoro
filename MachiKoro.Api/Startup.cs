@@ -1,4 +1,3 @@
-using MachiKoro.Api.Installers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MachiKoro.Api.Options;
 using MachiKoro.Persistence.Extensions;
+using MachiKoro.Api.Extensions;
+using MediatR.Extensions.FluentValidation.AspNetCore;
+using System.Reflection;
+using MachiKoro.Application.v1.Extensions;
 
 namespace MachiKoro.Api
 {
@@ -21,9 +24,17 @@ namespace MachiKoro.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.InstallServicesInAssembly(Configuration);
+
             services.AddPersistenceServices(Configuration);
-            services.InstallServicesInAssembly(Configuration);
-            services.AddAutoMapper(typeof(Startup));
+            services.AddMediatRServices(Configuration);
+            services.AddAutoMapperServices(Configuration);
+            services.AddFluentValidation(new[] { Assembly.GetExecutingAssembly() });
+            services.AddApplicationServices(Configuration);
+            services.AddPersistenceServices(Configuration);
+            services.AddAuthenticationServices(Configuration);
+
+            services.AddSwaggerServices(Configuration);
 
             services.AddControllers();
         }
