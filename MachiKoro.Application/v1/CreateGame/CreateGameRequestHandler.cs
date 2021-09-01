@@ -21,11 +21,19 @@ namespace MachiKoro.Application.v1.CreateGame
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
+            Core.Models.Player.Player player = new Core.Models.Player.Player()
+            {
+                Id = Guid.NewGuid(),
+                GoldAmount = 0,
+                PlayerType = Core.PlayerType.Human
+            };
+
             var game = new Game()
             {
-                GameId = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 MaxNumberOfPlayers = request.MaxNumberOfPlayers,
-                ExpensionType = request.ExpensionType
+                ExpensionType = request.ExpensionType,
+                Players = new System.Collections.Generic.List<Core.Models.Player.Player> { player }
             };
 
             bool created = await _gameRepository.CreateAsync(game);
@@ -37,7 +45,7 @@ namespace MachiKoro.Application.v1.CreateGame
 
             return new CreateGameResponse()
             {
-                GameId = game.GameId
+                GameId = game.Id
             };
         }
     }
