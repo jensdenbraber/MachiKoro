@@ -10,10 +10,20 @@ namespace MachiKoro.Api.Hubs
     [SignalRHub(path: "/hubs/GameHub")]
     public class GameHub : Hub
     {
-        [SignalRMethod(name: "nameOfTheMethodCalledOnTheClientSide", Microsoft.OpenApi.Models.OperationType.Put)]
+        [SignalRMethod(name: "nameOfTheMethodCalledOnTheClientSide", Microsoft.OpenApi.Models.OperationType.Post)]
         public async Task SendMessage(string user, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
+        }
+
+        [SignalRMethod(name: "RollDice", Microsoft.OpenApi.Models.OperationType.Post)]
+        public async Task RollDice(string user)
+        {
+
+
+            int diceValue = 12;
+
+            await Clients.All.SendAsync("DiceRoll", user, diceValue);
         }
 
 

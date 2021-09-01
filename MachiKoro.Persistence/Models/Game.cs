@@ -14,7 +14,6 @@ namespace MachiKoro.Persistence.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        [Required]
         public DateTime StartedDate { get; set; }
 
         public DateTime FinishedDate { get; set; }

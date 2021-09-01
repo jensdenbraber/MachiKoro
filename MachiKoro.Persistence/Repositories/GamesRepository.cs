@@ -1,4 +1,5 @@
-﻿using MachiKoro.Application.v1.Interfaces;
+﻿using AutoMapper;
+using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,10 +10,12 @@ namespace MachiKoro.Persistence.Repositories
 {
     public class GamesRepository : IGamesRepository
     {
+        private readonly IMapper _mapper;
         private readonly GameDataContext _gameDataContext;
 
-        public GamesRepository(GameDataContext gameDataContext)
+        public GamesRepository(IMapper mapper, GameDataContext gameDataContext)
         {
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _gameDataContext = gameDataContext;
         }
 
@@ -62,9 +65,14 @@ namespace MachiKoro.Persistence.Repositories
             return updated > 0;
         }
 
-        Task<bool> IGamesRepository.CreateAsync(Core.Models.Game.Game gameData)
-        {          
-            throw new NotImplementedException();
+        public async Task<bool> CreateAsync(Core.Models.Game.Game game)
+        {
+            Game gameData = _mapper.Map<Game>(game);
+
+            await _gameDataContext.Games.AddAsync(gameData);
+
+            var created = await _gameDataContext.SaveChangesAsync();
+            return created > 0;
         }
 
         Task<List<Core.Models.Game.Game>> IGamesRepository.GetGamesAsync()
