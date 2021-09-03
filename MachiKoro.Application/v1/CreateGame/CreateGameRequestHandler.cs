@@ -1,4 +1,5 @@
-﻿using MachiKoro.Application.v1.Interfaces;
+﻿using MachiKoro.Application.CardDecks;
+using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Core.Models.CreateGame;
 using MachiKoro.Core.Models.Game;
 using MediatR;
@@ -25,7 +26,8 @@ namespace MachiKoro.Application.v1.CreateGame
             {
                 GameId = Guid.NewGuid(),
                 MaxNumberOfPlayers = request.MaxNumberOfPlayers,
-                ExpensionType = request.ExpensionType
+                ExpensionType = request.ExpensionType,
+                CardDecks = CardDeckBuilder.BuildCardDecksBasicGame()
             };
 
             bool created = await _gameRepository.CreateAsync(game);

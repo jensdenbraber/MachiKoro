@@ -1,30 +1,22 @@
 ﻿using MachiKoro.Core.Cards.Establishments.Basic;
-
+using System;
 using System.Collections.Generic;
 
 namespace MachiKoro.Core.CardDecks
 {
     public class CardDeck
     {
-        private readonly int _maxRevealedCards;
-        public readonly Stack<EstablishmentBase> EstablishmentCards;
-        public Stack<EstablishmentBase> RevealedCards = new Stack<EstablishmentBase>();
+        public Guid Id { get; set;  }
+        public int MaxRevealedCards { get; }
+        public Stack<EstablishmentBase> EstablishmentCards { get; set; }
+        public Stack<EstablishmentBase> RevealedCards { get; set; }
 
-        public CardDeck(Stack<EstablishmentBase> establishmentCards, int maxRevealCards)
+        public CardDeck(Guid id, Stack<EstablishmentBase> establishmentCards, Stack<EstablishmentBase> revealedCards, int maxRevealCards)
         {
+            Id = id;
             EstablishmentCards = establishmentCards;
-            _maxRevealedCards = maxRevealCards;
-
-            for (int i = 0; i < _maxRevealedCards; i++)
-            {
-                RevealTopCard();
-            }
-        }
-
-        public void RevealTopCard()
-        {
-            var establishment = EstablishmentCards.Pop();
-            RevealedCards.Push(establishment);
+            RevealedCards = revealedCards;
+            MaxRevealedCards = maxRevealCards;
         }
     }
 }

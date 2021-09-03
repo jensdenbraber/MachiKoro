@@ -1,5 +1,7 @@
+using FluentAssertions;
 using MachiKoro.Core.CardDecks;
 using MachiKoro.Core.TestModelFactory.Models.CardDeck;
+using System;
 using Xunit;
 
 namespace MachiKoro.Core.UnitTests
@@ -7,28 +9,16 @@ namespace MachiKoro.Core.UnitTests
     public class CardDeckTests
     {
         [Fact]
-        public void BuildCardDecksBasicGame()
+        public void BuildCardDeck()
         {
-            CardDeck cardDeck = CardDeckFactory.ValidInstance(0);
+            var id = Guid.NewGuid();
 
-            var cardDeckBuilder = new CardDeckBuilder();
-            var cardDecks = cardDeckBuilder.BuildCardDecksBasicGame();
+            CardDeck cardDeck = CardDeckFactory.ValidInstance(id);
 
-            Assert.NotEmpty(cardDecks);
-            Assert.Equal(3, cardDecks.Count);
-
-            const int TotalLowCards = 36;
-            const int TotalHighCards = 36;
-            const int TotalMajorCards = 12;
-
-            Assert.Equal(4, cardDecks[0].RevealedCards.Count);
-            Assert.Equal(TotalLowCards, cardDecks[0].EstablishmentCards.Count + cardDecks[0].RevealedCards.Count);
-
-            Assert.Equal(4, cardDecks[1].RevealedCards.Count);
-            Assert.Equal(TotalHighCards, cardDecks[1].EstablishmentCards.Count + cardDecks[1].RevealedCards.Count);
-
-            Assert.Equal(2, cardDecks[2].RevealedCards.Count);
-            Assert.Equal(TotalMajorCards, cardDecks[2].EstablishmentCards.Count + cardDecks[2].RevealedCards.Count);
+            cardDeck.Id.Should().Be(id);
+            cardDeck.MaxRevealedCards.Should().Be(0);
+            cardDeck.RevealedCards.Count.Should().Be(0);
+            cardDeck.EstablishmentCards.Count.Should().Be(0);
         }
     }
 }

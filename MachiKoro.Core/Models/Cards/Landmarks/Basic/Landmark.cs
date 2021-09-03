@@ -3,18 +3,15 @@ using MachiKoro.Core.Interfaces;
 
 namespace MachiKoro.Core.Cards.Landmarks.Basic
 {
-    public class LandMark : Cards.ICard
+    public class LandMark : Card
     {
-        public string Name { get; }
-        public CardCategory CardIcon { get; }
         public int CompletionCost { get; }
         public bool IsConstructed { get; set; }
         private readonly ILandmarkEffect _landmarkEffectBase;
 
         public LandMark(string name, CardCategory cardIcon, int completionCost, ILandmarkEffect landmarkEffect)
+            : base(name, cardIcon)
         {
-            Name = name;
-            CardIcon = cardIcon;
             CompletionCost = completionCost;
             _landmarkEffectBase = landmarkEffect;
         }

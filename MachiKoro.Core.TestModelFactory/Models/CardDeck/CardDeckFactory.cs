@@ -1,19 +1,17 @@
 ﻿using MachiKoro.Core.Cards.Establishments.Basic;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MachiKoro.Core.TestModelFactory.Models.CardDeck
 {
     public class CardDeckFactory
     {
-        public static Core.CardDecks.CardDeck ValidInstance(int maxRevealedCards)
+        public static CardDecks.CardDeck ValidInstance(Guid id, int maxRevealedCards = 0)
         {
-            Stack<EstablishmentBase> establishmentCards = new Stack<EstablishmentBase>();
+            var establishmentCards = new Stack<EstablishmentBase>();
+            var revealedEstablishmentCards = new Stack<EstablishmentBase>();
 
-            CardDecks.CardDeck cardDeck = new CardDecks.CardDeck(establishmentCards, maxRevealedCards);
+            var cardDeck = new CardDecks.CardDeck(id, establishmentCards, revealedEstablishmentCards, maxRevealedCards);
 
             return cardDeck;
         }

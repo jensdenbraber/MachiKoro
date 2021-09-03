@@ -21,4 +21,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MachiKoro.Application\MachiKoro.Application.csproj" />
+    <ProjectReference Include="..\MachiKoro.Core.TestModelFactory\MachiKoro.Core.TestModelFactory.csproj" />
+  </ItemGroup>
+
 </Project>
