@@ -4,18 +4,15 @@ using System.Collections.Generic;
 
 namespace MachiKoro.Core.Cards.Establishments.Basic
 {
-    public abstract class EstablishmentBase : MachiKoro.Core.Cards.ICard
+    public abstract class EstablishmentBase : Card
     {
-        private readonly IEstablishmentEffect _establishmentEffect;
-        public string Name { get; }
-        public CardCategory CardIcon { get; }
         public List<int> ActivationNumbers { get; }
         public int ConstructionCost { get; }
+        private readonly IEstablishmentEffect _establishmentEffect;
        
         public EstablishmentBase(string name, CardCategory cardIcon, List<int> activationNumbers, int constructionCost, IEstablishmentEffect establishmentEffect)
+            :base(name, cardIcon)
         {
-            Name = name;
-            CardIcon = cardIcon;
             ActivationNumbers = activationNumbers;
             ConstructionCost = constructionCost;
             _establishmentEffect = establishmentEffect;

@@ -1,13 +1,26 @@
 ﻿using MachiKoro.Core.Cards.Establishments.Basic;
 using MachiKoro.Core.CardEffects.Establishments.Basic;
 using System.Collections.Generic;
+using MachiKoro.Core.CardDecks;
+using MachiKoro.Core;
+using System;
 
-namespace MachiKoro.Core.CardDecks
+namespace MachiKoro.Application.CardDecks
 {
-    public class CardDeckBuilder
+    public static class CardDeckBuilder
     {
-        private readonly List<CardDeck> CardDecks = new List<CardDeck>();
-        private void BuildCardDeckLowBasicGame(int numberOfRevealedCards)
+        private static readonly List<CardDeck> _cardDecks = new List<CardDeck>();
+
+        public static List<CardDeck> BuildCardDecksBasicGame(int revealedLowCards = 4, int revealedHighCards = 4, int revealedMajorCards = 2)
+        {
+            BuildCardDeckLowBasicGame(revealedLowCards);
+            BuildCardDeckHighBasicGame(revealedHighCards);
+            BuildCardDeckMajorBasicGame(revealedMajorCards);
+
+            return _cardDecks;
+        }
+
+        private static void BuildCardDeckLowBasicGame(int numberOfRevealedCards)
         {
             var establishments = new Stack<EstablishmentBase>();
 
@@ -30,12 +43,20 @@ namespace MachiKoro.Core.CardDecks
                 establishments.Push(restaurants);
             }
 
-            var cardDeck = new CardDeck(establishments, numberOfRevealedCards);
+            var revealedEstablishments = new Stack<EstablishmentBase>();
 
-            CardDecks.Add(cardDeck);
+            for (int i = 0; i < numberOfRevealedCards; i++)
+            {
+                var establishment = establishments.Pop();
+                revealedEstablishments.Push(establishment);
+            }
+
+            var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
+
+            _cardDecks.Add(cardDeck);
         }
 
-        private void BuildCardDeckHighBasicGame(int revealedCards)
+        private static void BuildCardDeckHighBasicGame(int numberOfRevealedCards)
         {
             var establishments = new Stack<EstablishmentBase>();
 
@@ -50,7 +71,6 @@ namespace MachiKoro.Core.CardDecks
 
                 var familyRestaurant = new Restaurants("Family Restaurant", CardCategory.Cup, new List<int>() { 9, 10 }, 3, new RestaurantsCardEffect(2));
 
-
                 establishments.Push(mine);
                 establishments.Push(appleOrchard);
                 establishments.Push(cheeseFactory);
@@ -59,38 +79,45 @@ namespace MachiKoro.Core.CardDecks
                 establishments.Push(familyRestaurant);
             }
 
-            var cardDeck = new CardDeck(establishments, revealedCards);
+            var revealedEstablishments = new Stack<EstablishmentBase>();
 
-            CardDecks.Add(cardDeck);
+            for (int i = 0; i < numberOfRevealedCards; i++)
+            {
+                var establishment = establishments.Pop();
+                revealedEstablishments.Push(establishment);
+            }
+
+            var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
+
+            _cardDecks.Add(cardDeck);
         }
 
-        private void BuildCardDeckMajorBasicGame(int revealedCards)
+        private static void BuildCardDeckMajorBasicGame(int numberOfRevealedCards)
         {
             var establishments = new Stack<EstablishmentBase>();
 
             for (int i = 0; i < 4; i++)
             {
-                var stadium = new MajorEstablishment("Stadium", CardCategory.Tower, new List<int>() { 6 }, 6, new CardEffects.Establishments.Basic.Major.CardEffectStadium());
-                var tvStation = new MajorEstablishment("TV Station", CardCategory.Tower, new List<int>() { 6 }, 7, new CardEffects.Establishments.Basic.Major.CardEffectStadium());
-                var businessCenter = new MajorEstablishment("Business Center", CardCategory.Tower, new List<int>() { 6 }, 8, new CardEffects.Establishments.Basic.Major.CardEffectStadium());
+                var stadium = new MajorEstablishment("Stadium", CardCategory.Tower, new List<int>() { 6 }, 6, new Core.CardEffects.Establishments.Basic.Major.CardEffectStadium());
+                var tvStation = new MajorEstablishment("TV Station", CardCategory.Tower, new List<int>() { 6 }, 7, new Core.CardEffects.Establishments.Basic.Major.CardEffectStadium());
+                var businessCenter = new MajorEstablishment("Business Center", CardCategory.Tower, new List<int>() { 6 }, 8, new Core.CardEffects.Establishments.Basic.Major.CardEffectStadium());
 
                 establishments.Push(stadium);
                 establishments.Push(tvStation);
                 establishments.Push(businessCenter);
             }
 
-            var cardDeck = new CardDeck(establishments, revealedCards);
+            var revealedEstablishments = new Stack<EstablishmentBase>();
 
-            CardDecks.Add(cardDeck);
-        }
+            for (int i = 0; i < numberOfRevealedCards; i++)
+            {
+                var establishment = establishments.Pop();
+                revealedEstablishments.Push(establishment);
+            }
 
-        public List<CardDeck> BuildCardDecksBasicGame(int revealedLowCards = 4, int revealedHighCards = 4, int revealedMajorCards = 2)
-        {
-            BuildCardDeckLowBasicGame(revealedLowCards);
-            BuildCardDeckHighBasicGame(revealedHighCards);
-            BuildCardDeckMajorBasicGame(revealedMajorCards);
+            var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
 
-            return CardDecks;
+            _cardDecks.Add(cardDeck);
         }
     }
 }
