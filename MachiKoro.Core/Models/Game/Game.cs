@@ -7,14 +7,14 @@ namespace MachiKoro.Core.Models.Game
 {
     public class Game
     {
-        public Guid GameId { get; set; }
+        public Guid Id { get; set; }
         public int MaxNumberOfPlayers { get; set; }
         public ExpensionType ExpensionType { get; set; }
         public int NumberOfTurns { get; set; }
         public int NumberOfOrbits { get; set; }
         public List<CardDeck> CardDecks { get; set; }
         public List<Dice.Dice> Dices { get; set; }
-        public Player ActivePlayer { get; set; }
-        public List<Player> Players { get; set; }
+        public Player.Player ActivePlayer { get; set; }
+        public List<Player.Player> Players { get; set; }
     }
 }
