@@ -34,7 +34,7 @@ namespace MachiKoro.Application.v1.CreateGame
                 Id = Guid.NewGuid(),
                 MaxNumberOfPlayers = request.MaxNumberOfPlayers,
                 ExpensionType = request.ExpensionType,
-                Players = new System.Collections.Generic.List<Core.Models.Player.Player> { player }
+                Players = new System.Collections.Generic.List<Core.Models.Player.Player> { player },
                 CardDecks = CardDeckBuilder.BuildCardDecksBasicGame()
             };
 
