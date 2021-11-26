@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 
 namespace MachiKoro.Core.Models.User
 {
-    public class User : IdentityUser
+    public class MachiKoroUser
     {
         public Guid Id { get; set; }
         public string UserName { get; set; }

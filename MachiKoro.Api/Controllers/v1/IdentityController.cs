@@ -8,6 +8,8 @@ using MachiKoro.Application.v1;
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using MediatR;
+using System.Linq;
+using MachiKoro.Core.Models.Identity;
 
 namespace MachiKoro.Api.Controllers.v1
 {
@@ -29,31 +31,14 @@ namespace MachiKoro.Api.Controllers.v1
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody][Required] UserRegistrationRequest request)
         {
-            var coreRequest = _mapper.Map<Core.Models.CreateUser.CreateUserRequest>(request);
+            var coreRequest = _mapper.Map<CreateUserRequest>(request);
 
             var coreResponse = await _mediator.Send(coreRequest);
 
-            if (coreResponse == null)
-                return NotFound();
-
-
-            //var authResponse = await _identityService.RegisterAsync(request.UserName, request.Email, request.Password);
-
-            //if (!authResponse.Success)
-            //{
-            //    return BadRequest(new AuthFailedResponse
-            //    {
-            //        Errors = authResponse.Errors
-            //    });
-            //}
-
-            //return Ok(new AuthSuccessResponse
-            //{
-            //    Token = authResponse.Token,
-            //    RefreshToken = authResponse.RefreshToken
-            //});
-
-            return Ok();
+            if (coreResponse.Errors?.Any() ?? false)
+                return BadRequest(coreResponse.Errors);
+            
+            return Ok(coreResponse.UserId);
         }
 
         [HttpPost(ApiRoutes.Identity.Login)]
@@ -62,7 +47,7 @@ namespace MachiKoro.Api.Controllers.v1
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody][Required] UserLoginRequest request)
         {
-            var coreRequest = _mapper.Map<Core.Models.CreateGame.CreateGameRequest>(request);
+            var coreRequest = _mapper.Map<LoginUserRequest>(request);
 
             var coreResponse = await _mediator.Send(coreRequest);
 

@@ -83,35 +83,35 @@ namespace MachiKoro.Api.Services
 
             var jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
 
-            var storedRefreshToken = await _identityDataContext.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
+            //var storedRefreshToken = await _identityDataContext.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
 
-            if (storedRefreshToken == null)
-            {
-                return new AuthenticationResult { Errors = new[] { "This refresh token does not exist" } };
-            }
+            //if (storedRefreshToken == null)
+            //{
+            //    return new AuthenticationResult { Errors = new[] { "This refresh token does not exist" } };
+            //}
 
-            if (DateTime.UtcNow > storedRefreshToken.ExpiryDate)
-            {
-                return new AuthenticationResult { Errors = new[] { "This refresh token has expired" } };
-            }
+            //if (DateTime.UtcNow > storedRefreshToken.ExpiryDate)
+            //{
+            //    return new AuthenticationResult { Errors = new[] { "This refresh token has expired" } };
+            //}
 
-            if (storedRefreshToken.Invalidated)
-            {
-                return new AuthenticationResult { Errors = new[] { "This refresh token has been invalidated" } };
-            }
+            //if (storedRefreshToken.Invalidated)
+            //{
+            //    return new AuthenticationResult { Errors = new[] { "This refresh token has been invalidated" } };
+            //}
 
-            if (storedRefreshToken.Used)
-            {
-                return new AuthenticationResult { Errors = new[] { "This refresh token has been used" } };
-            }
+            //if (storedRefreshToken.Used)
+            //{
+            //    return new AuthenticationResult { Errors = new[] { "This refresh token has been used" } };
+            //}
 
-            if (storedRefreshToken.JwtId != jti)
-            {
-                return new AuthenticationResult { Errors = new[] { "This refresh token does not match this JWT" } };
-            }
+            //if (storedRefreshToken.JwtId != jti)
+            //{
+            //    return new AuthenticationResult { Errors = new[] { "This refresh token does not match this JWT" } };
+            //}
 
-            storedRefreshToken.Used = true;
-            _identityDataContext.RefreshTokens.Update(storedRefreshToken);
+            //storedRefreshToken.Used = true;
+            //_identityDataContext.RefreshTokens.Update(storedRefreshToken);
             await _identityDataContext.SaveChangesAsync();
 
             var user = await _userManager.FindByIdAsync(validatedToken.Claims.Single(x => x.Type == "id").Value);
@@ -242,7 +242,7 @@ namespace MachiKoro.Api.Services
                 ExpiryDate = DateTime.UtcNow.AddMonths(6)
             };
 
-            await _identityDataContext.RefreshTokens.AddAsync(refreshToken);
+            //await _identityDataContext.RefreshTokens.AddAsync(refreshToken);
             await _identityDataContext.SaveChangesAsync();
 
             return new AuthenticationResult

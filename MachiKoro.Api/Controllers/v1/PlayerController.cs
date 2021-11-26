@@ -7,6 +7,8 @@ using MachiKoro.Contracts.v1.Responses;
 using MachiKoro.Core;
 using MachiKoro.Core.Models.Game;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ using System.Threading.Tasks;
 namespace MachiKoro.Api.Controllers.v1
 {
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PlayerController : ControllerBase
     {
         private readonly IPlayerService _playerService;

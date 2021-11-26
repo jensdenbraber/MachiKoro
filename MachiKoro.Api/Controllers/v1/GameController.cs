@@ -10,10 +10,13 @@ using MachiKoro.Api.Models.GetGame;
 using MachiKoro.Core.Models.AddPlayerToGame;
 using MachiKoro.Core.Models.RemovePlayerFromGame;
 using MachiKoro.Core.Models.DeleteGame;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MachiKoro.Api.Controllers.v1
 {
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GameController : ControllerBase
     {
         private readonly IMapper _mapper;

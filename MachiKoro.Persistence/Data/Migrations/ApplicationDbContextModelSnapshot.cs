@@ -16,7 +16,7 @@ namespace MachiKoro.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("GamePlayer", b =>
@@ -34,7 +34,7 @@ namespace MachiKoro.Data.Migrations
                     b.ToTable("GamePlayer");
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.Game", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Game", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,7 +58,7 @@ namespace MachiKoro.Data.Migrations
                     b.ToTable("Game");
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.Player", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Player", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace MachiKoro.Data.Migrations
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.PlayerProfile", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayerProfile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace MachiKoro.Data.Migrations
                     b.ToTable("PlayersProfiles");
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.PlayersStatistics", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayersStatistics", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,48 +125,48 @@ namespace MachiKoro.Data.Migrations
 
             modelBuilder.Entity("GamePlayer", b =>
                 {
-                    b.HasOne("MachiKoro.Data.Models.Game", null)
+                    b.HasOne("MachiKoro.Persistence.Models.Game", null)
                         .WithMany()
                         .HasForeignKey("GamesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MachiKoro.Data.Models.Player", null)
+                    b.HasOne("MachiKoro.Persistence.Models.Player", null)
                         .WithMany()
                         .HasForeignKey("PlayersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.PlayerProfile", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayerProfile", b =>
                 {
-                    b.HasOne("MachiKoro.Data.Models.Player", "Player")
+                    b.HasOne("MachiKoro.Persistence.Models.Player", "Player")
                         .WithOne("PlayerProfile")
-                        .HasForeignKey("MachiKoro.Data.Models.PlayerProfile", "PlayerForeignKey")
+                        .HasForeignKey("MachiKoro.Persistence.Models.PlayerProfile", "PlayerForeignKey")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Player");
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.PlayersStatistics", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayersStatistics", b =>
                 {
-                    b.HasOne("MachiKoro.Data.Models.PlayerProfile", "PlayerProfile")
+                    b.HasOne("MachiKoro.Persistence.Models.PlayerProfile", "PlayerProfile")
                         .WithOne("PlayersStatistics")
-                        .HasForeignKey("MachiKoro.Data.Models.PlayersStatistics", "PlayerProfileForeignKey")
+                        .HasForeignKey("MachiKoro.Persistence.Models.PlayersStatistics", "PlayerProfileForeignKey")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("PlayerProfile");
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.Player", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Player", b =>
                 {
                     b.Navigation("PlayerProfile")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.PlayerProfile", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayerProfile", b =>
                 {
                     b.Navigation("PlayersStatistics")
                         .IsRequired();

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MachiKoro.Infrastructure.Identity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace MachiKoro.Persistence.MappingProfiles
             //CreateMap<Core.Models.Player.Player, Models.Player>();
 
             //CreateMap<Models.PlayerProfile, Core.Models.PlayerProfile.PlayerProfile>();
-            //CreateMap<Core.Models.PlayerProfile.PlayerProfile, Models.PlayerProfile>();
+            CreateMap<Core.Models.User.MachiKoroUser, ApplicationUser> ();
+            CreateMap<ApplicationUser, Core.Models.User.MachiKoroUser> ();
 
 
         }

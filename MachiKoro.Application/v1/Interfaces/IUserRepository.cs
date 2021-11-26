@@ -7,7 +7,8 @@ namespace MachiKoro.Application.v1.Interfaces
 {
     public interface IUserRepository
     {
-        Task<bool> CreateAsync(IdentityUser player);
+        Task<IdentityResult> CreateAsync(MachiKoroUser player);
+        Task<MachiKoroUser> GetAsync(Guid userId);
         Task<bool> DeleteAsync(Guid playerId);
     }
 }

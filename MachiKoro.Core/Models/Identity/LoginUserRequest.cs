@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using System.ComponentModel.DataAnnotations;
 
-namespace MachiKoro.Core.Models.CreateUser
+namespace MachiKoro.Core.Models.Identity
 {
-    public class CreateUserRequest : IRequest<CreateUserResponse>
+    public class LoginUserRequest : IRequest<LoginUserResponse>
     {
         [Required]
         [MaxLength(50)]
