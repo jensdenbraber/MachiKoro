@@ -1,16 +1,16 @@
-﻿using MachiKoro.Persistence.Models;
+﻿using MachiKoro.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MachiKoro.Persistence
 {
-    public class IdentityDataContext : IdentityDbContext
+    public class IdentityDataContext : IdentityDbContext<ApplicationUser>
     {
         public IdentityDataContext(DbContextOptions<IdentityDataContext> options)
             : base(options)
         {
         }
 
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<MachiKoro.Persistence.Models.RefreshToken> RefreshTokens { get; set; }
     }
 }

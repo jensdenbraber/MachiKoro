@@ -9,11 +9,12 @@
     <Folder Include="Models\CardEffects\Landmarks\Harbor\" />
     <Folder Include="Models\Cards\Establishments\Harbor\" />
     <Folder Include="Models\Cards\Landmarks\Harbor\" />
+    <Folder Include="Models\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
   </ItemGroup>
 
 </Project>

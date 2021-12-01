@@ -8,8 +8,8 @@ namespace MachiKoro.Contracts.v1.Requests
         [MaxLength(50)]
         public string UserName { get; set; }
 
-        [EmailAddress]
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         
         [Required]

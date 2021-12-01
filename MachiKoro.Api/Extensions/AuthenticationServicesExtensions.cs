@@ -1,11 +1,14 @@
 ﻿using MachiKoro.Api.Options;
+using MachiKoro.Infrastructure.Identity.Models;
 using MachiKoro.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
 using System.Text;
 
 namespace MachiKoro.Api.Extensions
@@ -15,7 +18,11 @@ namespace MachiKoro.Api.Extensions
     {
         public static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services//AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddDefaultTokenProviders()
+                    .AddUserManager<UserManager<ApplicationUser>>()
+                    .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddEntityFrameworkStores<IdentityDataContext>();
 
             var jwtSettings = new JwtSettings();
@@ -26,25 +33,71 @@ namespace MachiKoro.Api.Extensions
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-                ValidateIssuer = false,
-                ValidateAudience = false,
+                ValidateIssuer = true,
+                ValidIssuer = "http://mysite.com",
+                ValidAudience = "http://mysite.com",
+                ValidateAudience = true,
                 RequireExpirationTime = false,
-                ValidateLifetime = true
+                ValidateLifetime = true,
+                NameClaimType = ClaimTypes.NameIdentifier,
+                ClockSkew = TimeSpan.Zero
             };
 
-            services.AddSingleton(tokenValidationParameters);
+            //Token token = configuration.GetSection("token").Get<Token>();
+            //byte[] secret = Encoding.ASCII.GetBytes(token.Secret);
 
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(x =>
-                {
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = tokenValidationParameters;
-                });
+
+            //var tokenValidationParameters = new TokenValidationParameters
+            //{
+            //    ClockSkew = TimeSpan.Zero,
+            //    ValidateIssuer = true,
+            //    ValidateAudience = true,
+            //    ValidateLifetime = true,
+            //    ValidateIssuerSigningKey = true,
+            //    ValidIssuer = token.Issuer,
+            //    ValidAudience = token.Audience,
+            //    IssuerSigningKey = new SymmetricSecurityKey(secret),
+            //    NameClaimType = ClaimTypes.NameIdentifier,
+            //    RequireSignedTokens = true,
+            //    RequireExpirationTime = true
+            //};
+
+            //services.AddSingleton(tokenValidationParameters);
+
+            services
+                .AddAuthentication(
+                    options =>
+                    {
+                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
+                .AddJwtBearer(
+                    options =>
+                    {
+                        options.RequireHttpsMetadata = true;
+                        options.SaveToken = true;
+                        //options.ClaimsIssuer = token.Issuer;
+                        options.IncludeErrorDetails = true;
+                        options.Validate(JwtBearerDefaults.AuthenticationScheme);
+                        options.TokenValidationParameters = tokenValidationParameters;
+                            //new TokenValidationParameters
+                            //{
+                            //    ClockSkew = TimeSpan.Zero,
+                            //    ValidateIssuer = true,
+                            //    ValidateAudience = true,
+                            //    ValidateLifetime = true,
+                            //    ValidateIssuerSigningKey = true,
+                            //    ValidIssuer = token.Issuer,
+                            //    ValidAudience = token.Audience,
+                            //    IssuerSigningKey = new SymmetricSecurityKey(secret),
+                            //    NameClaimType = ClaimTypes.NameIdentifier,
+                            //    RequireSignedTokens = true,
+                            //    RequireExpirationTime = true
+                            //};
+                    });
+
+
 
             return services;
         }

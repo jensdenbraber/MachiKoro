@@ -1,14 +1,16 @@
+using MachiKoro.Api.Extensions;
+using MachiKoro.Api.Options;
+using MachiKoro.Application.v1.Extensions;
+using MachiKoro.Infrastructure.Identity;
+using MachiKoro.Infrastructure.Identity.Models.Authentication;
+using MachiKoro.Persistence.Extensions;
+using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MachiKoro.Api.Options;
-using MachiKoro.Persistence.Extensions;
-using MachiKoro.Api.Extensions;
-using MediatR.Extensions.FluentValidation.AspNetCore;
 using System.Reflection;
-using MachiKoro.Application.v1.Extensions;
 
 namespace MachiKoro.Api
 {
@@ -26,6 +28,13 @@ namespace MachiKoro.Api
         {
             //services.InstallServicesInAssembly(Configuration);
 
+            // Strongly-typed configurations using IOptions
+            services.Configure<Token>(Configuration.GetSection("token"));
+            services.Configure<TokenServiceProvider>(Configuration.GetSection("TokenServiceProvider"));
+
+            //services.SetupAuthentication(Configuration);
+            //services.SetAuthorization();
+
             services.AddPersistenceServices(Configuration);
             services.AddMediatRServices(Configuration);
             services.AddAutoMapperServices(Configuration);
@@ -33,11 +42,13 @@ namespace MachiKoro.Api
             services.AddApplicationServices(Configuration);
             services.AddPersistenceServices(Configuration);
             services.AddAuthenticationServices(Configuration);
+            services.AddAuthorizationServices(Configuration);
 
             services.AddSwaggerServices(Configuration);
 
+            services.AddCors();
             services.AddControllers();
-        }
+        }  
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,6 +57,8 @@ namespace MachiKoro.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+
+                app.SeedIdentityDataAsync().Wait();
             }
             else
             {
@@ -68,6 +81,12 @@ namespace MachiKoro.Api
 
             app.UseRouting();
 
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -76,7 +95,7 @@ namespace MachiKoro.Api
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                //endpoints.MapRazorPages();
             });
         }
     }

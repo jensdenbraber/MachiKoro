@@ -1,4 +1,8 @@
 ﻿using AutoMapper;
+using MachiKoro.Contracts.v1.Requests;
+using MachiKoro.Core.Models.Identity;
+using MachiKoro.Infrastructure.Identity.Models;
+using MachiKoro.Infrastructure.Identity.Models.Authentication;
 
 namespace MachiKoro.Api.MappingProfiles
 {
@@ -19,6 +23,12 @@ namespace MachiKoro.Api.MappingProfiles
             CreateMap<Persistence.Models.PlayerProfile, Core.Models.PlayerProfile.PlayerProfile>();
             CreateMap<Core.Models.PlayerProfile.PlayerProfile, Persistence.Models.PlayerProfile>();
 
+            CreateMap<Core.Models.User.MachiKoroUser, ApplicationUser>();
+            CreateMap<ApplicationUser, Core.Models.User.MachiKoroUser>();
+
+            CreateMap<Configuration.Token, Token>();
+            CreateMap<Token, Configuration.Token>();
+
             //CreateMap<Models.CreateGame.CreateGameRequest, Persistence.Models.Game>();
             //CreateMap<Models.GetPlayerProfile.GetPlayerProfileResponse, Persistence.Models.PlayersStatistics>();
             //CreateMap<Models.PlayerStatistics, Data.Models.PlayerStatistics>();
@@ -33,6 +43,9 @@ namespace MachiKoro.Api.MappingProfiles
             //CreateMap<GetGameRequest, GetGameResponse>();
             ////CreateMap<Player, PlayerResponse>();
             //CreateMap<GetPlayerProfileResponse, GetPlayerProfileResponse>();
+
+            CreateMap<UserRegistrationRequest, CreateUserRequest>();
+            CreateMap<UserLoginRequest, LoginUserRequest>();
 
             CreateMap<Models.CreateGame.CreateGameRequest, Core.Models.CreateGame.CreateGameRequest>();
             CreateMap<Models.CreateGame.CreateGameResponse, Core.Models.CreateGame.CreateGameResponse>();

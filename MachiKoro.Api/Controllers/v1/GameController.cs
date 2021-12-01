@@ -1,19 +1,21 @@
 ﻿using AutoMapper;
+using MachiKoro.Api.Models.CreateGame;
+using MachiKoro.Api.Models.GetGame;
+using MachiKoro.Application.v1;
+using MachiKoro.Core.Models.AddPlayerToGame;
+using MachiKoro.Core.Models.DeleteGame;
+using MachiKoro.Core.Models.RemovePlayerFromGame;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using MediatR;
-using MachiKoro.Api.Models.CreateGame;
-using MachiKoro.Application.v1;
-using MachiKoro.Api.Models.GetGame;
-using MachiKoro.Core.Models.AddPlayerToGame;
-using MachiKoro.Core.Models.RemovePlayerFromGame;
-using MachiKoro.Core.Models.DeleteGame;
+using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Controllers.v1
 {
     [ApiController]
+    [Authorize]//(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GameController : ControllerBase
     {
         private readonly IMapper _mapper;
