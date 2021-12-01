@@ -5,11 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\NewFolder\**" />
+    <EmbeddedResource Remove="Models\NewFolder\**" />
+    <None Remove="Models\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\CardEffects\Establishments\Harbor\" />
     <Folder Include="Models\CardEffects\Landmarks\Harbor\" />
     <Folder Include="Models\Cards\Establishments\Harbor\" />
     <Folder Include="Models\Cards\Landmarks\Harbor\" />
-    <Folder Include="Models\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

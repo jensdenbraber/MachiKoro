@@ -3,8 +3,6 @@ using MachiKoro.Api.Models.GetPlayerProfile;
 using MachiKoro.Api.Services;
 using MachiKoro.Application.v1;
 using MachiKoro.Contracts.v1.Requests;
-using MachiKoro.Contracts.v1.Responses;
-using MachiKoro.Core;
 using MachiKoro.Core.Models.Game;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Controllers.v1
