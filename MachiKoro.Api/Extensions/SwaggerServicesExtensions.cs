@@ -1,4 +1,5 @@
 ﻿using MachiKoro.Api.Hubs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -41,7 +42,9 @@ namespace MachiKoro.Api.Extensions
                     Description = "JWT Authorization header using the bearer scheme",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = JwtBearerDefaults.AuthenticationScheme.ToLowerInvariant()
                 });
                 x.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {

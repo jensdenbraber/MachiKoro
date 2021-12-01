@@ -27,4 +27,8 @@
     <ProjectReference Include="..\MachiKoro.Application\MachiKoro.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\NewFolder\" />
+  </ItemGroup>
+
 </Project>

@@ -1,10 +1,9 @@
 ﻿using MachiKoro.Application.v1.Models;
-using MachiKoro.Core.Models;
 using MachiKoro.Infrastructure.Identity.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace MachiKoro.Persistence.Identity
+namespace MachiKoro.Persistence.Identity.Extensions
 {
     public static class IdentityResultExtensions
     {

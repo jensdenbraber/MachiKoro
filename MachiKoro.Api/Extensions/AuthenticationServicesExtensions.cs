@@ -1,6 +1,5 @@
 ﻿using MachiKoro.Api.Options;
 using MachiKoro.Infrastructure.Identity.Models;
-using MachiKoro.Infrastructure.Identity.Models.Authentication;
 using MachiKoro.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -34,36 +33,43 @@ namespace MachiKoro.Api.Extensions
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-                ValidateIssuer = false,
-                ValidateAudience = false,
+                ValidateIssuer = true,
+                ValidIssuer = "http://mysite.com",
+                ValidAudience = "http://mysite.com",
+                ValidateAudience = true,
                 RequireExpirationTime = false,
-                ValidateLifetime = true
+                ValidateLifetime = true,
+                NameClaimType = ClaimTypes.NameIdentifier,
+                ClockSkew = TimeSpan.Zero
             };
 
-            services.AddSingleton(tokenValidationParameters);
+            //Token token = configuration.GetSection("token").Get<Token>();
+            //byte[] secret = Encoding.ASCII.GetBytes(token.Secret);
 
-            //services.AddAuthentication(x =>
+
+            //var tokenValidationParameters = new TokenValidationParameters
             //{
-            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //    .AddJwtBearer(x =>
-            //    {
-            //        x.SaveToken = true;
-            //        x.TokenValidationParameters = tokenValidationParameters;
-            //    });
+            //    ClockSkew = TimeSpan.Zero,
+            //    ValidateIssuer = true,
+            //    ValidateAudience = true,
+            //    ValidateLifetime = true,
+            //    ValidateIssuerSigningKey = true,
+            //    ValidIssuer = token.Issuer,
+            //    ValidAudience = token.Audience,
+            //    IssuerSigningKey = new SymmetricSecurityKey(secret),
+            //    NameClaimType = ClaimTypes.NameIdentifier,
+            //    RequireSignedTokens = true,
+            //    RequireExpirationTime = true
+            //};
 
-
-
-            Token token = configuration.GetSection("token").Get<Token>();
-            byte[] secret = Encoding.ASCII.GetBytes(token.Secret);
+            //services.AddSingleton(tokenValidationParameters);
 
             services
                 .AddAuthentication(
                     options =>
                     {
                         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                     })
                 .AddJwtBearer(
@@ -71,24 +77,24 @@ namespace MachiKoro.Api.Extensions
                     {
                         options.RequireHttpsMetadata = true;
                         options.SaveToken = true;
-                        options.ClaimsIssuer = token.Issuer;
+                        //options.ClaimsIssuer = token.Issuer;
                         options.IncludeErrorDetails = true;
                         options.Validate(JwtBearerDefaults.AuthenticationScheme);
-                        options.TokenValidationParameters =
-                            new TokenValidationParameters
-                            {
-                                ClockSkew = TimeSpan.Zero,
-                                ValidateIssuer = true,
-                                ValidateAudience = true,
-                                ValidateLifetime = true,
-                                ValidateIssuerSigningKey = true,
-                                ValidIssuer = token.Issuer,
-                                ValidAudience = token.Audience,
-                                IssuerSigningKey = new SymmetricSecurityKey(secret),
-                                NameClaimType = ClaimTypes.NameIdentifier,
-                                RequireSignedTokens = true,
-                                RequireExpirationTime = true
-                            };
+                        options.TokenValidationParameters = tokenValidationParameters;
+                            //new TokenValidationParameters
+                            //{
+                            //    ClockSkew = TimeSpan.Zero,
+                            //    ValidateIssuer = true,
+                            //    ValidateAudience = true,
+                            //    ValidateLifetime = true,
+                            //    ValidateIssuerSigningKey = true,
+                            //    ValidIssuer = token.Issuer,
+                            //    ValidAudience = token.Audience,
+                            //    IssuerSigningKey = new SymmetricSecurityKey(secret),
+                            //    NameClaimType = ClaimTypes.NameIdentifier,
+                            //    RequireSignedTokens = true,
+                            //    RequireExpirationTime = true
+                            //};
                     });
 
 

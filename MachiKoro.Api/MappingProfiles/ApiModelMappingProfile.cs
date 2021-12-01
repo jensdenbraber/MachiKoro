@@ -3,7 +3,6 @@ using MachiKoro.Contracts.v1.Requests;
 using MachiKoro.Core.Models.Identity;
 using MachiKoro.Infrastructure.Identity.Models;
 using MachiKoro.Infrastructure.Identity.Models.Authentication;
-using MediatR;
 
 namespace MachiKoro.Api.MappingProfiles
 {
@@ -27,8 +26,8 @@ namespace MachiKoro.Api.MappingProfiles
             CreateMap<Core.Models.User.MachiKoroUser, ApplicationUser>();
             CreateMap<ApplicationUser, Core.Models.User.MachiKoroUser>();
 
-            //TODO not sure about this!
             CreateMap<Configuration.Token, Token>();
+            CreateMap<Token, Configuration.Token>();
 
             //CreateMap<Models.CreateGame.CreateGameRequest, Persistence.Models.Game>();
             //CreateMap<Models.GetPlayerProfile.GetPlayerProfileResponse, Persistence.Models.PlayersStatistics>();

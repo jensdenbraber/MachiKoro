@@ -1,15 +1,14 @@
-﻿using MachiKoro.Contracts.v1.Requests;
-using MachiKoro.Contracts.v1.Responses;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using System;
+﻿using AutoMapper;
 using MachiKoro.Application.v1;
-using System.ComponentModel.DataAnnotations;
-using AutoMapper;
-using MediatR;
-using System.Linq;
+using MachiKoro.Contracts.v1.Requests;
 using MachiKoro.Core.Models.Identity;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Controllers.v1
 {
@@ -38,7 +37,7 @@ namespace MachiKoro.Api.Controllers.v1
             if (coreResponse.Errors?.Any() ?? false)
                 return BadRequest(coreResponse.Errors);
             
-            return Ok(coreResponse.UserId);
+            return Ok(coreResponse);
         }
 
         [HttpPost(ApiRoutes.Identity.Login)]
@@ -60,7 +59,7 @@ namespace MachiKoro.Api.Controllers.v1
             //    RefreshToken = authResponse.RefreshToken
             //});
 
-            return Ok();
+            return Ok(coreResponse);
         }
 
         [HttpPost(ApiRoutes.Identity.Refresh)]

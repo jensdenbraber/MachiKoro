@@ -1,7 +1,7 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Infrastructure.Identity.Models;
+using MachiKoro.Infrastructure.Identity.Models.Authentication;
 using MachiKoro.Infrastructure.Identity.Services;
-using MachiKoro.Persistence.Models;
 using MachiKoro.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -34,6 +34,7 @@ namespace MachiKoro.Persistence.Extensions
             services.AddTransient<IPlayersRepository, PlayersRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<Token, Token>();
 
             return services;
         }

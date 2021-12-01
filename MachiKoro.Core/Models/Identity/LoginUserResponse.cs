@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace MachiKoro.Core.Models.Identity
@@ -7,6 +6,7 @@ namespace MachiKoro.Core.Models.Identity
     public class LoginUserResponse
     {
         public Guid? UserId { get; set; }
+        public string Token { get; set; }
         public List<string> Errors { get; set; }
     }
 }

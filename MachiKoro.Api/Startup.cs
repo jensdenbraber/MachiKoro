@@ -1,21 +1,16 @@
+using MachiKoro.Api.Extensions;
+using MachiKoro.Api.Options;
+using MachiKoro.Application.v1.Extensions;
+using MachiKoro.Infrastructure.Identity;
+using MachiKoro.Infrastructure.Identity.Models.Authentication;
+using MachiKoro.Persistence.Extensions;
+using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MachiKoro.Api.Options;
-using MachiKoro.Persistence.Extensions;
-using MachiKoro.Api.Extensions;
-using MediatR.Extensions.FluentValidation.AspNetCore;
 using System.Reflection;
-using MachiKoro.Application.v1.Extensions;
-using MachiKoro.Infrastructure.Identity.Models.Authentication;
-using MachiKoro.Infrastructure.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
-using System;
 
 namespace MachiKoro.Api
 {
@@ -51,10 +46,9 @@ namespace MachiKoro.Api
 
             services.AddSwaggerServices(Configuration);
 
+            services.AddCors();
             services.AddControllers();
-        }
-
-   
+        }  
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -86,6 +80,12 @@ namespace MachiKoro.Api
             });
 
             app.UseRouting();
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseAuthorization();

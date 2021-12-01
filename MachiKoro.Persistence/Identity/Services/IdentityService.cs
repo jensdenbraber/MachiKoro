@@ -1,15 +1,12 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Application.v1.Models;
-using MachiKoro.Core.Models;
 using MachiKoro.Infrastructure.Identity.Models;
 using MachiKoro.Infrastructure.Identity.Models.Authentication;
-using MachiKoro.Persistence.Identity;
+using MachiKoro.Persistence.Identity.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -68,9 +65,16 @@ namespace MachiKoro.Infrastructure.Identity.Services
 
                 if(result.Succeeded)
                 {
-                    var jwtToken = await GenerateJwtToken(user);
+                    var addToRolesResult = await _userManager.AddToRoleAsync(user, "Member");
 
-                    return (result.ToApplicationResult(), new TokenResponse(user, "", jwtToken).ToApplicationResult(), user.Id);
+                    if(addToRolesResult.Succeeded)
+                    {
+                        var jwtToken = await GenerateJwtToken(user);
+
+                        var roles = await _userManager.GetRolesAsync(user);
+
+                        return (result.ToApplicationResult(), new TokenResponse(user, string.Join(";", roles), jwtToken).ToApplicationResult(), user.Id);
+                    }
                 }
             //}
 
@@ -100,17 +104,19 @@ namespace MachiKoro.Infrastructure.Identity.Services
 
             var isCorrect = await _userManager.CheckPasswordAsync(existingUser, password);
 
+            if(!isCorrect)
+            {
+
+            }
 
             var principal = await _userClaimsPrincipalFactory.CreateAsync(existingUser);
 
-            //var result = await _authorizationService.AuthorizeAsync(principal, policyName);
+            //var result = await _authorizationservice.AuthorizeAsync(principal, policyName);
 
             string role = (await _userManager.GetRolesAsync(existingUser))[0];
             var jwtToken = await GenerateJwtToken(existingUser);
 
             return new TokenResponse(existingUser, role, jwtToken).ToApplicationResult();
-
-            //return new Result().Token = jwtToken;
         }
 
         public async Task<Result> DeleteUserAsync(string userId)
@@ -129,23 +135,31 @@ namespace MachiKoro.Infrastructure.Identity.Services
 
         private async Task<string> GenerateJwtToken(ApplicationUser user)
         {
-            string role = (await _userManager.GetRolesAsync(user))[0];
+            _token.Audience = "Member";
+            _token.Expiry = 10000000;
+            _token.Issuer = "Machi Koro";
+            _token.RefreshExpiry = 10000000;
+            _token.Secret = "E3238CFA-0449-47F0-BA46-C9136B9C5497";
+
+            List<string> roles = (await _userManager.GetRolesAsync(user)).ToList();
             byte[] secret = Encoding.ASCII.GetBytes(_token.Secret);
 
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor
-{
+            {
                 Issuer = _token.Issuer,
                 Audience = _token.Audience,
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("UserId", user.Id),
                     new Claim("FullName", $"{user.FirstName} {user.LastName}"),
-                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.NameIdentifier, user.Email),
-                    new Claim(ClaimTypes.Role, role)
-}),
+                    new Claim(ClaimTypes.Role, string.Join(",", roles))
+                }),
                 Expires = DateTime.UtcNow.AddMinutes(_token.Expiry),
+                IssuedAt = DateTime.UtcNow,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha256Signature)
             };
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace MachiKoro.Infrastructure.Identity.Models
@@ -20,6 +19,6 @@ namespace MachiKoro.Infrastructure.Identity.Models
         }
 
         //[JsonIgnore]
-        public List<RefreshToken> RefreshTokens { get; set; }
+        //public List<RefreshToken> RefreshTokens { get; set; }
     }
 }
