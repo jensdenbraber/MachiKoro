@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace MachiKoro.Api.Configuration
+namespace MachiKoro.Api.Models.Identity
 {
     public class Token
     {
