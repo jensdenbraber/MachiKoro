@@ -85,7 +85,7 @@ namespace MachiKoro.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        Task<List<Core.Players.Player>> IGamesRepository.GetPlayersFromGameAsync(Guid id)
+        Task<List<Core.Models.Player.Player>> IGamesRepository.GetPlayersFromGameAsync(Guid id)
         {
             throw new NotImplementedException();
         }

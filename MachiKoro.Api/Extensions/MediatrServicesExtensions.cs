@@ -1,4 +1,7 @@
-﻿using MachiKoro.Application.v1.CreateGame;
+﻿using MachiKoro.Application.v1.Game.Commands.CreateGame;
+using MachiKoro.Application.v1.Game.Commands.DeleteGame;
+using MachiKoro.Application.v1.Game.Queries.GetGame;
+using MachiKoro.Application.v1.Player.Queries.GetPlayerProfile;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +10,7 @@ using System.Reflection;
 
 namespace MachiKoro.Api.Extensions
 {
-	[ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage]
 	public static class MediatrServicesExtensions
     {
 		public static IServiceCollection AddMediatRServices(this IServiceCollection services, IConfiguration configuration)

@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.CreateGame
+namespace MachiKoro.Application.v1.Player.Queries.GetPlayerProfile
 {
     public class GetPlayerProfileRequestHandler : IRequestHandler<GetPlayerProfileRequest, GetPlayerProfileResponse>
     {
@@ -26,7 +26,7 @@ namespace MachiKoro.Application.v1.CreateGame
             {
                 return null;
             }
-                       
+
             return new GetPlayerProfileResponse()
             {
                 PlayerProfile = playerProfile
