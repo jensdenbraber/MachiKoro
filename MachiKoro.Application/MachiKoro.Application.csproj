@@ -15,4 +15,8 @@
     <ProjectReference Include="..\MachiKoro.Core\MachiKoro.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="v1\Player\Commands\" />
+  </ItemGroup>
+
 </Project>

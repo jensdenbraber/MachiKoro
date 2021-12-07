@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.CreateGame
+namespace MachiKoro.Application.v1.Game.Commands.DeleteGame
 {
     public class DeleteGameRequestHandler : IRequestHandler<DeleteGameRequest, DeleteGameResponse>
     {

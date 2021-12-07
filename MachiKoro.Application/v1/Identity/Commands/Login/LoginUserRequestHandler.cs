@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.Identity
+namespace MachiKoro.Application.v1.Identity.Commands.Login
 {
     public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoginUserResponse>
     {
@@ -42,7 +42,7 @@ namespace MachiKoro.Application.v1.Identity
 
             createUserResponse.UserId = machiKoroUser.Id;
             createUserResponse.Token = result.Token;
-            
+
             return createUserResponse;
         }
     }

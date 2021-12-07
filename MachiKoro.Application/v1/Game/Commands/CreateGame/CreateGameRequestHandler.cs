@@ -1,15 +1,13 @@
 ﻿using MachiKoro.Application.CardDecks;
 using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Core.Models.CreateGame;
-using MachiKoro.Core.Models.Game;
-using MachiKoro.Core.Models.Player;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.CreateGame
+namespace MachiKoro.Application.v1.Game.Commands.CreateGame
 {
     public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest, CreateGameResponse>
     {
@@ -24,19 +22,19 @@ namespace MachiKoro.Application.v1.CreateGame
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            Player player = new()
+            Core.Models.Player.Player player = new()
             {
                 Id = Guid.NewGuid(),
                 GoldAmount = 0,
                 PlayerType = Core.PlayerType.Human
             };
 
-            Game game = new()
+            MachiKoro.Core.Models.Game.Game game = new()
             {
                 Id = Guid.NewGuid(),
                 MaxNumberOfPlayers = request.MaxNumberOfPlayers,
                 ExpensionType = request.ExpensionType,
-                Players = new List<Player> { player },
+                Players = new List<Core.Models.Player.Player> { player },
                 CardDecks = CardDeckBuilder.BuildCardDecksBasicGame()
             };
 

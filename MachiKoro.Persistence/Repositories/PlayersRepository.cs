@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MachiKoro.Persistence.Repositories
 {
-    public class PlayersRepository : Player, IPlayersRepository
+    public class PlayersRepository : IPlayersRepository
     {
         private readonly PlayerDataContext _playerDataContext;
 
@@ -24,7 +24,7 @@ namespace MachiKoro.Persistence.Repositories
             return created > 0;
         }
 
-        public async Task<List<Player>> GetPlayers()
+        public async Task<List<Core.Models.Player.Player>> GetPlayers()
         {
             throw new NotImplementedException();
             //return await _playerDataContext.Players.ToListAsync();
@@ -81,37 +81,37 @@ namespace MachiKoro.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        Task<bool> IPlayersRepository.Create(Core.Players.Player player)
+        Task<bool> IPlayersRepository.Create(Core.Models.Player.Player player)
         {
             throw new NotImplementedException();
         }
 
-        Task<List<Core.Players.Player>> IPlayersRepository.GetPlayers()
+        Task<List<Core.Models.Player.Player>> IPlayersRepository.GetPlayers()
         {
             throw new NotImplementedException();
         }
 
-        Task<Core.Players.Player> IPlayersRepository.GetPlayerById(Guid id)
+        Task<Core.Models.Player.Player> IPlayersRepository.GetPlayerById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        Task<Core.Players.Player> IPlayersRepository.GetPlayerByUserName(string userName)
+        Task<Core.Models.Player.Player> IPlayersRepository.GetPlayerByUserName(string userName)
         {
             throw new NotImplementedException();
         }
 
-        Task<bool> IPlayersRepository.Update(Core.Players.Player player)
+        Task<bool> IPlayersRepository.Update(Core.Models.Player.Player player)
         {
             throw new NotImplementedException();
         }
 
-        Task<Core.Players.Player> IPlayersRepository.GetPlayerWithMostGamesWon()
+        Task<Core.Models.Player.Player> IPlayersRepository.GetPlayerWithMostGamesWon()
         {
             throw new NotImplementedException();
         }
 
-        Task<Core.Players.Player> IPlayersRepository.GetPlayerWithMostGamesLost()
+        Task<Core.Models.Player.Player> IPlayersRepository.GetPlayerWithMostGamesLost()
         {
             throw new NotImplementedException();
         }

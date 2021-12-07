@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.Identity
+namespace MachiKoro.Application.v1.Identity.Commands.Registration
 {
     public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, CreateUserResponse>
     {
@@ -23,8 +23,8 @@ namespace MachiKoro.Application.v1.Identity
             var createUserResponse = new CreateUserResponse();
 
             (Models.Result result, Models.Result token, string userId) = await _identityService.CreateUserAsync(request.UserName, request.Email, request.Password);
-            
-            if(result.Succeeded)
+
+            if (result.Succeeded)
             {
                 createUserResponse.UserId = Guid.Parse(userId);
                 createUserResponse.Token = token.Token;
@@ -33,7 +33,7 @@ namespace MachiKoro.Application.v1.Identity
             {
                 createUserResponse.Errors.AddRange(result.Errors);
             }
-               
+
             return createUserResponse;
         }
     }

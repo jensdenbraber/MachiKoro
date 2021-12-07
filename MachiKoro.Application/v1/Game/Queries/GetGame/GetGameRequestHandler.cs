@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.CreateGame
+namespace MachiKoro.Application.v1.Game.Queries.GetGame
 {
     public class GetGameRequestHandler : IRequestHandler<GetGameRequest, GetGameResponse>
     {
@@ -22,7 +22,7 @@ namespace MachiKoro.Application.v1.CreateGame
 
             var game = await _gameRepository.GetGameAsync(request.GameId);
 
-            if(game == null)
+            if (game == null)
             {
                 return null;
             }

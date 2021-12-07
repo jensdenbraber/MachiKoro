@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.RemovePlayerFromGame
+namespace MachiKoro.Application.v1.Game.Commands.RemovePlayerFromGame
 {
     public class RemovePlayerFromGameHandler : IRequestHandler<RemovePlayerFromGameRequest, RemovePlayerFromGameResponse>
     {
