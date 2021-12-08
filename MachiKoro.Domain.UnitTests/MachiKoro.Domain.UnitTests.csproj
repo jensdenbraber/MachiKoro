@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MachiKoro.Core.TestModelFactory\MachiKoro.Core.TestModelFactory.csproj" />
+    <ProjectReference Include="..\MachiKoro.Domain.TestModelFactory\MachiKoro.Domain.TestModelFactory.csproj" />
   </ItemGroup>
 
 </Project>

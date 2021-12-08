@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MachiKoro.Core\MachiKoro.Core.csproj" />
+    <Folder Include="v1\Player\Commands\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="v1\Player\Commands\" />
+    <ProjectReference Include="..\MachiKoro.Domain\MachiKoro.Domain.csproj" />
   </ItemGroup>
 
 </Project>

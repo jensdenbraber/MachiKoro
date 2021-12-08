@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MachiKoro.Application\MachiKoro.Application.csproj" />
-    <ProjectReference Include="..\MachiKoro.Core.TestModelFactory\MachiKoro.Core.TestModelFactory.csproj" />
+    <ProjectReference Include="..\MachiKoro.Domain.TestModelFactory\MachiKoro.Domain.TestModelFactory.csproj" />
   </ItemGroup>
 
 </Project>
