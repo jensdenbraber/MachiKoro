@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MachiKoro.Application\MachiKoro.Application.csproj" />
-    <ProjectReference Include="..\MachiKoro.Core\MachiKoro.Core.csproj" />
     <ProjectReference Include="..\MachiKoro.Persistence\MachiKoro.Persistence.csproj" />
   </ItemGroup>
 

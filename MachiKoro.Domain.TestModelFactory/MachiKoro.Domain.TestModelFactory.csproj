@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MachiKoro.Core\MachiKoro.Core.csproj" />
+    <ProjectReference Include="..\MachiKoro.Domain\MachiKoro.Domain.csproj" />
   </ItemGroup>
 
 </Project>

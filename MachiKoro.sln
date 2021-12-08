@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7BE1B11E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Application.UnitTests", "MachiKoro.Application.UnitTests\MachiKoro.Application.UnitTests.csproj", "{6BA0AD9F-7214-48E8-8F33-D8CA07CB39E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Core.UnitTests", "MachiKoro.Core.UnitTests\MachiKoro.Core.UnitTests.csproj", "{A526EEA8-F4B8-4995-BE2E-68C6456E12A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Domain.UnitTests", "MachiKoro.Domain.UnitTests\MachiKoro.Domain.UnitTests.csproj", "{A526EEA8-F4B8-4995-BE2E-68C6456E12A5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Persistence.UnitTests", "MachiKoro.Persistence.UnitTests\MachiKoro.Persistence.UnitTests.csproj", "{9A6D5606-F361-482B-946E-07838BFDF093}"
 EndProject
@@ -21,13 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Api.IntegrationTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Api.TestModelFactory", "MachiKoro.Api.TestModelFactory\MachiKoro.Api.TestModelFactory.csproj", "{C05B6620-ED85-4B52-8F95-EDA2E99E2EE8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Core.TestModelFactory", "MachiKoro.Core.TestModelFactory\MachiKoro.Core.TestModelFactory.csproj", "{0A2D47C9-41A5-412F-BB26-D79FED6048D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Domain.TestModelFactory", "MachiKoro.Domain.TestModelFactory\MachiKoro.Domain.TestModelFactory.csproj", "{0A2D47C9-41A5-412F-BB26-D79FED6048D4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Application", "MachiKoro.Application\MachiKoro.Application.csproj", "{69438F3B-6338-4C17-AFE0-E6DB54AD8029}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Core", "MachiKoro.Core\MachiKoro.Core.csproj", "{DC155A1D-2AE7-436B-A97E-52C11C6028A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Domain", "MachiKoro.Domain\MachiKoro.Domain.csproj", "{DC155A1D-2AE7-436B-A97E-52C11C6028A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachiKoro.Infrastructure", "MachiKoro.Infrastructure\MachiKoro.Infrastructure.csproj", "{F591EA13-6475-44B0-B538-0A7E834CD656}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachiKoro.Infrastructure", "MachiKoro.Infrastructure\MachiKoro.Infrastructure.csproj", "{F591EA13-6475-44B0-B538-0A7E834CD656}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
