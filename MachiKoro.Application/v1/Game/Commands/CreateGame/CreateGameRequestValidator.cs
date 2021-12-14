@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MachiKoro.Core.Models.CreateGame;
+using System;
 
 namespace MachiKoro.Application.v1.Game.Commands.CreateGame
 {
@@ -7,7 +7,8 @@ namespace MachiKoro.Application.v1.Game.Commands.CreateGame
     {
         public CreateGameRequestValidator()
         {
-            RuleFor(x => x.MaxNumberOfPlayers).NotEmpty();
+            RuleFor(x => x).NotNull().OnAnyFailure(x => { throw new ArgumentNullException(nameof(x)); });
+            RuleFor(x => x.MaxNumberOfPlayers).NotEmpty().InclusiveBetween(2, 4);
             RuleFor(x => x.ExpensionType).NotEmpty();
         }
     }

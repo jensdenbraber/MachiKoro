@@ -1,21 +1,18 @@
-using MachiKoro.Core.Interfaces;
-
-namespace MachiKoro.Core.CardEffects.Landmarks.Basic
+namespace MachiKoro.Domain.Models.CardEffects.Landmarks.Basic
 {
     public class ShoppingMall : ILandmarkEffect
     {
-        public void Destroy(IGame game)
+        public void Destroy()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Effect(IGame game)
+        public void Effect()
         {
-            if(game.ActivePlayer.EstablishmentCards[0].CardIcon == CardCategory.Cup || 
-                game.ActivePlayer.EstablishmentCards[0].CardIcon == CardCategory.Bread)
-            {
-
-            }
+            //if (game.ActivePlayer.EstablishmentCards[0].CardIcon == CardCategory.Cup ||
+            //    game.ActivePlayer.EstablishmentCards[0].CardIcon == CardCategory.Bread)
+            //{
+            //}
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MachiKoro.Core.Dice
+namespace MachiKoro.Domain.Models.Dice
 {
     public class Dice
     {

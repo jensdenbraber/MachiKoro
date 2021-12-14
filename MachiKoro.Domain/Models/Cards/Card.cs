@@ -1,4 +1,6 @@
-namespace MachiKoro.Core.Cards
+using MachiKoro.Domain.Enums;
+
+namespace MachiKoro.Domain.Models.Cards
 {
     public abstract class Card
     {

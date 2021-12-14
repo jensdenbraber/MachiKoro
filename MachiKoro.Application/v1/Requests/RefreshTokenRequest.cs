@@ -1,4 +1,4 @@
-﻿namespace MachiKoro.Contracts.v1.Requests
+﻿namespace MachiKoro.Application.v1.Requests
 {
     public class RefreshTokenRequest
     {

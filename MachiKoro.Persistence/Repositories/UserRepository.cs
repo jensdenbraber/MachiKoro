@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core.Models.User;
+using MachiKoro.Domain.Models.User;
 using MachiKoro.Infrastructure.Identity.Models;
 using MachiKoro.Persistence.Models;
 using Microsoft.AspNetCore.Identity;

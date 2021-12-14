@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MachiKoro.Core.Models.User;
+using MachiKoro.Domain.Models.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace MachiKoro.Application.v1.Interfaces

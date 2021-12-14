@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
-using MachiKoro.Api.Models.CreateGame;
-using MachiKoro.Api.Models.GetGame;
 using MachiKoro.Application.v1;
-using MachiKoro.Core.Models.AddPlayerToGame;
-using MachiKoro.Core.Models.DeleteGame;
-using MachiKoro.Core.Models.RemovePlayerFromGame;
+using MachiKoro.Application.v1.Game.Commands.DeleteGame;
+using MachiKoro.Application.v1.Game.Commands.RemovePlayerFromGame;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +11,6 @@ using System.Threading.Tasks;
 namespace MachiKoro.Api.Controllers.v1
 {
     [ApiController]
-    [Authorize]//(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GameController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -35,25 +30,25 @@ namespace MachiKoro.Api.Controllers.v1
         [HttpPost(ApiRoutes.Games.Create)]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(CreateGameResponse), 201)]
-        public async Task<IActionResult> CreateAsync([FromBody][Required] CreateGameRequest request)
+        [ProducesResponseType(typeof(Contracts.Game.CreateGame.CreateGameResponse), 201)]
+        public async Task<IActionResult> CreateAsync([FromBody][Required] Contracts.Game.CreateGame.CreateGameRequest request)
         {
-            var coreRequest = _mapper.Map<Core.Models.CreateGame.CreateGameRequest>(request);
-            
+            var coreRequest = _mapper.Map<Application.v1.Game.Commands.CreateGame.CreateGameRequest>(request);
+
             var coreResponse = await _mediator.Send(coreRequest);
-            
+
             if (coreResponse == null)
                 return NotFound();
-            
+
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationUri = baseUrl + "/" + ApiRoutes.Games.Get.Replace("{gameId}", coreResponse.GameId.ToString());
             return Created(locationUri, coreResponse.GameId);
         }
 
         [HttpGet(ApiRoutes.Games.Get)]
-        public async Task<IActionResult> GetAsync([FromRoute][Required] GetGameRequest request)
+        public async Task<IActionResult> GetAsync([FromRoute][Required] Contracts.Game.GetGame.GetGameRequest request)
         {
-            var coreRequest = _mapper.Map<Core.Models.GetGame.GetGameRequest>(request); 
+            var coreRequest = _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(request);
 
             var coreResponse = await _mediator.Send(coreRequest);
 
@@ -73,9 +68,9 @@ namespace MachiKoro.Api.Controllers.v1
 
         [HttpPost(ApiRoutes.Games.AddPlayer)]
         [Consumes("application/json")]
-        public async Task<IActionResult> AddPlayer([FromRoute][Required] AddPlayerToGameRequest request)
+        public async Task<IActionResult> AddPlayer([FromRoute][Required] Contracts.Game.AddPlayer.AddPlayerToGameRequest request)
         {
-            var coreRequest = _mapper.Map<AddPlayerToGameRequest>(request);
+            var coreRequest = _mapper.Map<Application.v1.Game.Commands.AddPlayerToGame.AddPlayerToGameRequest>(request);
 
             var coreResponse = await _mediator.Send(coreRequest);
 
@@ -95,7 +90,7 @@ namespace MachiKoro.Api.Controllers.v1
 
         [HttpDelete(ApiRoutes.Games.RemovePlayer)]
         [Consumes("application/json")]
-        public async Task<IActionResult> RemovePlayer([FromRoute][Required] RemovePlayerFromGameRequest request)
+        public async Task<IActionResult> RemovePlayer([FromRoute][Required] Contracts.Game.RemovePlayer.RemovePlayerFromGameRequest request)
         {
             var coreRequest = _mapper.Map<RemovePlayerFromGameRequest>(request);
 
@@ -109,7 +104,7 @@ namespace MachiKoro.Api.Controllers.v1
 
         [HttpDelete(ApiRoutes.Games.Delete)]
         [Consumes("application/json")]
-        public async Task<IActionResult> Delete([FromRoute][Required] DeleteGameRequest request)
+        public async Task<IActionResult> Delete([FromRoute][Required] Contracts.Game.DeleteGame.DeleteGameRequest request)
         {
             var coreRequest = _mapper.Map<DeleteGameRequest>(request);
 

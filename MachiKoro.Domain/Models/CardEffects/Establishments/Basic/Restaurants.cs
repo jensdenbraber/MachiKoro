@@ -1,6 +1,5 @@
 //#from .establishment_effect_base import CardEffect
 
-
 //#class CardEffectRestaurants(CardEffect):
 //#    def __init__(self, gold_amount: int):
 //#        super().__init__()
@@ -27,11 +26,7 @@
 //#        #         active_player.gold_amount = active_player.gold_amount - 2 - bonus
 //#        #         player.gold_amount = player.gold_amount + 2 + bonus
 
-
-using MachiKoro.Core.Cards.Landmarks.Basic;
-using MachiKoro.Core.Interfaces;
-
-namespace MachiKoro.Core.CardEffects.Establishments.Basic
+namespace MachiKoro.Domain.Models.CardEffects.Establishments.Basic
 {
     public class RestaurantsCardEffect : IEstablishmentEffect
     {
@@ -42,20 +37,20 @@ namespace MachiKoro.Core.CardEffects.Establishments.Basic
             GoldReward = goldReward;
         }
 
-        public void Activate(IGame game)
+        public void Activate()
         {
             //game.ActivePlayer.IsConstructLandmark()
 
-            foreach (var opponent in game.Opponents())
-            {
-                if (game.ActivePlayer.GoldAmount == 0)
-                {
-                    break;
-                }
+            //foreach (var opponent in game.Opponents())
+            //{
+            //    if (game.ActivePlayer.GoldAmount == 0)
+            //    {
+            //        break;
+            //    }
 
-                game.ActivePlayer.GoldAmount--;
-                opponent.GoldAmount++;
-            }
+            //    game.ActivePlayer.GoldAmount--;
+            //    opponent.GoldAmount++;
+            //}
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace MachiKoro.Core
+namespace MachiKoro.Domain.Enums
 {
     public enum ExpensionType
     {

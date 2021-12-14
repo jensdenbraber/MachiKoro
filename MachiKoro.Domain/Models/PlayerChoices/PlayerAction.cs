@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MachiKoro.Core
+namespace MachiKoro.Domain.Models.PlayerChoices
 {
     public class PlayerAction
     {

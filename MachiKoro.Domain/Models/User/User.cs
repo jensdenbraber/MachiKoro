@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MachiKoro.Core.Models.User
+namespace MachiKoro.Domain.Models.User
 {
     public class MachiKoroUser
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MachiKoro.Core.Dice
+namespace MachiKoro.Domain.Models.Dice
 {
     public class DiceHelper
     {

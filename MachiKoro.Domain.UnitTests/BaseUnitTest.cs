@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MachiKoro.Core.UnitTests
+namespace MachiKoro.Domain.UnitTests
 {
     public abstract class BaseUnitTest
     {

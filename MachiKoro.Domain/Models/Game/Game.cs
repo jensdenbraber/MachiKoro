@@ -1,8 +1,9 @@
-﻿using MachiKoro.Core.CardDecks;
+﻿using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Models.CardDecks;
 using System;
 using System.Collections.Generic;
 
-namespace MachiKoro.Core.Models.Game
+namespace MachiKoro.Domain.Models.Game
 {
     public class Game
     {

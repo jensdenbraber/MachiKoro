@@ -1,24 +1,20 @@
-using MachiKoro.Core.Interfaces;
-using MachiKoro.Core.PlayerChoices.PlayerOptions;
-using MachiKoro.Core.Players.Events;
-
-namespace MachiKoro.Core.CardEffects.Landmarks.Basic
+namespace MachiKoro.Domain.Models.CardEffects.Landmarks.Basic
 {
-    public class RadioTower : ILandmarkEffect, IPlayerPostDieRoll
+    public class RadioTower : ILandmarkEffect
     {
-        public void Effect(IGame game)
+        public void Effect()
         {
-            game.ActivePlayer.OnPlayerPostDieRoll += ActivePlayer_OnPlayerPostDieRoll;
+            //game.ActivePlayer.OnPlayerPostDieRoll += ActivePlayer_OnPlayerPostDieRoll;
         }
 
-        public void Destroy(IGame game)
+        public void Destroy()
         {
-            game.ActivePlayer.OnPlayerPostDieRoll -= ActivePlayer_OnPlayerPostDieRoll;
+            //game.ActivePlayer.OnPlayerPostDieRoll -= ActivePlayer_OnPlayerPostDieRoll;
         }
 
-        public void ActivePlayer_OnPlayerPostDieRoll(object sender, PlayerPostDieRollEventArgs e)
+        public void ActivePlayer_OnPlayerPostDieRoll()
         {
-            e.PlayerChoices.Add(new PlayerChoice(new RerollDice()));
+            //e.PlayerChoices.Add(new PlayerChoice(new RerollDice()));
         }
     }
 }

@@ -1,7 +1,7 @@
-using MachiKoro.Core.CardEffects.Landmarks.Basic;
-using MachiKoro.Core.Interfaces;
+using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Models.CardEffects.Landmarks.Basic;
 
-namespace MachiKoro.Core.Cards.Landmarks.Basic
+namespace MachiKoro.Domain.Models.Cards.Landmarks.Basic
 {
     public class LandMark : Card
     {
@@ -16,16 +16,16 @@ namespace MachiKoro.Core.Cards.Landmarks.Basic
             _landmarkEffectBase = landmarkEffect;
         }
 
-        public void Construct(IGame game)
+        public void Construct()
         {
             IsConstructed = true;
-            _landmarkEffectBase.Effect(game);
+            _landmarkEffectBase.Effect();
         }
 
-        public void Destroy(IGame game)
+        public void Destroy()
         {
             IsConstructed = false;
-            _landmarkEffectBase.Destroy(game);
+            _landmarkEffectBase.Destroy();
         }
     }
 }

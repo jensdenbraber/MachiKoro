@@ -1,15 +1,16 @@
-﻿using MachiKoro.Core.CardEffects.Establishments.Basic;
-using MachiKoro.Core.CardEffects.Landmarks.Basic;
-using MachiKoro.Core.Cards.Establishments.Basic;
-using MachiKoro.Core.Cards.Landmarks.Basic;
+﻿using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Models.CardEffects.Establishments.Basic;
+using MachiKoro.Domain.Models.CardEffects.Landmarks.Basic;
+using MachiKoro.Domain.Models.Cards.Establishments.Basic;
+using MachiKoro.Domain.Models.Cards.Landmarks.Basic;
 using System;
 using System.Collections.Generic;
 
-namespace MachiKoro.Core.TestModelFactory.Models.Player
+namespace MachiKoro.Domain.TestModelFactory.Models.Player
 {
     public class PlayerFactory
     {
-        public static Players.Player ValidPlayerInstance()
+        public static Domain.Models.Player.Player ValidPlayerInstance()
         {
             var establishmentCards = new List<EstablishmentBase>()
             {
@@ -25,7 +26,7 @@ namespace MachiKoro.Core.TestModelFactory.Models.Player
                 new LandMark("Radio Tower", CardCategory.Tower, 22, new RadioTower()),
             };
 
-            return new Players.Player(Guid.NewGuid(), PlayerType.Computer, 3, establishmentCards, landmarkCards);
+            return new Domain.Models.Player.Player(Guid.NewGuid(), PlayerType.Computer, 3, establishmentCards, landmarkCards);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using MachiKoro.Core.Constants;
+﻿using MachiKoro.Domain.Constants;
 using MachiKoro.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;

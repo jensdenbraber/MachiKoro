@@ -1,9 +1,9 @@
-﻿using MachiKoro.Core.Cards.Establishments.Basic;
-using MachiKoro.Core.CardEffects.Establishments.Basic;
-using System.Collections.Generic;
-using MachiKoro.Core.CardDecks;
-using MachiKoro.Core;
+﻿using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Models.CardDecks;
+using MachiKoro.Domain.Models.CardEffects.Establishments.Basic;
+using MachiKoro.Domain.Models.Cards.Establishments.Basic;
 using System;
+using System.Collections.Generic;
 
 namespace MachiKoro.Application.CardDecks
 {
@@ -98,9 +98,9 @@ namespace MachiKoro.Application.CardDecks
 
             for (int i = 0; i < 4; i++)
             {
-                var stadium = new MajorEstablishment("Stadium", CardCategory.Tower, new List<int>() { 6 }, 6, new Core.CardEffects.Establishments.Basic.Major.CardEffectStadium());
-                var tvStation = new MajorEstablishment("TV Station", CardCategory.Tower, new List<int>() { 6 }, 7, new Core.CardEffects.Establishments.Basic.Major.CardEffectStadium());
-                var businessCenter = new MajorEstablishment("Business Center", CardCategory.Tower, new List<int>() { 6 }, 8, new Core.CardEffects.Establishments.Basic.Major.CardEffectStadium());
+                var stadium = new MajorEstablishment("Stadium", CardCategory.Tower, new List<int>() { 6 }, 6, new Domain.Models.CardEffects.Establishments.Basic.Major.CardEffectStadium());
+                var tvStation = new MajorEstablishment("TV Station", CardCategory.Tower, new List<int>() { 6 }, 7, new Domain.Models.CardEffects.Establishments.Basic.Major.CardEffectStadium());
+                var businessCenter = new MajorEstablishment("Business Center", CardCategory.Tower, new List<int>() { 6 }, 8, new Domain.Models.CardEffects.Establishments.Basic.Major.CardEffectStadium());
 
                 establishments.Push(stadium);
                 establishments.Push(tvStation);

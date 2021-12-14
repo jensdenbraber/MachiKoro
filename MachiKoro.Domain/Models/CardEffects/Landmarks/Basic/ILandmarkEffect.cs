@@ -1,10 +1,9 @@
-using MachiKoro.Core.Interfaces;
-
-namespace MachiKoro.Core.CardEffects.Landmarks.Basic
+namespace MachiKoro.Domain.Models.CardEffects.Landmarks.Basic
 {
     public interface ILandmarkEffect
     {
-        public void Effect(IGame game);
-        public void Destroy(IGame game);
+        public void Effect();
+
+        public void Destroy();
     }
 }

@@ -1,10 +1,8 @@
-using MachiKoro.Core.Interfaces;
-
-namespace MachiKoro.Core.CardEffects.Establishments.Basic.Major
+namespace MachiKoro.Domain.Models.CardEffects.Establishments.Basic.Major
 {
     public class CardEffectBusinessCenter : IMajorCardEffect
     {
-        public void Activate(IGame game)
+        public void Activate()
         {
             throw new System.NotImplementedException();
         }

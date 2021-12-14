@@ -1,4 +1,4 @@
-﻿namespace MachiKoro.Core.Constants
+﻿namespace MachiKoro.Domain.Constants
 {
     public static class ApplicationIdentityConstants
     {

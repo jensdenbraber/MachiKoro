@@ -1,9 +1,7 @@
-using MachiKoro.Core.Interfaces;
-
-namespace MachiKoro.Core.CardEffects.Establishments.Basic
+namespace MachiKoro.Domain.Models.CardEffects.Establishments.Basic
 {
     public interface IEstablishmentEffect
     {
-        public void Activate(IGame game);
+        public void Activate();
     }
 }

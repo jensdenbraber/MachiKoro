@@ -1,25 +1,20 @@
-using MachiKoro.Core.Interfaces;
-using MachiKoro.Core.PlayerChoices.PlayerOptions;
-using MachiKoro.Core.Players.Events;
-using System;
-
-namespace MachiKoro.Core.CardEffects.Landmarks.Basic
+namespace MachiKoro.Domain.Models.CardEffects.Landmarks.Basic
 {
-    public class TrainStation : ILandmarkEffect, IPlayerUpkeep
+    public class TrainStation : ILandmarkEffect
     {
-        public void Effect(IGame game)
+        public void Effect()
         {
-            game.ActivePlayer.OnPlayerUpkeep += ActivePlayer_OnPlayerUpkeep;
+            //game.ActivePlayer.OnPlayerUpkeep += ActivePlayer_OnPlayerUpkeep;
         }
 
-        public void Destroy(IGame game)
+        public void Destroy()
         {
-            game.ActivePlayer.OnPlayerUpkeep -= ActivePlayer_OnPlayerUpkeep;
+            //game.ActivePlayer.OnPlayerUpkeep -= ActivePlayer_OnPlayerUpkeep;
         }
 
-        public void ActivePlayer_OnPlayerUpkeep(object sender, PlayerUpkeepEventArgs e)
+        public void ActivePlayer_OnPlayerUpkeep()
         {
-            e.PlayerChoices.Add(new PlayerChoice(new RollDoubleDice()));
+            //e.PlayerChoices.Add(new PlayerChoice(new RollDoubleDice()));
         }
     }
 }

@@ -1,4 +1,6 @@
-namespace MachiKoro.Core.CardEffects.Establishments.Basic.Major
+using MachiKoro.Domain.Models.CardEffects.Establishments.Basic;
+
+namespace MachiKoro.Domain.Models.CardEffects.Establishments.Basic.Major
 {
     public interface IMajorCardEffect : IEstablishmentEffect
     {

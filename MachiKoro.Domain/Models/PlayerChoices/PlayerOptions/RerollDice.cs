@@ -1,4 +1,4 @@
-﻿namespace MachiKoro.Core.PlayerChoices.PlayerOptions
+﻿namespace MachiKoro.Domain.Models.PlayerChoices.PlayerOptions
 {
     public class RerollDice : IPlayerOption
     {

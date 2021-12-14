@@ -1,14 +1,6 @@
-using MachiKoro.Core.CardDecks;
-using MachiKoro.Core.CardEffects.Establishments.Basic;
-using MachiKoro.Core.CardEffects.Landmarks.Basic;
-using MachiKoro.Core.Cards.Establishments.Basic;
-using MachiKoro.Core.Cards.Landmarks.Basic;
-using MachiKoro.Core.Players;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
-namespace MachiKoro.Core.UnitTests
+namespace MachiKoro.Domain.UnitTests.Models
 {
     public class GameBasicTest
     {
@@ -52,7 +44,7 @@ namespace MachiKoro.Core.UnitTests
             //    new LandMark("Amusement Park", CardCategory.TOWER, 16, new AmusementPark()),
             //    new LandMark("Radio Tower", CardCategory.TOWER, 22, new RadioTower()),
             //}));            
-            
+
             //var game = new Game(players, cardDecks, dices);
 
             //Assert.Equal(player1Id, game.ActivePlayer.Id);
@@ -72,7 +64,7 @@ namespace MachiKoro.Core.UnitTests
             //game.EndTheTurn();
 
             //List<PlayerChoice> playerChoices1 = game.PlayerUpkeep();
-            
+
             //Assert.Single(playerChoices1);
 
         }

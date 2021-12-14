@@ -1,6 +1,5 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core.Models.Identity;
-using MachiKoro.Core.Models.User;
+using MachiKoro.Domain.Models.User;
 using MediatR;
 using System;
 using System.Collections.Generic;

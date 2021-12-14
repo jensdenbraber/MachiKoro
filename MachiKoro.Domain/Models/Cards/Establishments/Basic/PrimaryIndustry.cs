@@ -1,7 +1,8 @@
-using MachiKoro.Core.CardEffects.Establishments.Basic;
+using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Models.CardEffects.Establishments.Basic;
 using System.Collections.Generic;
 
-namespace MachiKoro.Core.Cards.Establishments.Basic
+namespace MachiKoro.Domain.Models.Cards.Establishments.Basic
 {
     public class PrimaryIndustry : EstablishmentBase
     {

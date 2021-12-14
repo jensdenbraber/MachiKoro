@@ -1,26 +1,26 @@
-using MachiKoro.Core.CardEffects.Establishments.Basic;
-using MachiKoro.Core.Interfaces;
+using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Models.CardEffects.Establishments.Basic;
 using System.Collections.Generic;
 
-namespace MachiKoro.Core.Cards.Establishments.Basic
+namespace MachiKoro.Domain.Models.Cards.Establishments.Basic
 {
     public abstract class EstablishmentBase : Card
     {
         public List<int> ActivationNumbers { get; }
         public int ConstructionCost { get; }
         private readonly IEstablishmentEffect _establishmentEffect;
-       
+
         public EstablishmentBase(string name, CardCategory cardIcon, List<int> activationNumbers, int constructionCost, IEstablishmentEffect establishmentEffect)
-            :base(name, cardIcon)
+            : base(name, cardIcon)
         {
             ActivationNumbers = activationNumbers;
             ConstructionCost = constructionCost;
             _establishmentEffect = establishmentEffect;
         }
 
-        public void Activate(IGame game)
+        public void Activate()
         {
-            _establishmentEffect.Activate(game);
+            _establishmentEffect.Activate();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core.Models.GetPlayerProfile;
 using MediatR;
 using System;
 using System.Threading;

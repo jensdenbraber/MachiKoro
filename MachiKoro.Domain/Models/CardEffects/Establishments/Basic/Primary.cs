@@ -1,6 +1,4 @@
-using MachiKoro.Core.Interfaces;
-
-namespace MachiKoro.Core.CardEffects.Establishments.Basic
+namespace MachiKoro.Domain.Models.CardEffects.Establishments.Basic
 {
     public class PrimaryCardEffect : IEstablishmentEffect
     {
@@ -11,9 +9,9 @@ namespace MachiKoro.Core.CardEffects.Establishments.Basic
             GoldReward = goldReward;
         }
 
-        public void Activate(IGame game)
+        public void Activate()
         {
-            game.ActivePlayer.GoldAmount += GoldReward;
+            //game.ActivePlayer.GoldAmount += GoldReward;
         }
     }
 }

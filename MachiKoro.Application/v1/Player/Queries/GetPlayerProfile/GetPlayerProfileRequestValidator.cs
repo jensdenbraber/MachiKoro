@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using MachiKoro.Core.Models.GetPlayerProfile;
 
 namespace MachiKoro.Application.v1.Player.Queries.GetPlayerProfile
 {

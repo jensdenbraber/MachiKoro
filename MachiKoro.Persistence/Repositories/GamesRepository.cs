@@ -65,7 +65,7 @@ namespace MachiKoro.Persistence.Repositories
             return updated > 0;
         }
 
-        public async Task<bool> CreateAsync(Core.Models.Game.Game game)
+        public async Task<bool> CreateAsync(Domain.Models.Game.Game game)
         {
             Game gameData = _mapper.Map<Game>(game);
 
@@ -75,22 +75,22 @@ namespace MachiKoro.Persistence.Repositories
             return created > 0;
         }
 
-        Task<List<Core.Models.Game.Game>> IGamesRepository.GetGamesAsync()
+        Task<List<Domain.Models.Game.Game>> IGamesRepository.GetGamesAsync()
         {
             throw new NotImplementedException();
         }
 
-        Task<Core.Models.Game.Game> IGamesRepository.GetGameAsync(Guid id)
+        Task<Domain.Models.Game.Game> IGamesRepository.GetGameAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        Task<List<Core.Models.Player.Player>> IGamesRepository.GetPlayersFromGameAsync(Guid id)
+        Task<List<Domain.Models.Player.Player>> IGamesRepository.GetPlayersFromGameAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        Task<bool> IGamesRepository.UpdateAsync(Core.Models.Game.Game gameData)
+        Task<bool> IGamesRepository.UpdateAsync(Domain.Models.Game.Game gameData)
         {
             throw new NotImplementedException();
         }

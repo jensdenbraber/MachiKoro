@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using MachiKoro.Application.v1;
-using MachiKoro.Contracts.v1.Requests;
-using MachiKoro.Core.Models.Identity;
+using MachiKoro.Application.v1.Identity.Commands.Login;
+using MachiKoro.Application.v1.Identity.Commands.Registration;
+using MachiKoro.Application.v1.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

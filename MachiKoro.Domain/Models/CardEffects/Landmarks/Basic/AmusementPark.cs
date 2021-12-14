@@ -1,21 +1,18 @@
-using MachiKoro.Core.Interfaces;
-using MachiKoro.Core.Players.Events;
-
-namespace MachiKoro.Core.CardEffects.Landmarks.Basic
+namespace MachiKoro.Domain.Models.CardEffects.Landmarks.Basic
 {
-    public class AmusementPark : ILandmarkEffect, IPlayerPostDieRoll
+    public class AmusementPark : ILandmarkEffect
     {
-        public void Destroy(IGame game)
+        public void Destroy()
         {
-            game.ActivePlayer.OnPlayerPostDieRoll -= ActivePlayer_OnPlayerPostDieRoll;
+            //game.ActivePlayer.OnPlayerPostDieRoll -= ActivePlayer_OnPlayerPostDieRoll;
         }
 
-        public void Effect(IGame game)
+        public void Effect()
         {
-            game.ActivePlayer.OnPlayerPostDieRoll += ActivePlayer_OnPlayerPostDieRoll;
+            //game.ActivePlayer.OnPlayerPostDieRoll += ActivePlayer_OnPlayerPostDieRoll;
         }
 
-        public void ActivePlayer_OnPlayerPostDieRoll(object sender, PlayerPostDieRollEventArgs e)
+        public void ActivePlayer_OnPlayerPostDieRoll()
         {
             //if (game.DiceHelper.IsSame())
             //{
