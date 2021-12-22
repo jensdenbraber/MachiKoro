@@ -2,7 +2,7 @@ using MachiKoro.Api.Extensions;
 using MachiKoro.Api.Options;
 using MachiKoro.Application.v1.Extensions;
 using MachiKoro.Infrastructure.Identity;
-using MachiKoro.Infrastructure.Identity.Models.Authentication;
+using MachiKoro.Persistence.Identity.Models.Authentication;
 using MachiKoro.Persistence.Extensions;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -58,7 +58,7 @@ namespace MachiKoro.Api
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
 
-                app.SeedIdentityDataAsync().Wait();
+                //app.SeedIdentityDataAsync().Wait();
             }
             else
             {

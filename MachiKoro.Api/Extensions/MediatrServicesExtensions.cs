@@ -21,7 +21,7 @@ namespace MachiKoro.Api.Extensions
 				Assembly.GetAssembly(typeof(CreateGameRequestHandler)),
 				Assembly.GetAssembly(typeof(GetGameRequestHandler)),
 				Assembly.GetAssembly(typeof(DeleteGameRequestHandler)),
-				Assembly.GetAssembly(typeof(GetPlayerProfileRequestHandler))
+				//Assembly.GetAssembly(typeof(GetPlayerProfileRequestHandler))
 			};
 
 			services.AddMediatR(assemblies);

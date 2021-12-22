@@ -19,21 +19,6 @@ namespace MachiKoro.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("GamePlayer", b =>
-                {
-                    b.Property<Guid>("GamesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PlayersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("GamesId", "PlayersId");
-
-                    b.HasIndex("PlayersId");
-
-                    b.ToTable("GamePlayer");
-                });
-
             modelBuilder.Entity("MachiKoro.Persistence.Models.Game", b =>
                 {
                     b.Property<Guid>("Id")
@@ -41,7 +26,6 @@ namespace MachiKoro.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ExpensionType")
@@ -50,10 +34,15 @@ namespace MachiKoro.Data.Migrations
                     b.Property<DateTime>("FinishedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("StartedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("Game");
                 });
@@ -65,111 +54,27 @@ namespace MachiKoro.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayerProfile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PlayerForeignKey")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlayerForeignKey")
-                        .IsUnique();
-
-                    b.ToTable("PlayersProfiles");
-                });
-
-            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayersStatistics", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("GamesLost")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GamesPlayed")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GamesWon")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("PlayerProfileForeignKey")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlayerProfileForeignKey")
-                        .IsUnique();
-
-                    b.ToTable("PlayersStatistics");
-                });
-
-            modelBuilder.Entity("GamePlayer", b =>
-                {
-                    b.HasOne("MachiKoro.Persistence.Models.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MachiKoro.Persistence.Models.Player", null)
-                        .WithMany()
-                        .HasForeignKey("PlayersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayerProfile", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Game", b =>
                 {
                     b.HasOne("MachiKoro.Persistence.Models.Player", "Player")
-                        .WithOne("PlayerProfile")
-                        .HasForeignKey("MachiKoro.Persistence.Models.PlayerProfile", "PlayerForeignKey")
+                        .WithMany("Games")
+                        .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Player");
                 });
 
-            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayersStatistics", b =>
-                {
-                    b.HasOne("MachiKoro.Persistence.Models.PlayerProfile", "PlayerProfile")
-                        .WithOne("PlayersStatistics")
-                        .HasForeignKey("MachiKoro.Persistence.Models.PlayersStatistics", "PlayerProfileForeignKey")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PlayerProfile");
-                });
-
             modelBuilder.Entity("MachiKoro.Persistence.Models.Player", b =>
                 {
-                    b.Navigation("PlayerProfile")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MachiKoro.Persistence.Models.PlayerProfile", b =>
-                {
-                    b.Navigation("PlayersStatistics")
-                        .IsRequired();
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

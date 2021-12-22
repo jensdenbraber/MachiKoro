@@ -1,5 +1,5 @@
 ﻿using MachiKoro.Domain.Constants;
-using MachiKoro.Infrastructure.Identity.Models;
+using MachiKoro.Persistence.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 

@@ -12,7 +12,7 @@ namespace MachiKoro.Application.v1.Interfaces
 
         Task<Domain.Models.Game.Game> GetGameAsync(Guid id);
 
-        Task<List<Domain.Models.Player.Player>> GetPlayersFromGameAsync(Guid id);
+        //Task<List<Domain.Models.Player.Player>> GetPlayersFromGameAsync(Guid id);
 
         Task<bool> DeleteAsync(Guid gameId);
         

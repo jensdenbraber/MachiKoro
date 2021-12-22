@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace MachiKoro.Infrastructure.Identity.Models
+namespace MachiKoro.Persistence.Identity.Models
 {
     public partial class ApplicationDbContext
     {

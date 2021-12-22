@@ -23,7 +23,7 @@ namespace MachiKoro.Application.CardDecks
         private static void BuildCardDeckLowBasicGame(int numberOfRevealedCards)
         {
             var establishments = new Stack<EstablishmentBase>();
-
+            
             for (int i = 0; i < 6; i++)
             {
                 var wheatField = new PrimaryIndustry("Wheat Field", CardCategory.Wheat, new List<int>() { 1 }, 1, new PrimaryCardEffect(1));

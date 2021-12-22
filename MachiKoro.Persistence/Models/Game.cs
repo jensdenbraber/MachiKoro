@@ -1,4 +1,5 @@
 ﻿using MachiKoro.Domain.Enums;
+using MachiKoro.Persistence.Identity.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,18 +12,19 @@ namespace MachiKoro.Persistence.Models
         [Key]
         public Guid Id { get; internal set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public DateTime StartedDate { get; set; }
+        public DateTime StartedDate { get; set; } = DateTime.Now;
 
-        public DateTime FinishedDate { get; set; }
+        public DateTime FinishedDate { get; set; } = DateTime.Now;
 
         [Required]
         [EnumDataType(typeof(ExpensionType))]
         public ExpensionType ExpensionType { get; set; }
 
         [Required]
-        public virtual ICollection<Player> Players { get; set; }
+        public virtual Guid PlayerId { get; set; }
+        public virtual Player Player { get; set; }
     }
 }

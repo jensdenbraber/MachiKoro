@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MachiKoro.Domain.Models.User;
-using MachiKoro.Infrastructure.Identity.Models;
+using MachiKoro.Persistence.Identity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

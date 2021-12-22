@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Runtime.Serialization;
 
-namespace MachiKoro.Infrastructure.Identity.Models
+namespace MachiKoro.Persistence.Identity.Models
 {
     public class ApplicationUser : IdentityUser
     {

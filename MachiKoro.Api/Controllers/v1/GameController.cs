@@ -58,14 +58,6 @@ namespace MachiKoro.Api.Controllers.v1
             return Ok(coreResponse.Game);
         }
 
-        [HttpPost(ApiRoutes.Games.Start)]
-        [Consumes("application/json")]
-        public async Task<IActionResult> Start([FromRoute][Required] Guid gameId)
-        {
-            // start the game by saving it inital values to the database
-            throw new NotImplementedException();
-        }
-
         [HttpPost(ApiRoutes.Games.AddPlayer)]
         [Consumes("application/json")]
         public async Task<IActionResult> AddPlayer([FromRoute][Required] Contracts.Game.AddPlayer.AddPlayerToGameRequest request)

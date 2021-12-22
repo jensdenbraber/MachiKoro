@@ -1,8 +1,8 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Application.v1.Models;
-using MachiKoro.Infrastructure.Identity.Models;
-using MachiKoro.Infrastructure.Identity.Models.Authentication;
+using MachiKoro.Persistence.Identity.Models.Authentication;
 using MachiKoro.Persistence.Identity.Extensions;
+using MachiKoro.Persistence.Identity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +15,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Infrastructure.Identity.Services
+namespace MachiKoro.Persistence.Identity.Services
 {
     public class IdentityService : IIdentityService
     {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MachiKoro.Domain.Models.Dice
+﻿namespace MachiKoro.Domain.Models.Dice
 {
     public class Dice
     {
@@ -8,11 +6,6 @@ namespace MachiKoro.Domain.Models.Dice
         public Dice(int sides = 6)
         {
             Sides = sides;
-        }
-
-        public int Roll()
-        {
-            return new Random().Next(1, Sides);
         }
     }
 }

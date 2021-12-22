@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using MachiKoro.Persistence.Identity.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace MachiKoro.Infrastructure.Identity.Models
+namespace MachiKoro.Persistence.Identity.Models
 {
     public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

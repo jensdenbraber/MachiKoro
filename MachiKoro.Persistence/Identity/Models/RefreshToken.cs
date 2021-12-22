@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace MachiKoro.Infrastructure.Identity.Models
+namespace MachiKoro.Persistence.Identity.Models
 {
     [Owned]
     public class RefreshToken

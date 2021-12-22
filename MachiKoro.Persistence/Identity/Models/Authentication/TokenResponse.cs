@@ -1,4 +1,6 @@
-﻿namespace MachiKoro.Infrastructure.Identity.Models.Authentication
+﻿using MachiKoro.Persistence.Identity.Models;
+
+namespace MachiKoro.Persistence.Identity.Models.Authentication
 {
     public class TokenResponse
     {

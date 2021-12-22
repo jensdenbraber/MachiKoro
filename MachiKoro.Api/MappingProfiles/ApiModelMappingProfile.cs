@@ -6,8 +6,8 @@ using MachiKoro.Domain.Models.Game;
 using MachiKoro.Domain.Models.Player;
 using MachiKoro.Domain.Models.PlayerProfile;
 using MachiKoro.Domain.Models.User;
-using MachiKoro.Infrastructure.Identity.Models;
-using MachiKoro.Infrastructure.Identity.Models.Authentication;
+using MachiKoro.Persistence.Identity.Models.Authentication;
+using MachiKoro.Persistence.Identity.Models;
 
 namespace MachiKoro.Api.MappingProfiles
 {
@@ -16,16 +16,16 @@ namespace MachiKoro.Api.MappingProfiles
         public ApiModelMappingProfile()
         {
             CreateMap<Persistence.Models.Game, Contracts.Game.CreateGame.CreateGameRequest>();
-            CreateMap<Persistence.Models.Player, Contracts.Player.GetPlayerProfile.GetPlayerProfileRequest>();
+            //CreateMap<Persistence.Models.Player, Contracts.Player.GetPlayerProfile.GetPlayerProfileRequest>();
 
             CreateMap<Game, Persistence.Models.Game>();
             CreateMap<Persistence.Models.Game, Game>();
 
-            CreateMap<Persistence.Models.Player, Player>();
-            CreateMap<Player, Persistence.Models.Player>();
+            //CreateMap<Persistence.Models.Player, Player>();
+            //CreateMap<Player, Persistence.Models.Player>();
 
-            CreateMap<Persistence.Models.PlayerProfile, PlayerProfile>();
-            CreateMap<PlayerProfile, Persistence.Models.PlayerProfile>();
+            //CreateMap<Persistence.Models.PlayerProfile, PlayerProfile>();
+            //CreateMap<PlayerProfile, Persistence.Models.PlayerProfile>();
 
             CreateMap<MachiKoroUser, ApplicationUser>();
             CreateMap<ApplicationUser, MachiKoroUser>();
@@ -33,7 +33,7 @@ namespace MachiKoro.Api.MappingProfiles
             CreateMap<Contracts.Identity.Token, Token>();
             CreateMap<Token, Contracts.Identity.Token>();
 
-            //CreateMap<Models.CreateGame.CreateGameRequest, Persistence.Models.Game>();
+            //CreateMap<Application.v1.Game.Commands.CreateGame.CreateGameRequest, Persistence.Models.Game>();
             //CreateMap<Models.GetPlayerProfile.GetPlayerProfileResponse, Persistence.Models.PlayersStatistics>();
             //CreateMap<Models.PlayerStatistics, Data.Models.PlayerStatistics>();
 
@@ -57,8 +57,8 @@ namespace MachiKoro.Api.MappingProfiles
             CreateMap<Contracts.Game.GetGame.GetGameRequest, Application.v1.Game.Queries.GetGame.GetGameRequest>();
             CreateMap<Contracts.Game.GetGame.GetGameResponse, Application.v1.Game.Queries.GetGame.GetGameResponse>();
 
-            CreateMap<Contracts.Player.GetPlayerProfile.GetPlayerProfileRequest, Application.v1.Player.Queries.GetPlayerProfile.GetPlayerProfileRequest>();
-            CreateMap<Contracts.Player.GetPlayerProfile.GetPlayerProfileResponse, Application.v1.Player.Queries.GetPlayerProfile.GetPlayerProfileResponse>();
+            //CreateMap<Contracts.Player.GetPlayerProfile.GetPlayerProfileRequest, Application.v1.Player.Queries.GetPlayerProfile.GetPlayerProfileRequest>();
+            //CreateMap<Contracts.Player.GetPlayerProfile.GetPlayerProfileResponse, Application.v1.Player.Queries.GetPlayerProfile.GetPlayerProfileResponse>();
 
             //CreateMap<PaginationQuery, PaginationFilter>();
             //CreateMap<GetAllPostsQuery, GetAllPostsFilter>();

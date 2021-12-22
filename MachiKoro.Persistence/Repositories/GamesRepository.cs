@@ -37,12 +37,12 @@ namespace MachiKoro.Persistence.Repositories
             return await _gameDataContext.Games.FirstOrDefaultAsync(g => g.Id == id);
         }
 
-        public async Task<List<Player>> GetPlayersFromGameAsync(Guid id)
-        {
-            //return await _gameDataContext.Games.FirstOrDefaultAsync(g => g.Id == id).Players;
+        //public async Task<List<Player>> GetPlayersFromGameAsync(Guid id)
+        //{
+        //    //return await _gameDataContext.Games.FirstOrDefaultAsync(g => g.Id == id).Players;
 
-            throw new NotImplementedException();
-        }
+        //    throw new NotImplementedException();
+        //}
 
         public async Task<bool> DeleteAsync(Guid gameId)
         {
@@ -85,10 +85,10 @@ namespace MachiKoro.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        Task<List<Domain.Models.Player.Player>> IGamesRepository.GetPlayersFromGameAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        //Task<List<Domain.Models.Player.Player>> IGamesRepository.GetPlayersFromGameAsync(Guid id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         Task<bool> IGamesRepository.UpdateAsync(Domain.Models.Game.Game gameData)
         {
