@@ -1,4 +1,6 @@
-﻿namespace MachiKoro.Application.v1.Requests
+﻿using FluentValidation;
+
+namespace MachiKoro.Application.v1.Identity.Commands.Refresh
 {
     public class RefreshTokenRequest
     {

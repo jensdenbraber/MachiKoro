@@ -45,6 +45,24 @@ namespace MachiKoro.Api.Controllers.v1
             return Created(locationUri, coreResponse.GameId);
         }
 
+        [HttpPost(ApiRoutes.Games.Choose)]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Contracts.Game.Choose.ChooseResponse), 201)]
+        public async Task<IActionResult> ChooseAsync([FromBody][Required] Contracts.Game.Choose.ChooseRequest chooseRequest, [FromRoute][Required] Contracts.Game.GetGame.GetGameRequest gameRequest)
+        {
+            var coreGameRequest = _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(gameRequest);
+            var coreChooseRequest = _mapper.Map<Application.v1.Game.Commands.Choose.ChooseRequest>(chooseRequest);
+            coreChooseRequest.GameId = coreChooseRequest.GameId;
+
+            var coreResponse = await _mediator.Send(coreChooseRequest);
+
+            if (coreResponse == null)
+                return NotFound();
+
+            return new NoContentResult();
+        }
+
         [HttpGet(ApiRoutes.Games.Get)]
         public async Task<IActionResult> GetAsync([FromRoute][Required] Contracts.Game.GetGame.GetGameRequest request)
         {

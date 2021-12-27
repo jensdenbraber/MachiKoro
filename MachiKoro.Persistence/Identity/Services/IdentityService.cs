@@ -92,13 +92,13 @@ namespace MachiKoro.Persistence.Identity.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Result> AuthorizeAsync(string userName, string password)
+        public async Task<(Result, string)> AuthorizeAsync(string userName, string password)
         {
             var existingUser = await _userManager.FindByNameAsync(userName);
 
             if (existingUser == null)
             {
-                return null;
+                return (null, null);
             }
 
             var isCorrect = await _userManager.CheckPasswordAsync(existingUser, password);
@@ -114,7 +114,7 @@ namespace MachiKoro.Persistence.Identity.Services
             string role = (await _userManager.GetRolesAsync(existingUser))[0];
             var jwtToken = await GenerateJwtToken(existingUser);
 
-            return new TokenResponse(existingUser, role, jwtToken).ToApplicationResult();
+            return (new TokenResponse(existingUser, role, jwtToken).ToApplicationResult(), existingUser.Id);
         }
 
         public async Task<Result> DeleteUserAsync(string userId)

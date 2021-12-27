@@ -16,5 +16,6 @@ namespace MachiKoro.Domain.Models.Game
         public List<Dice.Dice> Dices { get; set; }
         public Player.Player ActivePlayer { get; set; }
         public List<Player.Player> Players { get; set; }
+        public Question Step { get; set; }
     }
 }

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="v1\Exceptions\" />
     <Folder Include="v1\Player\Commands\" />
   </ItemGroup>
 

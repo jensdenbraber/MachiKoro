@@ -12,6 +12,7 @@ namespace MachiKoro.Persistence
         }
 
         public DbSet<Game> Games { get; set; }
+        public DbSet<Step> Steps { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

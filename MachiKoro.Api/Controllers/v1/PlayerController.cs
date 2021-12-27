@@ -2,7 +2,6 @@
 using MachiKoro.Api.Contracts.Player.GetPlayerProfile;
 using MachiKoro.Application.v1;
 using MachiKoro.Application.v1.Game.Commands.CreateGame;
-using MachiKoro.Application.v1.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

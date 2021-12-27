@@ -1,0 +1,19 @@
+using MachiKoro.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace MachiKoro.Persistence.Models
+{
+    [Keyless]
+    public class Step
+    {
+        public Guid PlayerId { get; set; }
+
+        public Guid GameId { get; set; }
+        public int StepIndex { get; set; }
+        public ChoiseType? ChoiseType { get; set; }
+        public ActionType? ActionType { get; set; }
+        public string Result { get; set; } // serialize based on Choise/Action type
+    }
+}

@@ -19,6 +19,6 @@ namespace MachiKoro.Api.Contracts.Identity
 
         public string UserId { get; set; }
 
-        public IdentityUser User { get; set; }
+        //public IdentityUser User { get; set; }
     }
 }

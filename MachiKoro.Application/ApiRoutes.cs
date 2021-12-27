@@ -25,6 +25,8 @@
 
             public const string Get = Base + "/games/{gameId}";
 
+            public const string Choose = Base + "/games/{gameId}/choose";
+
             public const string AddPlayer = Base + "/games/{gameId}/players";
 
             public const string RemovePlayer = Base + "/games/{gameId}/players/{playerId}";
@@ -34,7 +36,7 @@
             public const string Delete = Base + "/games/{gameId}";
 
             public const string Start = Base + "/games/{gameId}/start";
-            
+
             public const string Upkeep = Base + "/games/{gameId}/upkeep/{playerId}";
 
             public const string RollDice = Base + "/games/{gameId}/rolldice/{playerId}";
@@ -47,7 +49,7 @@
             public const string GetAll = Base + "/players";
 
             public const string Get = Base + "/players/{playerId}";
-            
+
             public const string GetProfile = Base + "/players/{playerId}/profile";
 
             public const string GetGames = Base + "/players/{playerId}/games";

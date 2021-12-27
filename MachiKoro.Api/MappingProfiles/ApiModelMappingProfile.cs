@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MachiKoro.Application.v1.Identity.Commands.Login;
 using MachiKoro.Application.v1.Identity.Commands.Registration;
-using MachiKoro.Application.v1.Requests;
 using MachiKoro.Domain.Models.Game;
 using MachiKoro.Domain.Models.Player;
 using MachiKoro.Domain.Models.PlayerProfile;
@@ -48,8 +47,8 @@ namespace MachiKoro.Api.MappingProfiles
             ////CreateMap<Player, PlayerResponse>();
             //CreateMap<GetPlayerProfileResponse, GetPlayerProfileResponse>();
 
-            CreateMap<UserRegistrationRequest, CreateUserRequest>();
-            CreateMap<UserLoginRequest, LoginUserRequest>();
+            CreateMap<CreateUserRequest, CreateUserRequest>();
+            CreateMap<LoginUserRequest, LoginUserRequest>();
 
             CreateMap<Contracts.Game.CreateGame.CreateGameRequest, Application.v1.Game.Commands.CreateGame.CreateGameRequest>();
             CreateMap<Contracts.Game.CreateGame.CreateGameResponse, Application.v1.Game.Commands.CreateGame.CreateGameResponse>();
