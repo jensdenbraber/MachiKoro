@@ -4,14 +4,16 @@ using MachiKoro.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MachiKoro.Data.Migrations.GameData
 {
     [DbContext(typeof(GameDataContext))]
-    partial class GameDataContextModelSnapshot : ModelSnapshot
+    [Migration("20211227200905_AddStep2")]
+    partial class AddStep2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +68,7 @@ namespace MachiKoro.Data.Migrations.GameData
                     b.Property<int?>("ActionType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ChoiceType")
+                    b.Property<int?>("ChoiseType")
                         .HasColumnType("int");
 
                     b.Property<Guid>("GameId")

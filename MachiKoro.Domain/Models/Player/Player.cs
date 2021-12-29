@@ -10,7 +10,7 @@ namespace MachiKoro.Domain.Models.Player
     {
         public Guid Id { get; set; }
         public PlayerType PlayerType { get; set; }
-        public int GoldAmount { get; set; }
+        public int CoinAmount { get; set; }
         public List<EstablishmentBase> EstablishmentCards { get; set; }
         public List<LandMark> LandmarkCards { get; set; }
 
@@ -18,11 +18,11 @@ namespace MachiKoro.Domain.Models.Player
         {
         }
 
-        public Player(Guid id, PlayerType playerType, int goldAmount, List<EstablishmentBase> establishmentCards, List<LandMark> landmarkCards)
+        public Player(Guid id, PlayerType playerType, int coinAmount, List<EstablishmentBase> establishmentCards, List<LandMark> landmarkCards)
         {
             Id = id;
             PlayerType = playerType;
-            GoldAmount = goldAmount;
+            CoinAmount = coinAmount;
             EstablishmentCards = establishmentCards;
             LandmarkCards = landmarkCards;
         }

@@ -1,6 +1,6 @@
-﻿using MachiKoro.Domain.Enums;
+﻿using MachiKoro.Application.v1.CardEffects.Establishments.Basic;
+using MachiKoro.Domain.Enums;
 using MachiKoro.Domain.Models.CardDecks;
-using MachiKoro.Domain.Models.CardEffects.Establishments.Basic;
 using MachiKoro.Domain.Models.Cards.Establishments.Basic;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace MachiKoro.Application.CardDecks
         private static void BuildCardDeckLowBasicGame(int numberOfRevealedCards)
         {
             var establishments = new Stack<EstablishmentBase>();
-            
+
             for (int i = 0; i < 6; i++)
             {
                 var wheatField = new PrimaryIndustry("Wheat Field", CardCategory.Wheat, new List<int>() { 1 }, 1, new PrimaryCardEffect(1));
@@ -43,12 +43,12 @@ namespace MachiKoro.Application.CardDecks
                 establishments.Push(restaurants);
             }
 
-            var revealedEstablishments = new Stack<EstablishmentBase>();
+            var revealedEstablishments = new List<EstablishmentBase>();
 
             for (int i = 0; i < numberOfRevealedCards; i++)
             {
                 var establishment = establishments.Pop();
-                revealedEstablishments.Push(establishment);
+                revealedEstablishments.Add(establishment);
             }
 
             var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
@@ -79,12 +79,12 @@ namespace MachiKoro.Application.CardDecks
                 establishments.Push(familyRestaurant);
             }
 
-            var revealedEstablishments = new Stack<EstablishmentBase>();
+            var revealedEstablishments = new List<EstablishmentBase>();
 
             for (int i = 0; i < numberOfRevealedCards; i++)
             {
                 var establishment = establishments.Pop();
-                revealedEstablishments.Push(establishment);
+                revealedEstablishments.Add(establishment);
             }
 
             var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
@@ -98,21 +98,21 @@ namespace MachiKoro.Application.CardDecks
 
             for (int i = 0; i < 4; i++)
             {
-                var stadium = new MajorEstablishment("Stadium", CardCategory.Tower, new List<int>() { 6 }, 6, new Domain.Models.CardEffects.Establishments.Basic.Major.CardEffectStadium());
-                var tvStation = new MajorEstablishment("TV Station", CardCategory.Tower, new List<int>() { 6 }, 7, new Domain.Models.CardEffects.Establishments.Basic.Major.CardEffectStadium());
-                var businessCenter = new MajorEstablishment("Business Center", CardCategory.Tower, new List<int>() { 6 }, 8, new Domain.Models.CardEffects.Establishments.Basic.Major.CardEffectStadium());
+                var stadium = new MajorEstablishment("Stadium", CardCategory.Tower, new List<int>() { 6 }, 6, new v1.CardEffects.Establishments.Basic.Major.CardEffectStadium());
+                var tvStation = new MajorEstablishment("TV Station", CardCategory.Tower, new List<int>() { 6 }, 7, new v1.CardEffects.Establishments.Basic.Major.CardEffectStadium());
+                var businessCenter = new MajorEstablishment("Business Center", CardCategory.Tower, new List<int>() { 6 }, 8, new v1.CardEffects.Establishments.Basic.Major.CardEffectStadium());
 
                 establishments.Push(stadium);
                 establishments.Push(tvStation);
                 establishments.Push(businessCenter);
             }
 
-            var revealedEstablishments = new Stack<EstablishmentBase>();
+            var revealedEstablishments = new List<EstablishmentBase>();
 
             for (int i = 0; i < numberOfRevealedCards; i++)
             {
                 var establishment = establishments.Pop();
-                revealedEstablishments.Push(establishment);
+                revealedEstablishments.Add(establishment);
             }
 
             var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);

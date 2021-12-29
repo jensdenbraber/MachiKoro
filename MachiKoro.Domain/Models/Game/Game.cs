@@ -1,4 +1,5 @@
 ﻿using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Extensions;
 using MachiKoro.Domain.Models.CardDecks;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,8 @@ namespace MachiKoro.Domain.Models.Game
         public int NumberOfOrbits { get; set; }
         public List<CardDeck> CardDecks { get; set; }
         public List<Dice.Dice> Dices { get; set; }
-        public Player.Player ActivePlayer { get; set; }
-        public List<Player.Player> Players { get; set; }
+        public Player.Player ActivePlayer => Players.Current;
+        public CircularList<Player.Player> Players { get; set; }
         public Question Step { get; set; }
     }
 }

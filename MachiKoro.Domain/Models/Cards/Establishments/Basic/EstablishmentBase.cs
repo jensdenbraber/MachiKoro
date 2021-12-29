@@ -1,5 +1,5 @@
 using MachiKoro.Domain.Enums;
-using MachiKoro.Domain.Models.CardEffects.Establishments.Basic;
+using MachiKoro.Domain.Interfaces;
 using System.Collections.Generic;
 
 namespace MachiKoro.Domain.Models.Cards.Establishments.Basic
@@ -18,9 +18,9 @@ namespace MachiKoro.Domain.Models.Cards.Establishments.Basic
             _establishmentEffect = establishmentEffect;
         }
 
-        public void Activate()
+        public void ExecuteEffect(Game.Game game, Player.Player player)
         {
-            _establishmentEffect.Activate();
+            _establishmentEffect.Activate(game, player);
         }
     }
 }

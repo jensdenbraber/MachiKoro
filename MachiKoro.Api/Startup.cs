@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using MachiKoro.Api.Hubs;
 
 namespace MachiKoro.Api
 {
@@ -48,7 +49,9 @@ namespace MachiKoro.Api
 
             services.AddCors();
             services.AddControllers();
-        }  
+
+            services.AddSignalR();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -95,6 +98,7 @@ namespace MachiKoro.Api
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapHub<GameHub>("/hubs/game").RequireCors("SignalRHubs");
                 //endpoints.MapRazorPages();
             });
         }

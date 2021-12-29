@@ -16,12 +16,12 @@ namespace MachiKoro.Persistence.Repositories
         public StepsRepository(IMapper mapper, GameDataContext gameDataContext)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _gameDataContext = gameDataContext;
+            _gameDataContext = gameDataContext ?? throw new ArgumentNullException(nameof(gameDataContext));
         }
 
         public async Task<bool> AddStepAsync(Domain.Models.Game.Game game, Domain.Models.Game.Step step)
         {
-            Step stepData = _mapper.Map<Step>(step);
+            var stepData = _mapper.Map<Step>(step);
 
             stepData.StepIndex = await _gameDataContext.Steps.Where(x => x.GameId == game.Id).CountAsync();
             stepData.GameId = game.Id;

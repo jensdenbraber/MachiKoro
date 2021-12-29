@@ -1,6 +1,4 @@
 ﻿using MachiKoro.Domain.Enums;
-using MachiKoro.Domain.Models.CardEffects.Establishments.Basic;
-using MachiKoro.Domain.Models.CardEffects.Landmarks.Basic;
 using MachiKoro.Domain.Models.Cards.Establishments.Basic;
 using MachiKoro.Domain.Models.Cards.Landmarks.Basic;
 using System;
@@ -14,16 +12,16 @@ namespace MachiKoro.Domain.TestModelFactory.Models.Player
         {
             var establishmentCards = new List<EstablishmentBase>()
             {
-                new PrimaryIndustry("Wheat Field", CardCategory.Wheat, new List<int>() { 1 }, 1, new PrimaryCardEffect(1)),
-                new SecondaryIndustryCard("Bakery", CardCategory.Bread, new List<int>() { 2, 3 }, 1, new SecondayCardEffect(1)),
+                new PrimaryIndustry("Wheat Field", CardCategory.Wheat, new List<int>() { 1 }, 1, null),
+                new SecondaryIndustryCard("Bakery", CardCategory.Bread, new List<int>() { 2, 3 }, 1, null),
             };
 
             var landmarkCards = new List<LandMark>()
             {
-                new LandMark("Train Station", CardCategory.Tower, 4, new TrainStation()),
-                new LandMark("Shopping Mall", CardCategory.Tower, 10, new ShoppingMall()),
-                new LandMark("Amusement Park", CardCategory.Tower, 16, new AmusementPark()),
-                new LandMark("Radio Tower", CardCategory.Tower, 22, new RadioTower()),
+                new LandMark("Train Station", CardCategory.Tower, 4, null),
+                new LandMark("Shopping Mall", CardCategory.Tower, 10, null),
+                new LandMark("Amusement Park", CardCategory.Tower, 16, null),
+                new LandMark("Radio Tower", CardCategory.Tower, 22, null),
             };
 
             return new Domain.Models.Player.Player(Guid.NewGuid(), PlayerType.Computer, 3, establishmentCards, landmarkCards);

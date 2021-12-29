@@ -12,8 +12,8 @@ namespace MachiKoro.Persistence.Models
 
         public Guid GameId { get; set; }
         public int StepIndex { get; set; }
-        public ChoiseType? ChoiseType { get; set; }
+        public ChoiceType? ChoiceType { get; set; }
         public ActionType? ActionType { get; set; }
-        public string Result { get; set; } // serialize based on Choise/Action type
+        public string Result { get; set; } // serialize based on Choice/Action type
     }
 }

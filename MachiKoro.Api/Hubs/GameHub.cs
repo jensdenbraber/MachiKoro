@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using SignalRSwaggerGen.Attributes;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace MachiKoro.Api.Hubs
 {
     [SignalRHub(path: "/hubs/GameHub")]
+    [Authorize]
     public class GameHub : Hub
     {
         [SignalRMethod(name: "nameOfTheMethodCalledOnTheClientSide", Microsoft.OpenApi.Models.OperationType.Post)]
@@ -19,14 +21,10 @@ namespace MachiKoro.Api.Hubs
         [SignalRMethod(name: "RollDice", Microsoft.OpenApi.Models.OperationType.Post)]
         public async Task RollDice(string user)
         {
-
-
             int diceValue = 12;
 
             await Clients.All.SendAsync("DiceRoll", user, diceValue);
         }
-
-
 
         //[HttpPost(ApiRoutes.Games.Upkeep)]
         //[Consumes("application/json")]

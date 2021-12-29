@@ -16,18 +16,18 @@ namespace MachiKoro.Application.v1.Game.Commands.Choose
         public ChooseRequestHandler(IGamesRepository gameRepository, Services.GamesService gamesService)
         {
             _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
-            _gamesService = gamesService;
+            _gamesService = gamesService ?? throw new ArgumentNullException(nameof(gamesService));
         }
 
         public async Task<ChooseResponse> Handle(ChooseRequest request, CancellationToken cancellationToken)
         {
-            //request.index;
             var game = await _gameRepository.GetGameAsync(request.GameId);
 
             if (game.ActivePlayer.Id != request.PlayerId)
             {
                 throw new UnauthorizedAccessException();
             }
+
             if (request.Index > game.Step.Options.Count)
             {
                 throw new ArgumentOutOfRangeException("Chosen option is out of bounds.");
@@ -35,18 +35,20 @@ namespace MachiKoro.Application.v1.Game.Commands.Choose
 
             var chosenOption = game.Step.Options[request.Index];
 
-            switch (game.Step.ChoiseType)
+            switch (game.Step.ChoiceType)
             {
-                case ChoiseType.AmountDices:
+                case ChoiceType.AmountDices:
 
-                    _gamesService.PostActionDiceAmountAsync(game, chosenOption);
+                    await _gamesService.PostActionDiceAmountAsync(game, chosenOption);
 
                     break;
 
-                case ChoiseType.BuyCard:
+                case ChoiceType.BuyCard:
+
                     break;
 
-                case ChoiseType.Build:
+                case ChoiceType.Build:
+                    await _gamesService.PostActionConstructionAsync(game, chosenOption);
                     break;
 
                 default:

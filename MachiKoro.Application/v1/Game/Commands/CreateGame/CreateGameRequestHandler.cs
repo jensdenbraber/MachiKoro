@@ -1,6 +1,7 @@
 ﻿using MachiKoro.Application.CardDecks;
 using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Extensions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace MachiKoro.Application.v1.Game.Commands.CreateGame
             var player = new Domain.Models.Player.Player()
             {
                 Id = Guid.NewGuid(),
-                GoldAmount = 3,
+                CoinAmount = 3,
                 PlayerType = PlayerType.Human,
                 EstablishmentCards = new List<Domain.Models.Cards.Establishments.Basic.EstablishmentBase>(),
                 LandmarkCards = new List<Domain.Models.Cards.Landmarks.Basic.LandMark>()
@@ -34,7 +35,7 @@ namespace MachiKoro.Application.v1.Game.Commands.CreateGame
                 Id = Guid.NewGuid(),
                 MaxNumberOfPlayers = request.MaxNumberOfPlayers,
                 ExpensionType = request.ExpensionType,
-                Players = new List<Domain.Models.Player.Player> { player },
+                Players = new CircularList<Domain.Models.Player.Player> { player },
                 CardDecks = CardDeckBuilder.BuildCardDecksBasicGame()
             };
 

@@ -9,7 +9,7 @@ namespace MachiKoro.Domain.TestModelFactory.Models.CardDeck
         public static Domain.Models.CardDecks.CardDeck ValidInstance(Guid id, int maxRevealedCards = 0)
         {
             var establishmentCards = new Stack<EstablishmentBase>();
-            var revealedEstablishmentCards = new Stack<EstablishmentBase>();
+            var revealedEstablishmentCards = new List<EstablishmentBase>();
 
             var cardDeck = new Domain.Models.CardDecks.CardDeck(id, establishmentCards, revealedEstablishmentCards, maxRevealedCards);
 

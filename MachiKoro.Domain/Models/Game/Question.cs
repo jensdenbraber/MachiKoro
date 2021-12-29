@@ -4,7 +4,7 @@ namespace MachiKoro.Domain.Models.Game
 {
     public class Question
     {
-        public Enums.ChoiseType ChoiseType { get; set; }
+        public Enums.ChoiceType ChoiceType { get; set; }
         public List<object> Options { get; set; }
     }
 }

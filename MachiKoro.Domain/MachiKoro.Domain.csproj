@@ -11,8 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\CardEffects\Establishments\Harbor\" />
-    <Folder Include="Models\CardEffects\Landmarks\Harbor\" />
     <Folder Include="Models\Cards\Establishments\Harbor\" />
     <Folder Include="Models\Cards\Landmarks\Harbor\" />
   </ItemGroup>

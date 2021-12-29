@@ -9,9 +9,9 @@ namespace MachiKoro.Domain.Models.CardDecks
         public Guid Id { get; set; }
         public int MaxRevealedCards { get; }
         public Stack<EstablishmentBase> EstablishmentCards { get; set; }
-        public Stack<EstablishmentBase> RevealedCards { get; set; }
+        public List<EstablishmentBase> RevealedCards { get; set; }
 
-        public CardDeck(Guid id, Stack<EstablishmentBase> establishmentCards, Stack<EstablishmentBase> revealedCards, int maxRevealCards)
+        public CardDeck(Guid id, Stack<EstablishmentBase> establishmentCards, List<EstablishmentBase> revealedCards, int maxRevealCards)
         {
             Id = id;
             EstablishmentCards = establishmentCards;
