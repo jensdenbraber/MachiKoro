@@ -32,8 +32,7 @@ namespace MachiKoro.Persistence.Extensions
 
             services.AddTransient<IGamesRepository, GamesRepository>();
             services.AddTransient<IStepsRepository, StepsRepository>();
-            services.AddTransient<Application.v1.Services.GamesService, Application.v1.Services.GamesService>();
-
+ 
             //services.AddTransient<IPlayersRepository, PlayersRepository>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<Token, Token>();

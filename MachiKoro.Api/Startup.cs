@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using MachiKoro.Api.Hubs;
+using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Persistence.Repositories;
 
 namespace MachiKoro.Api
 {
@@ -47,7 +49,20 @@ namespace MachiKoro.Api
 
             services.AddSwaggerServices(Configuration);
 
-            services.AddCors();
+            services.AddTransient<INotifyPlayerService, GameHubContext>();
+            services.AddTransient<Application.v1.Services.GamesService, Application.v1.Services.GamesService>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ClientPermission", policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("http://localhost:3000")
+                        .AllowCredentials();
+                });
+            });
+
             services.AddControllers();
 
             services.AddSignalR();
@@ -85,10 +100,12 @@ namespace MachiKoro.Api
             app.UseRouting();
 
             // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            //app.UseCors(x => x
+            //    .AllowAnyOrigin()
+            //    .AllowAnyMethod()
+            //    .AllowAnyHeader());
+
+            app.UseCors("ClientPermission");
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -98,8 +115,8 @@ namespace MachiKoro.Api
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                //endpoints.MapHub<GameHub>("/hubs/game").RequireCors("SignalRHubs");
-                //endpoints.MapRazorPages();
+                endpoints.MapHub<GameHub>("/hubs/GameHub");
+                //endpoints.MapHub<SignalRNotificationHub>("/hubs/SignalRNotification");
             });
         }
     }

@@ -3,6 +3,7 @@
     public enum ActionType
     {
         DiceThrow,
+        EarnIncome,
         Construction
     }
 }

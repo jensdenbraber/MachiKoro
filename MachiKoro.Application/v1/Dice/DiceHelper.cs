@@ -1,35 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MachiKoro.Application.v1.Dice
 {
     public static class DiceHelper
     {
-        public static int Total()
+        public static int Total(this List<Domain.Models.Dice.Dice> dices)
         {
-            throw new NotImplementedException();
+            return dices.Sum(x => x.PreviousValue);
         }
 
-        public static bool IsSame()
+        public static bool IsSame(this List<Domain.Models.Dice.Dice> dices)
         {
-            throw new NotImplementedException();
+            return dices.Select(x => x.PreviousValue).Distinct().Count() < 2;
         }
 
         public static int Roll(this Domain.Models.Dice.Dice dice)
         {
-            return new Random().Next(1, dice.Sides);
+            var newValue = new Random().Next(1, dice.Sides);
+
+            dice.PreviousValue = newValue;
+
+            return newValue;
         }
 
         public static List<int> Roll(this Domain.Models.Dice.Dice dice, int amountDice)
         {
-            var list = new List<int>();
+            var lastValues = new List<int>();
 
             for (int i = 0; i < amountDice; i++)
             {
-                list.Add(dice.Roll());
+                lastValues.Add(dice.Roll());
             }
 
-            return list;
+            return lastValues;
         }
     }
 }

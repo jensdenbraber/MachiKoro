@@ -14,13 +14,13 @@ namespace MachiKoro.Application.v1.Services
 {
     public class GamesService
     {
-        private readonly IGamesRepository _gameRepository;
         private readonly IStepsRepository _stepRepository;
+        private readonly INotifyPlayerService _playerService;
 
-        public GamesService(IGamesRepository gameRepository, IStepsRepository stepRepository)
+        public GamesService(IStepsRepository stepRepository, INotifyPlayerService playerService)
         {
-            _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
             _stepRepository = stepRepository ?? throw new ArgumentNullException(nameof(stepRepository));
+            _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
         }
 
         public async Task PostActionDiceAmountAsync(Domain.Models.Game.Game game, object chosenResult)
@@ -39,6 +39,7 @@ namespace MachiKoro.Application.v1.Services
             var stepAdded = await _stepRepository.AddStepAsync(game, step);
 
             // TODO send diceRoll to GameHub for client notification
+            await _playerService.SendNotificationDiceRollAsync(diceAmount);
 
             //TODO Earnincome()
             await EarnIncomeAsync(game);
@@ -53,26 +54,40 @@ namespace MachiKoro.Application.v1.Services
                     card.ExecuteEffect(game, player);
                 }
             }
+
+            var step = new Step
+            {
+                PlayerId = game.ActivePlayer.Id,
+                StepKind = StepKind.Action,
+                Type = (int)ActionType.EarnIncome,
+                Result = game.Players.ToArray()
+            };
+
+            var stepAdded = await _stepRepository.AddStepAsync(game, step);
         }
 
         public async Task StartConstructionPhaseAsync(Domain.Models.Game.Game game)
         {
-            var constructionOptions = GetConstructionOptions(game);
+            var constructionEstablishmentsOptions = GetConstructionEstablishmentsOptions(game);
+            var constructionLandmarksOptions = GetConstructionLandmarksOptions(game);
 
-            if (constructionOptions.Any())
+            if (constructionEstablishmentsOptions.Any() || constructionLandmarksOptions.Any())
             {
                 // TODO send to GameHub option for player
+                await _playerService.SendNotificationConstructionEstablishmentsOptionsAsync(game.ActivePlayer.Id, constructionEstablishmentsOptions);
+                await _playerService.SendNotificationConstructionLandmarksOptionsAsync(game.ActivePlayer.Id, constructionLandmarksOptions);
+
                 return;
             }
 
             await ToNextPlayerAsync(game);
         }
 
-        public async Task PostActionConstructionAsync(Domain.Models.Game.Game game, object chosenResult)
+        public async Task PostActionConstructionEstablishmentAsync(Domain.Models.Game.Game game, object chosenResult)
         {
             var chosenIndex = Convert.ToInt32(chosenResult);
 
-            var card = GetConstructionOptions(game)[chosenIndex];
+            var card = GetConstructionEstablishmentsOptions(game).ElementAt(chosenIndex);
 
             if (card is EstablishmentBase)
             {
@@ -87,11 +102,27 @@ namespace MachiKoro.Application.v1.Services
                 }
             }
 
+            var step = new Step
+            {
+                PlayerId = game.ActivePlayer.Id,
+                StepKind = StepKind.Action,
+                Type = (int)ActionType.Construction,
+                Result = card
+            };
+
+            var stepAdded = await _stepRepository.AddStepAsync(game, step);
+        }
+
+        public async Task PostActionConstructionLandmarkAsync(Domain.Models.Game.Game game, object chosenResult)
+        {
+            var chosenIndex = Convert.ToInt32(chosenResult);
+
+            var card = GetConstructionLandmarksOptions(game).ElementAt(chosenIndex);
+
             if (card is LandMark)
             {
                 game.ActivePlayer.LandmarkCards.SingleOrDefault(x => x == card as LandMark).Construct();
 
-                // TODO check for winning player
                 if (HasPlayerWon(game.ActivePlayer))
                 {
                     // TODO send to GameHub Player won
@@ -109,16 +140,14 @@ namespace MachiKoro.Application.v1.Services
             var stepAdded = await _stepRepository.AddStepAsync(game, step);
         }
 
-        private List<Card> GetConstructionOptions(Domain.Models.Game.Game game)
+        private IEnumerable<Card> GetConstructionEstablishmentsOptions(Domain.Models.Game.Game game)
         {
-            var establishments = game.CardDecks.SelectMany(cardDeck => cardDeck.RevealedCards.Where(establishment => establishment.ConstructionCost <= game.ActivePlayer.CoinAmount)).ToList();
-            var landmarks = game.ActivePlayer.LandmarkCards.Where(landmark => landmark.CompletionCost <= game.ActivePlayer.CoinAmount).ToList();
+            return game.CardDecks.SelectMany(cardDeck => cardDeck.RevealedCards.Where(establishment => establishment.ConstructionCost <= game.ActivePlayer.CoinAmount)).Cast<Card>();
+        }
 
-            var constructionOptions = new List<Card>();
-            constructionOptions.AddRange(establishments);
-            constructionOptions.AddRange(landmarks);
-
-            return constructionOptions;
+        private IEnumerable<Card> GetConstructionLandmarksOptions(Domain.Models.Game.Game game)
+        {
+            return game.ActivePlayer.LandmarkCards.Where(landmark => landmark.CompletionCost <= game.ActivePlayer.CoinAmount).Cast<Card>();
         }
 
         private async Task ToNextPlayerAsync(Domain.Models.Game.Game game)

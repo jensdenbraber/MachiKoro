@@ -56,6 +56,11 @@ namespace MachiKoro.Api.MappingProfiles
             CreateMap<Contracts.Game.GetGame.GetGameRequest, Application.v1.Game.Queries.GetGame.GetGameRequest>();
             CreateMap<Contracts.Game.GetGame.GetGameResponse, Application.v1.Game.Queries.GetGame.GetGameResponse>();
 
+            CreateMap<Contracts.Game.Choose.ChooseRequest, Application.v1.Game.Commands.Choose.ChooseRequest>();
+            CreateMap<Contracts.Game.Choose.ChooseResponse, Application.v1.Game.Commands.Choose.ChooseResponse>();
+
+            CreateMap<Contracts.Game.ExpensionTypeResponse, Domain.Enums.ExpensionType>();
+
             //CreateMap<Contracts.Player.GetPlayerProfile.GetPlayerProfileRequest, Application.v1.Player.Queries.GetPlayerProfile.GetPlayerProfileRequest>();
             //CreateMap<Contracts.Player.GetPlayerProfile.GetPlayerProfileResponse, Application.v1.Player.Queries.GetPlayerProfile.GetPlayerProfileResponse>();
 

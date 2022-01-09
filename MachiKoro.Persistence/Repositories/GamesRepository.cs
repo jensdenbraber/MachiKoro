@@ -16,33 +16,45 @@ namespace MachiKoro.Persistence.Repositories
         public GamesRepository(IMapper mapper, GameDataContext gameDataContext)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _gameDataContext = gameDataContext;
+            _gameDataContext = gameDataContext ?? throw new ArgumentNullException(nameof(gameDataContext));
         }
 
-        public async Task<bool> CreateAsync(Game gameData)
+        public async Task<bool> CreateAsync(Domain.Models.Game.Game game)
         {
+            var gameData = _mapper.Map<Game>(game);
+
             await _gameDataContext.Games.AddAsync(gameData);
 
             var created = await _gameDataContext.SaveChangesAsync();
             return created > 0;
         }
 
-        public async Task<List<Game>> GetGamesAsync()
+        public Task<List<Domain.Models.Game.Game>> GetGamesAsync()
         {
-            return await _gameDataContext.Games.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<Game> GetGameAsync(Guid id)
+        public async Task<Domain.Models.Game.Game> GetGameAsync(Guid id)
         {
-            return await _gameDataContext.Games.FirstOrDefaultAsync(g => g.Id == id);
+            Game gameData = await _gameDataContext.Games.FindAsync(id);
+
+            if (gameData == null)
+                return null;
+
+            var game = _mapper.Map<Domain.Models.Game.Game>(gameData);
+
+            return game;
         }
 
-        //public async Task<List<Player>> GetPlayersFromGameAsync(Guid id)
-        //{
-        //    //return await _gameDataContext.Games.FirstOrDefaultAsync(g => g.Id == id).Players;
+        public async Task<bool> UpdateAsync(Domain.Models.Game.Game game)
+        {
+            var gameData = _mapper.Map<Game>(game);
 
-        //    throw new NotImplementedException();
-        //}
+            _gameDataContext.Games.Update(gameData);
+
+            var updated = await _gameDataContext.SaveChangesAsync();
+            return updated > 0;
+        }
 
         public async Task<bool> DeleteAsync(Guid gameId)
         {
@@ -57,52 +69,21 @@ namespace MachiKoro.Persistence.Repositories
             return deleted > 0;
         }
 
-        public async Task<bool> UpdateAsync(Game gameData)
-        {
-            _gameDataContext.Games.Update(gameData);
-
-            var updated = await _gameDataContext.SaveChangesAsync();
-            return updated > 0;
-        }
-
-        public async Task<bool> CreateAsync(Domain.Models.Game.Game game)
-        {
-            Game gameData = _mapper.Map<Game>(game);
-
-            await _gameDataContext.Games.AddAsync(gameData);
-
-            var created = await _gameDataContext.SaveChangesAsync();
-            return created > 0;
-        }
-
-        Task<List<Domain.Models.Game.Game>> IGamesRepository.GetGamesAsync()
+        public Task<bool> AddPlayerToGameAsync(Guid playerId, Guid gameId)
         {
             throw new NotImplementedException();
         }
 
-        Task<Domain.Models.Game.Game> IGamesRepository.GetGameAsync(Guid id)
+        public Task<bool> RemovePlayerFromGameAsync(Guid playerId, Guid gameId)
         {
             throw new NotImplementedException();
         }
 
-        //Task<List<Domain.Models.Player.Player>> IGamesRepository.GetPlayersFromGameAsync(Guid id)
+        //public async Task<List<Player>> GetPlayersFromGameAsync(Guid id)
         //{
+        //    //return await _gameDataContext.Games.FirstOrDefaultAsync(g => g.Id == id).Players;
+
         //    throw new NotImplementedException();
         //}
-
-        Task<bool> IGamesRepository.UpdateAsync(Domain.Models.Game.Game gameData)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IGamesRepository.AddPlayerToGameAsync(Guid playerId, Guid gameId)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IGamesRepository.RemovePlayerFromGameAsync(Guid playerId, Guid gameId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

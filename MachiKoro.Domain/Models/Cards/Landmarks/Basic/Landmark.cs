@@ -20,10 +20,5 @@ namespace MachiKoro.Domain.Models.Cards.Landmarks.Basic
         {
             IsConstructed = true;
         }
-
-        public void Destroy()
-        {
-            IsConstructed = false;
-        }
     }
 }

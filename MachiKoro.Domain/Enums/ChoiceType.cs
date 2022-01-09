@@ -3,7 +3,7 @@
     public enum ChoiceType
     {
         AmountDices,
-        BuyCard,
-        Build
+        ConstructEstablishment,
+        ConstructLandmark
     }
 }

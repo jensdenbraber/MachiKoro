@@ -1,10 +1,13 @@
-﻿using MachiKoro.Domain.Enums;
+﻿using System.Text.Json.Serialization;
 
 namespace MachiKoro.Api.Contracts.Game.CreateGame
 {
-    public class CreateGameRequest
+    public record CreateGameRequest
     {
+        [JsonPropertyName("maxNumberOfPlayers")]
         public int MaxNumberOfPlayers { get; set; }
-        public ExpensionType ExpensionType { get; set; }
+
+        [JsonPropertyName("expensionType")]
+        public ExpensionTypeResponse ExpensionType { get; set; }
     }
 }

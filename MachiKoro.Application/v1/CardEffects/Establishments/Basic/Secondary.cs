@@ -6,9 +6,9 @@ namespace MachiKoro.Application.v1.CardEffects.Establishments.Basic
     {
         public readonly int CoinReward;
 
-        public SecondayCardEffect(int goldReward)
+        public SecondayCardEffect(int coinReward)
         {
-            CoinReward = goldReward;
+            CoinReward = coinReward;
         }
 
         public void Activate(Domain.Models.Game.Game game, Domain.Models.Player.Player player)

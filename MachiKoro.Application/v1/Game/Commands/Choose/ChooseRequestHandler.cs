@@ -38,17 +38,16 @@ namespace MachiKoro.Application.v1.Game.Commands.Choose
             switch (game.Step.ChoiceType)
             {
                 case ChoiceType.AmountDices:
-
                     await _gamesService.PostActionDiceAmountAsync(game, chosenOption);
+                    break;
+
+                case ChoiceType.ConstructEstablishment:
+                    await _gamesService.PostActionConstructionEstablishmentAsync(game, chosenOption);
 
                     break;
 
-                case ChoiceType.BuyCard:
-
-                    break;
-
-                case ChoiceType.Build:
-                    await _gamesService.PostActionConstructionAsync(game, chosenOption);
+                case ChoiceType.ConstructLandmark:
+                    await _gamesService.PostActionConstructionLandmarkAsync(game, chosenOption);
                     break;
 
                 default:
