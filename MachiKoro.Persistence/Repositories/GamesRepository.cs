@@ -4,6 +4,7 @@ using MachiKoro.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Persistence.Repositories
@@ -19,24 +20,24 @@ namespace MachiKoro.Persistence.Repositories
             _gameDataContext = gameDataContext ?? throw new ArgumentNullException(nameof(gameDataContext));
         }
 
-        public async Task<bool> CreateAsync(Domain.Models.Game.Game game)
+        public async Task<bool> CreateAsync(Domain.Models.Game.Game game, CancellationToken cancellationToken = default)
         {
             var gameData = _mapper.Map<Game>(game);
 
-            await _gameDataContext.Games.AddAsync(gameData);
+            await _gameDataContext.Games.AddAsync(gameData, cancellationToken);
 
             var created = await _gameDataContext.SaveChangesAsync();
             return created > 0;
         }
 
-        public Task<List<Domain.Models.Game.Game>> GetGamesAsync()
+        public Task<List<Domain.Models.Game.Game>> GetGamesAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Models.Game.Game> GetGameAsync(Guid id)
+        public async Task<Domain.Models.Game.Game> GetGameAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            Game gameData = await _gameDataContext.Games.FindAsync(id);
+            Game gameData = await _gameDataContext.Games.FindAsync(id, cancellationToken);
 
             if (gameData == null)
                 return null;
@@ -46,17 +47,17 @@ namespace MachiKoro.Persistence.Repositories
             return game;
         }
 
-        public async Task<bool> UpdateAsync(Domain.Models.Game.Game game)
+        public async Task<bool> UpdateAsync(Domain.Models.Game.Game game, CancellationToken cancellationToken = default)
         {
             var gameData = _mapper.Map<Game>(game);
 
             _gameDataContext.Games.Update(gameData);
 
-            var updated = await _gameDataContext.SaveChangesAsync();
+            var updated = await _gameDataContext.SaveChangesAsync(cancellationToken);
             return updated > 0;
         }
 
-        public async Task<bool> DeleteAsync(Guid gameId)
+        public async Task<bool> DeleteAsync(Guid gameId, CancellationToken cancellationToken = default)
         {
             var game = await _gameDataContext.Games.AsNoTracking().SingleOrDefaultAsync(x => x.Id == gameId);
 
@@ -65,16 +66,16 @@ namespace MachiKoro.Persistence.Repositories
 
             _gameDataContext.Games.Remove(game);
 
-            var deleted = await _gameDataContext.SaveChangesAsync();
+            var deleted = await _gameDataContext.SaveChangesAsync(cancellationToken);
             return deleted > 0;
         }
 
-        public Task<bool> AddPlayerToGameAsync(Guid playerId, Guid gameId)
+        public Task<bool> AddPlayerToGameAsync(Guid playerId, Guid gameId, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> RemovePlayerFromGameAsync(Guid playerId, Guid gameId)
+        public Task<bool> RemovePlayerFromGameAsync(Guid playerId, Guid gameId, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

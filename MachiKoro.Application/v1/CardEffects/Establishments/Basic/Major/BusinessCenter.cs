@@ -1,24 +1,33 @@
+using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Domain.Interfaces;
 using MachiKoro.Domain.Models.Cards.Establishments.Basic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace MachiKoro.Application.v1.CardEffects.Establishments.Basic.Major
 {
     public class CardEffectBusinessCenter : IMajorCardEffect
     {
-        public void Activate(Domain.Models.Game.Game game, Domain.Models.Player.Player player)
+        private readonly INotifyPlayerService _playerService;
+
+        public CardEffectBusinessCenter(INotifyPlayerService playerService)
+        {
+            _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
+        }
+
+        public async void Activate(Domain.Models.Game.Game game, Domain.Models.Player.Player player, CancellationToken cancellationToken)
         {
             // if your turn: exchange a chosen card with an opponent, may not be of category "Tower"
 
             if (game.ActivePlayer.Equals(player))
             {
                 IEnumerable<EstablishmentBase> opponentsTargets = GetAllLegalOpponentsTargets(game);
-                IEnumerable<EstablishmentBase> owntargets = GetAllLegalOwnTargets(game);
+                IEnumerable<EstablishmentBase> ownTargets = GetAllLegalOwnTargets(game);
 
-                IEnumerable<EstablishmentBase> targets = owntargets.Concat(opponentsTargets);
-
-                // TODO send targets to GameHub for client notification
+                await _playerService.SendNotificationTargetAsync(opponentsTargets, cancellationToken);
+                await _playerService.SendNotificationTargetAsync(ownTargets, cancellationToken);
             }
         }
 

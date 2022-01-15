@@ -19,7 +19,7 @@ namespace MachiKoro.Application.v1.Game.Commands.RemovePlayerFromGame
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            bool removed = await _gameRepository.RemovePlayerFromGameAsync(request.PlayerId, request.GameId);
+            bool removed = await _gameRepository.RemovePlayerFromGameAsync(request.PlayerId, request.GameId, cancellationToken);
 
             if (!removed)
             {

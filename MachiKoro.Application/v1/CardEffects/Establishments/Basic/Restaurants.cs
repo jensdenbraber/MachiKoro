@@ -1,5 +1,6 @@
 using MachiKoro.Domain.Interfaces;
 using System;
+using System.Threading;
 
 namespace MachiKoro.Application.v1.CardEffects.Establishments.Basic
 {
@@ -12,7 +13,7 @@ namespace MachiKoro.Application.v1.CardEffects.Establishments.Basic
             CoinReward = coinReward;
         }
 
-        public void Activate(Domain.Models.Game.Game game, Domain.Models.Player.Player player)
+        public void Activate(Domain.Models.Game.Game game, Domain.Models.Player.Player player, CancellationToken cancellationToken)
         {
             if (game.ActivePlayer != player)
             {

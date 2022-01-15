@@ -9,7 +9,7 @@ namespace MachiKoro.Application.UnitTests
         [Fact]
         public void BuildCardDecksBasicGame()
         {
-            var cardDecks = CardDeckBuilder.BuildCardDecksBasicGame();
+            var cardDecks = new CardDeckBuilder(null).BuildCardDecksBasicGame();
 
             cardDecks.Should().HaveCount(3);
 

@@ -21,7 +21,7 @@ namespace MachiKoro.Application.v1.Game.Commands.Choose
 
         public async Task<ChooseResponse> Handle(ChooseRequest request, CancellationToken cancellationToken)
         {
-            var game = await _gameRepository.GetGameAsync(request.GameId);
+            var game = await _gameRepository.GetGameAsync(request.GameId, cancellationToken);
 
             if (game.ActivePlayer.Id != request.PlayerId)
             {
@@ -38,16 +38,16 @@ namespace MachiKoro.Application.v1.Game.Commands.Choose
             switch (game.Step.ChoiceType)
             {
                 case ChoiceType.AmountDices:
-                    await _gamesService.PostActionDiceAmountAsync(game, chosenOption);
+                    await _gamesService.PostActionDiceAmountAsync(game, chosenOption, cancellationToken);
                     break;
 
                 case ChoiceType.ConstructEstablishment:
-                    await _gamesService.PostActionConstructionEstablishmentAsync(game, chosenOption);
+                    await _gamesService.PostActionConstructionEstablishmentAsync(game, chosenOption, cancellationToken);
 
                     break;
 
                 case ChoiceType.ConstructLandmark:
-                    await _gamesService.PostActionConstructionLandmarkAsync(game, chosenOption);
+                    await _gamesService.PostActionConstructionLandmarkAsync(game, chosenOption, cancellationToken);
                     break;
 
                 default:

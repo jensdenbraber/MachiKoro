@@ -8,6 +8,7 @@ using MachiKoro.Domain.Models.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Application.v1.Services
@@ -23,7 +24,7 @@ namespace MachiKoro.Application.v1.Services
             _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
         }
 
-        public async Task PostActionDiceAmountAsync(Domain.Models.Game.Game game, object chosenResult)
+        public async Task PostActionDiceAmountAsync(Domain.Models.Game.Game game, object chosenResult, CancellationToken cancellationToken)
         {
             var amountDice = Convert.ToInt32(chosenResult);
             var diceAmount = new Domain.Models.Dice.Dice().Roll(amountDice);
@@ -36,22 +37,22 @@ namespace MachiKoro.Application.v1.Services
                 Result = diceAmount.ToArray()
             };
 
-            var stepAdded = await _stepRepository.AddStepAsync(game, step);
+            var stepAdded = await _stepRepository.AddStepAsync(game, step, cancellationToken);
 
             // TODO send diceRoll to GameHub for client notification
-            await _playerService.SendNotificationDiceRollAsync(diceAmount);
+            await _playerService.SendNotificationDiceRollAsync(diceAmount, cancellationToken);
 
             //TODO Earnincome()
-            await EarnIncomeAsync(game);
+            await EarnIncomeAsync(game, cancellationToken);
         }
 
-        public async Task EarnIncomeAsync(Domain.Models.Game.Game game)
+        public async Task EarnIncomeAsync(Domain.Models.Game.Game game, CancellationToken cancellationToken)
         {
             foreach (var player in game.Players)
             {
                 foreach (var card in player.EstablishmentCards)
                 {
-                    card.ExecuteEffect(game, player);
+                    card.ExecuteEffect(game, player, cancellationToken);
                 }
             }
 
@@ -63,10 +64,10 @@ namespace MachiKoro.Application.v1.Services
                 Result = game.Players.ToArray()
             };
 
-            var stepAdded = await _stepRepository.AddStepAsync(game, step);
+            var stepAdded = await _stepRepository.AddStepAsync(game, step, cancellationToken);
         }
 
-        public async Task StartConstructionPhaseAsync(Domain.Models.Game.Game game)
+        public async Task StartConstructionPhaseAsync(Domain.Models.Game.Game game, CancellationToken cancellationToken)
         {
             var constructionEstablishmentsOptions = GetConstructionEstablishmentsOptions(game);
             var constructionLandmarksOptions = GetConstructionLandmarksOptions(game);
@@ -74,16 +75,16 @@ namespace MachiKoro.Application.v1.Services
             if (constructionEstablishmentsOptions.Any() || constructionLandmarksOptions.Any())
             {
                 // TODO send to GameHub option for player
-                await _playerService.SendNotificationConstructionEstablishmentsOptionsAsync(game.ActivePlayer.Id, constructionEstablishmentsOptions);
-                await _playerService.SendNotificationConstructionLandmarksOptionsAsync(game.ActivePlayer.Id, constructionLandmarksOptions);
+                await _playerService.SendNotificationConstructionEstablishmentsOptionsAsync(game.ActivePlayer.Id, constructionEstablishmentsOptions, cancellationToken);
+                await _playerService.SendNotificationConstructionLandmarksOptionsAsync(game.ActivePlayer.Id, constructionLandmarksOptions, cancellationToken);
 
                 return;
             }
 
-            await ToNextPlayerAsync(game);
+            await ToNextPlayerAsync(game, cancellationToken);
         }
 
-        public async Task PostActionConstructionEstablishmentAsync(Domain.Models.Game.Game game, object chosenResult)
+        public async Task PostActionConstructionEstablishmentAsync(Domain.Models.Game.Game game, object chosenResult, CancellationToken cancellationToken)
         {
             var chosenIndex = Convert.ToInt32(chosenResult);
 
@@ -110,10 +111,10 @@ namespace MachiKoro.Application.v1.Services
                 Result = card
             };
 
-            var stepAdded = await _stepRepository.AddStepAsync(game, step);
+            var stepAdded = await _stepRepository.AddStepAsync(game, step, cancellationToken);
         }
 
-        public async Task PostActionConstructionLandmarkAsync(Domain.Models.Game.Game game, object chosenResult)
+        public async Task PostActionConstructionLandmarkAsync(Domain.Models.Game.Game game, object chosenResult, CancellationToken cancellationToken)
         {
             var chosenIndex = Convert.ToInt32(chosenResult);
 
@@ -125,7 +126,7 @@ namespace MachiKoro.Application.v1.Services
 
                 if (HasPlayerWon(game.ActivePlayer))
                 {
-                    // TODO send to GameHub Player won
+                    await _playerService.SendNotificationWinnerAsync(game.ActivePlayer.Id, cancellationToken);
                 }
             }
 
@@ -137,7 +138,7 @@ namespace MachiKoro.Application.v1.Services
                 Result = card
             };
 
-            var stepAdded = await _stepRepository.AddStepAsync(game, step);
+            var stepAdded = await _stepRepository.AddStepAsync(game, step, cancellationToken);
         }
 
         private IEnumerable<Card> GetConstructionEstablishmentsOptions(Domain.Models.Game.Game game)
@@ -150,7 +151,7 @@ namespace MachiKoro.Application.v1.Services
             return game.ActivePlayer.LandmarkCards.Where(landmark => landmark.CompletionCost <= game.ActivePlayer.CoinAmount).Cast<Card>();
         }
 
-        private async Task ToNextPlayerAsync(Domain.Models.Game.Game game)
+        private async Task ToNextPlayerAsync(Domain.Models.Game.Game game, CancellationToken cancellationToken)
         {
             // TODO change player to next player
             var nextPlayer = game.Players.MoveNext;
@@ -164,7 +165,7 @@ namespace MachiKoro.Application.v1.Services
                 return;
             }
 
-            await PostActionDiceAmountAsync(game, 1);
+            await PostActionDiceAmountAsync(game, 1, cancellationToken);
         }
 
         private bool HasDiceoptions(Domain.Models.Player.Player player)
