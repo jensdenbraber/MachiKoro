@@ -5,6 +5,7 @@ using MachiKoro.Application.v1.Identity.Commands.Refresh;
 using MachiKoro.Application.v1.Identity.Commands.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;

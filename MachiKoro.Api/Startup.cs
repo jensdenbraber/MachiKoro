@@ -58,7 +58,7 @@ namespace MachiKoro.Api
                 {
                     policy.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .WithOrigins("http://localhost:3000")
+                        .WithOrigins("http://localhost:27143")
                         .AllowCredentials();
                 });
             });
@@ -114,8 +114,9 @@ namespace MachiKoro.Api
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapHub<GameHub>("/hubs/GameHub");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");//.RequireCors("ClientPermission");
+                endpoints.MapHub<GameHub>("/hubs/GameHub");//.RequireCors("ClientPermission");
+                endpoints.MapHub<GameHub>("/hubs/GameLobbyHub");//.RequireCors("ClientPermission");
                 //endpoints.MapHub<SignalRNotificationHub>("/hubs/SignalRNotification");
             });
         }
