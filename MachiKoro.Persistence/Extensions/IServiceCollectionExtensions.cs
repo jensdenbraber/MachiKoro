@@ -1,7 +1,7 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Infrastructure.Identity.Models;
-using MachiKoro.Infrastructure.Identity.Models.Authentication;
-using MachiKoro.Infrastructure.Identity.Services;
+using MachiKoro.Persistence.Identity.Models.Authentication;
+using MachiKoro.Persistence.Identity.Services;
+using MachiKoro.Persistence.Identity.Models;
 using MachiKoro.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -31,8 +31,9 @@ namespace MachiKoro.Persistence.Extensions
                     configuration.GetConnectionString(ConnectionString)));
 
             services.AddTransient<IGamesRepository, GamesRepository>();
-            services.AddTransient<IPlayersRepository, PlayersRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IStepsRepository, StepsRepository>();
+ 
+            //services.AddTransient<IPlayersRepository, PlayersRepository>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<Token, Token>();
 

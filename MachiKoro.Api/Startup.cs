@@ -2,7 +2,7 @@ using MachiKoro.Api.Extensions;
 using MachiKoro.Api.Options;
 using MachiKoro.Application.v1.Extensions;
 using MachiKoro.Infrastructure.Identity;
-using MachiKoro.Infrastructure.Identity.Models.Authentication;
+using MachiKoro.Persistence.Identity.Models.Authentication;
 using MachiKoro.Persistence.Extensions;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using MachiKoro.Api.Hubs;
+using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Persistence.Repositories;
 
 namespace MachiKoro.Api
 {
@@ -46,9 +49,24 @@ namespace MachiKoro.Api
 
             services.AddSwaggerServices(Configuration);
 
-            services.AddCors();
+            services.AddTransient<INotifyPlayerService, GameHubContext>();
+            services.AddTransient<Application.v1.Services.GamesService, Application.v1.Services.GamesService>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ClientPermission", policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("http://localhost:27143")
+                        .AllowCredentials();
+                });
+            });
+
             services.AddControllers();
-        }  
+
+            services.AddSignalR();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,7 +76,7 @@ namespace MachiKoro.Api
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
 
-                app.SeedIdentityDataAsync().Wait();
+                //app.SeedIdentityDataAsync().Wait();
             }
             else
             {
@@ -82,10 +100,12 @@ namespace MachiKoro.Api
             app.UseRouting();
 
             // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            //app.UseCors(x => x
+            //    .AllowAnyOrigin()
+            //    .AllowAnyMethod()
+            //    .AllowAnyHeader());
+
+            app.UseCors("ClientPermission");
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -94,8 +114,10 @@ namespace MachiKoro.Api
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                //endpoints.MapRazorPages();
+                    pattern: "{controller=Home}/{action=Index}/{id?}");//.RequireCors("ClientPermission");
+                endpoints.MapHub<GameHub>("/hubs/GameHub");//.RequireCors("ClientPermission");
+                endpoints.MapHub<GameHub>("/hubs/GameLobbyHub");//.RequireCors("ClientPermission");
+                //endpoints.MapHub<SignalRNotificationHub>("/hubs/SignalRNotification");
             });
         }
     }

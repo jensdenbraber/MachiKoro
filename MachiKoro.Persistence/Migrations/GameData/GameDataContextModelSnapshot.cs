@@ -16,32 +16,16 @@ namespace MachiKoro.Data.Migrations.GameData
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("GamePlayer", b =>
-                {
-                    b.Property<Guid>("GamesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PlayersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("GamesId", "PlayersId");
-
-                    b.HasIndex("PlayersId");
-
-                    b.ToTable("GamePlayer");
-                });
-
-            modelBuilder.Entity("MachiKoro.Data.Models.Game", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Game", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ExpensionType")
@@ -50,82 +34,70 @@ namespace MachiKoro.Data.Migrations.GameData
                     b.Property<DateTime>("FinishedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("StartedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PlayerId");
+
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.Player", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Player", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PlayerProfileId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PlayerProfileId");
 
                     b.ToTable("Player");
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.PlayerProfile", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Step", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int?>("ActionType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ChoiceType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GameId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PlayersStatisticsId")
+                    b.Property<Guid>("PlayerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Result")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("StepIndex")
+                        .HasColumnType("int");
 
-                    b.ToTable("PlayerProfile");
+                    b.ToTable("Steps");
                 });
 
-            modelBuilder.Entity("GamePlayer", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Game", b =>
                 {
-                    b.HasOne("MachiKoro.Data.Models.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesId")
+                    b.HasOne("MachiKoro.Persistence.Models.Player", "Player")
+                        .WithMany("Games")
+                        .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MachiKoro.Data.Models.Player", null)
-                        .WithMany()
-                        .HasForeignKey("PlayersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Player");
                 });
 
-            modelBuilder.Entity("MachiKoro.Data.Models.Player", b =>
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Player", b =>
                 {
-                    b.HasOne("MachiKoro.Data.Models.PlayerProfile", "PlayerProfile")
-                        .WithMany()
-                        .HasForeignKey("PlayerProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PlayerProfile");
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

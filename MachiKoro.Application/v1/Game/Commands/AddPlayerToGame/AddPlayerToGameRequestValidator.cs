@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using MachiKoro.Core.Models.AddPlayerToGame;
 
 namespace MachiKoro.Application.v1.Game.Commands.AddPlayerToGame
 {

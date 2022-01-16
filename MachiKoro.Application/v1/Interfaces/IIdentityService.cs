@@ -10,7 +10,7 @@ namespace MachiKoro.Application.v1.Interfaces
         Task<bool> IsInRoleAsync(string userId, string role);
 
         Task<bool> AuthorizeByIdAsync(string userId, string policyName);
-        Task<Result> AuthorizeAsync(string userName, string password);
+        Task<(Result Result, string UserId)> AuthorizeAsync(string userName, string password);
 
         Task<(Result Result, Result TokenResponse, string UserId)> CreateUserAsync(string userName, string email, string password);
 

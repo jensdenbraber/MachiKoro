@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MachiKoro.Infrastructure.Identity.Models.Authentication
+namespace MachiKoro.Persistence.Identity.Models.Authentication
 {
     [JsonObject("token")]
     public class Token

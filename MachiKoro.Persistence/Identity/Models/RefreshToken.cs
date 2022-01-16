@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace MachiKoro.Infrastructure.Identity.Models
+namespace MachiKoro.Persistence.Identity.Models
 {
     [Owned]
     public class RefreshToken
@@ -18,10 +18,12 @@ namespace MachiKoro.Infrastructure.Identity.Models
 
         public string Token { get; set; }
         public DateTime Expiry { get; set; }
+
         public bool IsExpired
         {
             get { return DateTime.UtcNow >= Expiry; }
         }
+
         public DateTime Created { get; set; }
         public string CreatedByIp { get; set; }
         public DateTime? Revoked { get; set; }
@@ -40,7 +42,7 @@ namespace MachiKoro.Infrastructure.Identity.Models
         public DateTime AddedDate { get; set; }
         public DateTime ExpiryDate { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public IdentityUser User { get; set; }
+        //[ForeignKey(nameof(UserId))]
+        //public IdentityUser User { get; set; }
     }
 }

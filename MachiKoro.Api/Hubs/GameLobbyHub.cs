@@ -13,7 +13,6 @@ namespace MachiKoro.Api.Hubs
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
 
-
         //public async Task<IActionResult> GetAllAsync()
         //{
         //    List<Game> games = await _gameService.GetAllGamesAsync();

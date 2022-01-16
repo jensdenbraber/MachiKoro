@@ -1,10 +1,10 @@
 using FluentAssertions;
-using MachiKoro.Core.CardDecks;
-using MachiKoro.Core.TestModelFactory.Models.CardDeck;
+using MachiKoro.Domain.Models.CardDecks;
+using MachiKoro.Domain.TestModelFactory.Models.CardDeck;
 using System;
 using Xunit;
 
-namespace MachiKoro.Core.UnitTests
+namespace MachiKoro.Domain.UnitTests.Models
 {
     public class CardDeckTests
     {

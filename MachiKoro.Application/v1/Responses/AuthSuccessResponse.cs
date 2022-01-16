@@ -1,4 +1,4 @@
-﻿namespace MachiKoro.Contracts.v1.Responses
+﻿namespace MachiKoro.Application.v1.Responses
 {
     public class AuthSuccessResponse
     {

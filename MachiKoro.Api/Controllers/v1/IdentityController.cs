@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MachiKoro.Application.v1;
-using MachiKoro.Contracts.v1.Requests;
-using MachiKoro.Core.Models.Identity;
+using MachiKoro.Application.v1.Identity.Commands.Login;
+using MachiKoro.Application.v1.Identity.Commands.Refresh;
+using MachiKoro.Application.v1.Identity.Commands.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -28,7 +30,7 @@ namespace MachiKoro.Api.Controllers.v1
         [Consumes("application/json")]
         [Produces("application/json")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody][Required] UserRegistrationRequest request)
+        public async Task<IActionResult> Register([FromBody][Required] CreateUserRequest request)
         {
             var coreRequest = _mapper.Map<CreateUserRequest>(request);
 
@@ -36,7 +38,7 @@ namespace MachiKoro.Api.Controllers.v1
 
             if (coreResponse.Errors?.Any() ?? false)
                 return BadRequest(coreResponse.Errors);
-            
+
             return Ok(coreResponse);
         }
 
@@ -44,7 +46,7 @@ namespace MachiKoro.Api.Controllers.v1
         [Consumes("application/json")]
         [Produces("application/json")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody][Required] UserLoginRequest request)
+        public async Task<IActionResult> Login([FromBody][Required] LoginUserRequest request)
         {
             var coreRequest = _mapper.Map<LoginUserRequest>(request);
 

@@ -1,6 +1,5 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core.Models.Identity;
-using MachiKoro.Core.Models.User;
+using MachiKoro.Domain.Models.User;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -22,26 +21,20 @@ namespace MachiKoro.Application.v1.Identity.Commands.Login
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            MachiKoroUser machiKoroUser = new()
-            {
-                UserName = request.UserName,
-                Password = request.Password
-            };
-
             var result = await _identityService.AuthorizeAsync(request.UserName, request.Password);
 
             var createUserResponse = new LoginUserResponse();
 
-            if (!result.Succeeded)
+            if (!result.Result.Succeeded)
             {
                 createUserResponse.Errors = new List<string>();
-                createUserResponse.Errors.AddRange(result.Errors);
+                createUserResponse.Errors.AddRange(result.Result.Errors);
 
                 return createUserResponse;
             }
 
-            createUserResponse.UserId = machiKoroUser.Id;
-            createUserResponse.Token = result.Token;
+            createUserResponse.UserId = new Guid(result.UserId);
+            createUserResponse.Token = result.Result.Token;
 
             return createUserResponse;
         }

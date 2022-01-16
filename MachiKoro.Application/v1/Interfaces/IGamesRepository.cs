@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Application.v1.Interfaces
 {
     public interface IGamesRepository
     {
-        Task<bool> CreateAsync(Core.Models.Game.Game gameData);
+        Task<bool> CreateAsync(Domain.Models.Game.Game gameData, CancellationToken cancellationToken);
 
-        Task<List<Core.Models.Game.Game>> GetGamesAsync();
+        Task<List<Domain.Models.Game.Game>> GetGamesAsync(CancellationToken cancellationToken);
 
-        Task<Core.Models.Game.Game> GetGameAsync(Guid id);
+        Task<Domain.Models.Game.Game> GetGameAsync(Guid id, CancellationToken cancellationToken);
 
-        Task<List<Core.Models.Player.Player>> GetPlayersFromGameAsync(Guid id);
+        //Task<List<Domain.Models.Player.Player>> GetPlayersFromGameAsync(Guid id);
+        Task<bool> UpdateAsync(Domain.Models.Game.Game gameData, CancellationToken cancellationToken);
 
-        Task<bool> DeleteAsync(Guid gameId);
-        
-        Task<bool> UpdateAsync(Core.Models.Game.Game gameData);
-        Task<bool> AddPlayerToGameAsync(Guid playerId, Guid gameId);
-        Task<bool> RemovePlayerFromGameAsync(Guid playerId, Guid gameId);
+        Task<bool> DeleteAsync(Guid gameId, CancellationToken cancellationToken);
+
+        Task<bool> AddPlayerToGameAsync(Guid playerId, Guid gameId, CancellationToken cancellationToken);
+
+        Task<bool> RemovePlayerFromGameAsync(Guid playerId, Guid gameId, CancellationToken cancellationToken);
     }
 }

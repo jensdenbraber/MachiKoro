@@ -1,0 +1,361 @@
+{
+    "gameId": "339735ED-63BC-4C82-A51E-A500B8D289D1",
+    "gameType": "Basic",
+    "gameStarted": "2021-07-26T16:00:00",
+    "gameEnded": "2021-09-26T17:00:00",
+    "version": "1.0.0",
+    "establishmentConfiguration": {
+        "wheatField": {
+            "name": "Wheat Field",
+            "type": "Primary",
+            "category": "Wheat",
+            "activationNumbers": [
+                1
+            ],
+            "constructionCost": 1,
+            "effect": 1
+        },
+        "bakery": {
+            "name": "Bakery",
+            "type": "Secondary",
+            "category": "Bread",
+            "activationNumbers": [
+                2,
+                3
+            ],
+            "constructionCost": 1,
+            "effect": 1
+        }
+    },
+    "landmarkConfiguration": {
+        "trainstation": {
+            "name": "Wheat Field",
+            "completionCost": 4
+        },
+        "shoppingMall": {
+            "name": "Shopping Mall",
+            "completionCost": 4
+        },
+        "radioTower": {
+            "name": "Radio Tower",
+            "completionCost": 4
+        },
+        "amusementPark": {
+            "name": "Amusement Park",
+            "completionCost": 4
+        }
+    },
+    "players": [
+        {
+            "id": "1AABD327-073E-49F4-B628-519766D0F178",
+            "coins": 3,
+            "type": "Human",
+            "establishmentCards": [
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "bakery"
+                }
+            ],
+            "landmarkCards": [
+                {
+                    "landmarkId": "trainstation",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "shoppingMall",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "radioTower",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "amusementPark",
+                    "isCompleted": false
+                }
+            ]
+        },
+        {
+            "id": "9658A1B9-52C6-4FB9-BD35-ADC0B50E1EA6",
+            "coins": 3,
+            "type": "Human",
+            "establishmentCards": [
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "bakery"
+                }
+            ],
+            "landmarkCards": [
+                {
+                    "landmarkId": "trainstation",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "shoppingMall",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "radioTower",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "amusementPark",
+                    "isCompleted": false
+                }
+            ]
+        },
+        {
+            "id": "3E02B7CF-EE4B-4281-8122-A89A91732FA0",
+            "coins": 3,
+            "type": "Human",
+            "establishmentCards": [
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "bakery"
+                }
+            ],
+            "landmarkCards": [
+                {
+                    "landmarkId": "trainstation",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "shoppingMall",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "radioTower",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "amusementPark",
+                    "isCompleted": false
+                }
+            ]
+        },
+        {
+            "id": "D1E34F8B-D061-4F32-9D51-86D0916213BC",
+            "coins": 3,
+            "type": "Human",
+            "establishmentCards": [
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "bakery"
+                }
+            ],
+            "landmarkCards": [
+                {
+                    "landmarkId": "trainstation",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "shoppingMall",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "radioTower",
+                    "isCompleted": false
+                },
+                {
+                    "landmarkId": "amusementPark",
+                    "isCompleted": false
+                }
+            ]
+        }
+    ],
+    "cardDecks": [
+        {
+            "revealedAmount": 4,
+            "cards": [
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                }
+            ]
+        },
+        {
+            "revealedAmount": 4,
+            "cards": [
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                }
+            ]
+        },
+        {
+            "revealedAmount": 2,
+            "cards": [
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                },
+                {
+                    "id": "1AABD327-073E-49F4-B628-519766D0F178",
+                    "establishmentId": "wheatField"
+                }
+            ]
+        }
+    ],
+    "steps": [
+        {
+            "playerId": "1AABD327-073E-49F4-B628-519766D0F178",
+            "kind": "question",
+            "type": "amount-dices",
+            "result": [
+                1,
+                2
+            ]
+        },
+        {
+            "playerId": "1AABD327-073E-49F4-B628-519766D0F178",
+            "kind": "answer",
+            "type": "amount-dices",
+            "result": 0
+        },
+        {
+            "playerId": "1AABD327-073E-49F4-B628-519766D0F178",
+            "kind": "action",
+            "type": "throw-dice",
+            "result": [
+                6
+            ]
+        },
+        {
+            "playerId": "1AABD327-073E-49F4-B628-519766D0F178",
+            "kind": "question",
+            "type": "ruil-kaart-your-card",
+            "result": [
+                "wheatField",
+                "Bakery",
+                "Cafe"
+            ]
+        },
+        {
+            "playerId": "1AABD327-073E-49F4-B628-519766D0F178",
+            "kind": "answer",
+            "type": "ruil-kaart-your-card",
+            "result": 1
+        },
+        {
+            "playerId": "1AABD327-073E-49F4-B628-519766D0F178",
+            "kind": "question",
+            "type": "ruil-kaart-target-player",
+            "result": [
+                "2AABD327-073E-49F4-B628-519766D0F178",
+                "3AABD327-073E-49F4-B628-519766D0F178",
+                "4AABD327-073E-49F4-B628-519766D0F178"
+            ]
+        },
+        {
+            "playerId": "1AABD327-073E-49F4-B628-519766D0F178",
+            "kind": "answer",
+            "type": "ruil-kaart-target-player",
+            "result": 2
+        },
+        {
+            "playerId": "1AABD327-073E-49F4-B628-519766D0F178",
+            "kind": "question",
+            "type": "ruil-kaart-target-card",
+            "result": [
+                "Cafe",
+                "Restaurant"
+            ]
+        },
+        {
+            "playerId": "1AABD327-073E-49F4-B628-519766D0F178",
+            "kind": "answer",
+            "type": "ruil-kaart-target-card",
+            "result": 1
+        },
+        {
+            "playerId": "9658A1B9-52C6-4FB9-BD35-ADC0B50E1EA6",
+            "kind": "question",
+            "type": "build",
+            "result": [
+                "Cafe",
+                "Restaurant",
+                "Cafe",
+                "Restaurant",
+                "WheatField"
+            ]
+        },
+        {
+            "playerId": "9658A1B9-52C6-4FB9-BD35-ADC0B50E1EA6",
+            "kind": "answer",
+            "type": "build",
+            "cardType": 3
+        }
+    ]
+}

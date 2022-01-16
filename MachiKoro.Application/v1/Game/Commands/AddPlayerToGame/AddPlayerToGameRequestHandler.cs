@@ -1,5 +1,4 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core.Models.AddPlayerToGame;
 using MediatR;
 using System;
 using System.Threading;
@@ -20,7 +19,7 @@ namespace MachiKoro.Application.v1.Game.Commands.AddPlayerToGame
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            bool added = await _gameRepository.AddPlayerToGameAsync(request.PlayerId, request.GameId);
+            bool added = await _gameRepository.AddPlayerToGameAsync(request.PlayerId, request.GameId, cancellationToken);
 
             if (!added)
             {

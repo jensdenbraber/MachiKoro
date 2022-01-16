@@ -2,6 +2,7 @@
 using MachiKoro.Core.Models.Identity;
 using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +21,8 @@ namespace MachiKoro.Application.v1.Identity.Commands.Registration
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
+            request.Email = $"{request.UserName}@email.com";
+
             var createUserResponse = new CreateUserResponse();
 
             (Models.Result result, Models.Result token, string userId) = await _identityService.CreateUserAsync(request.UserName, request.Email, request.Password);
@@ -31,7 +34,7 @@ namespace MachiKoro.Application.v1.Identity.Commands.Registration
             }
             else
             {
-                createUserResponse.Errors.AddRange(result.Errors);
+                createUserResponse.Errors = new List<string>(result.Errors);
             }
 
             return createUserResponse;

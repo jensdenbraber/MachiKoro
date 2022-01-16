@@ -1,8 +1,8 @@
-using MachiKoro.Core.TestModelFactory.Models.Player;
 using FluentAssertions;
+using MachiKoro.Domain.TestModelFactory.Models.Player;
 using Xunit;
 
-namespace MachiKoro.Core.UnitTests
+namespace MachiKoro.Domain.UnitTests.Models
 {
     public class PlayerTests : BaseUnitTest
     {

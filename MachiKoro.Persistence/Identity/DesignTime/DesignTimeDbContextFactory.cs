@@ -1,11 +1,11 @@
-﻿using MachiKoro.Infrastructure.Identity.Models;
+﻿using MachiKoro.Persistence.Identity.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 
-namespace MachiKoro.Infrastructure.Identity.DesignTime
+namespace MachiKoro.Persistence.Identity.DesignTime
 {
     /// <summary>
     ///     Used for design time migrations.  Will look to the appsettings.json file in this project

@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
-using MachiKoro.Contracts.v1.Requests;
-using MachiKoro.Core.Models.Identity;
-using MachiKoro.Infrastructure.Identity.Models;
-using MachiKoro.Infrastructure.Identity.Models.Authentication;
+using MachiKoro.Application.v1.Identity.Commands.Login;
+using MachiKoro.Application.v1.Identity.Commands.Registration;
+using MachiKoro.Domain.Models.Game;
+using MachiKoro.Domain.Models.Player;
+using MachiKoro.Domain.Models.PlayerProfile;
+using MachiKoro.Domain.Models.User;
+using MachiKoro.Persistence.Identity.Models.Authentication;
+using MachiKoro.Persistence.Identity.Models;
 
 namespace MachiKoro.Api.MappingProfiles
 {
@@ -10,26 +14,25 @@ namespace MachiKoro.Api.MappingProfiles
     {
         public ApiModelMappingProfile()
         {
-            CreateMap<Persistence.Models.Game, Models.CreateGame.CreateGameRequest>();
-            CreateMap<Persistence.Models.Player, Models.GetPlayerProfile.GetPlayerProfileRequest>();
+            CreateMap<Persistence.Models.Game, Contracts.Game.CreateGame.CreateGameRequest>();
+            //CreateMap<Persistence.Models.Player, Contracts.Player.GetPlayerProfile.GetPlayerProfileRequest>();
 
+            CreateMap<Game, Persistence.Models.Game>();
+            CreateMap<Persistence.Models.Game, Game>();
 
-            CreateMap<Core.Models.Game.Game, Persistence.Models.Game>();
-            CreateMap<Persistence.Models.Game, Core.Models.Game.Game>();
+            //CreateMap<Persistence.Models.Player, Player>();
+            //CreateMap<Player, Persistence.Models.Player>();
 
-            CreateMap<Persistence.Models.Player, Core.Models.Player.Player>();
-            CreateMap<Core.Models.Player.Player, Persistence.Models.Player>();
+            //CreateMap<Persistence.Models.PlayerProfile, PlayerProfile>();
+            //CreateMap<PlayerProfile, Persistence.Models.PlayerProfile>();
 
-            CreateMap<Persistence.Models.PlayerProfile, Core.Models.PlayerProfile.PlayerProfile>();
-            CreateMap<Core.Models.PlayerProfile.PlayerProfile, Persistence.Models.PlayerProfile>();
+            CreateMap<MachiKoroUser, ApplicationUser>();
+            CreateMap<ApplicationUser, MachiKoroUser>();
 
-            CreateMap<Core.Models.User.MachiKoroUser, ApplicationUser>();
-            CreateMap<ApplicationUser, Core.Models.User.MachiKoroUser>();
+            CreateMap<Contracts.Identity.Token, Token>();
+            CreateMap<Token, Contracts.Identity.Token>();
 
-            CreateMap<Models.Identity.Token, Token>();
-            CreateMap<Token, Models.Identity.Token>();
-
-            //CreateMap<Models.CreateGame.CreateGameRequest, Persistence.Models.Game>();
+            //CreateMap<Application.v1.Game.Commands.CreateGame.CreateGameRequest, Persistence.Models.Game>();
             //CreateMap<Models.GetPlayerProfile.GetPlayerProfileResponse, Persistence.Models.PlayersStatistics>();
             //CreateMap<Models.PlayerStatistics, Data.Models.PlayerStatistics>();
 
@@ -44,17 +47,22 @@ namespace MachiKoro.Api.MappingProfiles
             ////CreateMap<Player, PlayerResponse>();
             //CreateMap<GetPlayerProfileResponse, GetPlayerProfileResponse>();
 
-            CreateMap<UserRegistrationRequest, CreateUserRequest>();
-            CreateMap<UserLoginRequest, LoginUserRequest>();
+            CreateMap<CreateUserRequest, CreateUserRequest>();
+            CreateMap<LoginUserRequest, LoginUserRequest>();
 
-            CreateMap<Models.CreateGame.CreateGameRequest, Core.Models.CreateGame.CreateGameRequest>();
-            CreateMap<Models.CreateGame.CreateGameResponse, Core.Models.CreateGame.CreateGameResponse>();
+            CreateMap<Contracts.Game.CreateGame.CreateGameRequest, Application.v1.Game.Commands.CreateGame.CreateGameRequest>();
+            CreateMap<Contracts.Game.CreateGame.CreateGameResponse, Application.v1.Game.Commands.CreateGame.CreateGameResponse>();
 
-            CreateMap<Models.GetGame.GetGameRequest, Core.Models.GetGame.GetGameRequest>();
-            CreateMap<Models.GetGame.GetGameResponse, Core.Models.GetGame.GetGameResponse>();
+            CreateMap<Contracts.Game.GetGame.GetGameRequest, Application.v1.Game.Queries.GetGame.GetGameRequest>();
+            CreateMap<Contracts.Game.GetGame.GetGameResponse, Application.v1.Game.Queries.GetGame.GetGameResponse>();
 
-            CreateMap<Models.GetPlayerProfile.GetPlayerProfileRequest, Core.Models.GetPlayerProfile.GetPlayerProfileRequest>();
-            CreateMap<Models.GetPlayerProfile.GetPlayerProfileResponse, Core.Models.GetPlayerProfile.GetPlayerProfileResponse>();
+            CreateMap<Contracts.Game.Choose.ChooseRequest, Application.v1.Game.Commands.Choose.ChooseRequest>();
+            CreateMap<Contracts.Game.Choose.ChooseResponse, Application.v1.Game.Commands.Choose.ChooseResponse>();
+
+            CreateMap<Contracts.Game.ExpensionTypeResponse, Domain.Enums.ExpensionType>();
+
+            //CreateMap<Contracts.Player.GetPlayerProfile.GetPlayerProfileRequest, Application.v1.Player.Queries.GetPlayerProfile.GetPlayerProfileRequest>();
+            //CreateMap<Contracts.Player.GetPlayerProfile.GetPlayerProfileResponse, Application.v1.Player.Queries.GetPlayerProfile.GetPlayerProfileResponse>();
 
             //CreateMap<PaginationQuery, PaginationFilter>();
             //CreateMap<GetAllPostsQuery, GetAllPostsFilter>();

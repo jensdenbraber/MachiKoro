@@ -1,5 +1,4 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core.Models.DeleteGame;
 using MediatR;
 using System;
 using System.Threading;
@@ -20,7 +19,7 @@ namespace MachiKoro.Application.v1.Game.Commands.DeleteGame
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            bool deleted = await _gameRepository.DeleteAsync(request.GameId);
+            bool deleted = await _gameRepository.DeleteAsync(request.GameId, cancellationToken);
 
             if (!deleted)
             {

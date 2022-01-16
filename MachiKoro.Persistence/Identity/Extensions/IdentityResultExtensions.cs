@@ -1,5 +1,5 @@
 ﻿using MachiKoro.Application.v1.Models;
-using MachiKoro.Infrastructure.Identity.Models.Authentication;
+using MachiKoro.Persistence.Identity.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 

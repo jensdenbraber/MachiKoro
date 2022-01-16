@@ -1,6 +1,6 @@
 ﻿using MachiKoro.Api.Options;
-using MachiKoro.Infrastructure.Identity.Models;
 using MachiKoro.Persistence;
+using MachiKoro.Persistence.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

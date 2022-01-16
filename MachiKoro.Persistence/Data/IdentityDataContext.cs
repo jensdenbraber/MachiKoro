@@ -1,4 +1,4 @@
-﻿using MachiKoro.Infrastructure.Identity.Models;
+﻿using MachiKoro.Persistence.Identity.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +11,6 @@ namespace MachiKoro.Persistence
         {
         }
 
-        public DbSet<MachiKoro.Persistence.Models.RefreshToken> RefreshTokens { get; set; }
+        //public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

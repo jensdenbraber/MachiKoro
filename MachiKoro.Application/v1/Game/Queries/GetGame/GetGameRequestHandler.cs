@@ -1,5 +1,4 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core.Models.GetGame;
 using MediatR;
 using System;
 using System.Threading;
@@ -20,7 +19,7 @@ namespace MachiKoro.Application.v1.Game.Queries.GetGame
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            var game = await _gameRepository.GetGameAsync(request.GameId);
+            var game = await _gameRepository.GetGameAsync(request.GameId, cancellationToken);
 
             if (game == null)
             {

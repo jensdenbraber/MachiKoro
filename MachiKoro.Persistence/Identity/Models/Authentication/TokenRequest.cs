@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace MachiKoro.Infrastructure.Identity.Models.Authentication
+namespace MachiKoro.Persistence.Identity.Models.Authentication
 {
     public class TokenRequest
     {
