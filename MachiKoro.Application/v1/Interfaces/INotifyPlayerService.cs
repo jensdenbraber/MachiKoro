@@ -35,7 +35,7 @@ namespace MachiKoro.Application.v1.Interfaces
 
         Task SendNotificationPlayersIncomeAsync(Guid playerId, object message, CancellationToken cancellationToken);
 
-        Task SendNotificationWinnerAsync(Guid playerId, CancellationToken cancellationToken);
+        Task SendNotificationWinnerAsync(Guid playerId, CancellationToken cancellationToken = default);
 
         Task SendNotificationTargetAsync(IEnumerable<EstablishmentBase> opponentsTargets, CancellationToken cancellationToken);
     }
