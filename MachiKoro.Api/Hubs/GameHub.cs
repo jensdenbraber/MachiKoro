@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using MachiKoro.Application.v1.Game.Commands.Choices;
+using MachiKoro.Application.v1.Services;
+using Microsoft.AspNetCore.SignalR;
 using SignalRSwaggerGen.Attributes;
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Hubs
@@ -8,6 +11,13 @@ namespace MachiKoro.Api.Hubs
     [SignalRHub(path: "/hubs/GameHub")]
     public class GameHub : Hub<Application.v1.Interfaces.INotifyPlayerService>
     {
+        private readonly GamesService _gamesService;
+
+        public GameHub(GamesService gamesService)
+        {
+            _gamesService = gamesService;
+        }
+
         [SignalRMethod(name: "SendMessage", Microsoft.OpenApi.Models.OperationType.Post)]
         public async Task SendMessage(string user, string message)
         {
@@ -15,9 +25,10 @@ namespace MachiKoro.Api.Hubs
         }
 
         [SignalRMethod(name: "Choice", Microsoft.OpenApi.Models.OperationType.Post)]
-        public async Task Choice(string choice)
+        public async Task Choice(string data)
         {
             // TODO parse choice json to object
+            var choice = JsonSerializer.Deserialize<BuyChoice>(data);
         }
 
         //[SignalRMethod(name: "nameOfTheMethodCalledOnTheClientSide", Microsoft.OpenApi.Models.OperationType.Post)]
