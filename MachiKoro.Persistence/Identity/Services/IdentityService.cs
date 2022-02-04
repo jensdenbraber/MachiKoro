@@ -72,7 +72,7 @@ namespace MachiKoro.Persistence.Identity.Services
 
                     var roles = await _userManager.GetRolesAsync(user);
 
-                    return (result.ToApplicationResult(), new TokenResponse(user, string.Join(";", roles), jwtToken).ToApplicationResult(), user.Id);
+                    return (result.ToApplicationResult(), new TokenResponse(user, jwtToken).ToApplicationResult(), user.Id);
                 }
             }
             //}
@@ -94,27 +94,37 @@ namespace MachiKoro.Persistence.Identity.Services
 
         public async Task<(Result, string)> AuthorizeAsync(string userName, string password)
         {
-            var existingUser = await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByNameAsync(userName);
 
-            if (existingUser == null)
+            if (user == null)
             {
                 return (null, null);
             }
-
-            var isCorrect = await _userManager.CheckPasswordAsync(existingUser, password);
+            
+            var isCorrect = await _userManager.CheckPasswordAsync(user, password);
 
             if (!isCorrect)
             {
             }
 
-            var principal = await _userClaimsPrincipalFactory.CreateAsync(existingUser);
+            var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
 
-            //var result = await _authorizationservice.AuthorizeAsync(principal, policyName);
+            var userRoles = await _userManager.GetRolesAsync(user);
 
-            string role = (await _userManager.GetRolesAsync(existingUser))[0];
-            var jwtToken = await GenerateJwtToken(existingUser);
+            var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
 
-            return (new TokenResponse(existingUser, role, jwtToken).ToApplicationResult(), existingUser.Id);
+            foreach (var userRole in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+
+            var jwtToken = await GenerateJwtToken(user);
+
+            return (new TokenResponse(user, jwtToken).ToApplicationResult(), user.Id);
         }
 
         public async Task<Result> DeleteUserAsync(string userId)
@@ -161,7 +171,7 @@ namespace MachiKoro.Persistence.Identity.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            SecurityToken token = handler.CreateToken(descriptor);
+            SecurityToken token = handler.CreateJwtSecurityToken(descriptor);
             return handler.WriteToken(token);
         }
 

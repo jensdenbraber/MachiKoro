@@ -5,7 +5,6 @@ namespace MachiKoro.Persistence.Identity.Models.Authentication
     public class TokenResponse
     {
         public TokenResponse(ApplicationUser user, 
-                             string role, 
                              string token
                              //string refreshToken
                             )
@@ -14,7 +13,6 @@ namespace MachiKoro.Persistence.Identity.Models.Authentication
             FullName = user.FullName;
             EmailAddress = user.Email;
             Token = token;
-            Role = role;
             //RefreshToken = refreshToken;
         }
 
