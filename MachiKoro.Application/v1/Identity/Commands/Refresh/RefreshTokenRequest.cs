@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using MachiKoro.Core.Models.Identity;
-using MediatR;
+﻿using MediatR;
 
 namespace MachiKoro.Application.v1.Identity.Commands.Refresh
 {

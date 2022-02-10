@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MachiKoro.Persistence.Identity.Models
 {
-    [Owned]
     public class RefreshToken
     {
         [Key]

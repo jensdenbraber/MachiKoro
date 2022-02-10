@@ -66,38 +66,19 @@ namespace MachiKoro.Api.Controllers.v1
         }
 
         [HttpPost(ApiRoutes.Identity.Refresh)]
-        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request)
+        public async Task<IActionResult> Refresh([FromBody] Contracts.Identity.RefreshToken.RefreshTokenRequest request)
         {
             var coreRequest = _mapper.Map<RefreshTokenRequest>(request);
 
             coreRequest.IpAddress = ipAddress();
 
             var coreResponse = await _mediator.Send(coreRequest);
+            setTokenCookie(coreResponse.RefreshToken);
 
             if (coreResponse == null)
                 return NotFound();
 
-
             return Ok(coreResponse);
-
-
-            //var authResponse = await _identityService.RefreshTokenAsync(request.Token, request.RefreshToken);
-
-            //if (!authResponse.Success)
-            //{
-            //    return BadRequest(new AuthFailedResponse
-            //    {
-            //        Errors = authResponse.Errors
-            //    });
-            //}
-
-            //return Ok(new AuthSuccessResponse
-            //{
-            //    Token = authResponse.Token,
-            //    RefreshToken = authResponse.RefreshToken
-            //});
-
-            //return Ok();
         }
 
         private void setTokenCookie(string token)
