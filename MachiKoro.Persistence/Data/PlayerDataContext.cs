@@ -19,26 +19,25 @@ namespace MachiKoro.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // configures one-to-many relationship
-            modelBuilder.Entity<Game>()
-                .HasOne<Player>(s => s.Player)
-                .WithMany(g => g.Games)
-                .HasForeignKey(s => s.PlayerId);
+            modelBuilder.Entity<Player>()
+                .HasMany<Step>(s => s.Steps)
+                .WithOne(g => g.Player)
+                .HasForeignKey(g => g.PlayerId);
         }
 
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    modelBuilder.Entity<Player>()
-    //        .HasOne(p => p.PlayerProfile)
-    //        .WithOne(pp => pp.Player)
-    //        .HasForeignKey<PlayerProfile>(ppp => ppp.PlayerForeignKey);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Player>()
+        //        .HasOne(p => p.PlayerProfile)
+        //        .WithOne(pp => pp.Player)
+        //        .HasForeignKey<PlayerProfile>(ppp => ppp.PlayerForeignKey);
 
-    //    modelBuilder.Entity<PlayerProfile>()
-    //        .HasOne(p => p.PlayersStatistics)
-    //        .WithOne(pp => pp.PlayerProfile)
-    //        .HasForeignKey<PlayersStatistics>(ppp => ppp.PlayerProfileForeignKey);
+        //    modelBuilder.Entity<PlayerProfile>()
+        //        .HasOne(p => p.PlayersStatistics)
+        //        .WithOne(pp => pp.PlayerProfile)
+        //        .HasForeignKey<PlayersStatistics>(ppp => ppp.PlayerProfileForeignKey);
 
-    //    base.OnModelCreating(modelBuilder);
-    //}
-}
+        //    base.OnModelCreating(modelBuilder);
+        //}
+    }
 }

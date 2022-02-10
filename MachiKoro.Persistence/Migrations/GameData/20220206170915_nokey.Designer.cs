@@ -4,16 +4,18 @@ using MachiKoro.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MachiKoro.Data.Migrations
+namespace MachiKoro.Data.Migrations.GameData
 {
-    [DbContext(typeof(PlayerDataContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(GameDataContext))]
+    [Migration("20220206170915_nokey")]
+    partial class nokey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,11 +32,11 @@ namespace MachiKoro.Data.Migrations
                     b.Property<Guid>("PlayersId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("GamesId", "PlayersId");
+                    b.HasIndex("GamesId");
 
                     b.HasIndex("PlayersId");
 
-                    b.ToTable("GamePlayer");
+                    b.ToTable("GamePlayer", (string)null);
                 });
 
             modelBuilder.Entity("MachiKoro.Persistence.Models.Game", b =>
@@ -60,7 +62,7 @@ namespace MachiKoro.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Game");
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("MachiKoro.Persistence.Models.Player", b =>
@@ -74,7 +76,7 @@ namespace MachiKoro.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Players");
+                    b.ToTable("Player");
                 });
 
             modelBuilder.Entity("MachiKoro.Persistence.Models.Step", b =>
@@ -107,7 +109,7 @@ namespace MachiKoro.Data.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("Step");
+                    b.ToTable("Steps");
                 });
 
             modelBuilder.Entity("GamePlayer", b =>

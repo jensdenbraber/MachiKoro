@@ -18,7 +18,7 @@ namespace MachiKoro.Application.v1.Interfaces
 
         Task<bool> DeleteAsync(Guid gameId, CancellationToken cancellationToken);
 
-        Task<bool> AddPlayerToGameAsync(Guid playerId, Guid gameId, CancellationToken cancellationToken);
+        Task<bool> AddPlayerToGameAsync(Domain.Models.Player.Player player, Guid gameId, CancellationToken cancellationToken);
 
         Task<bool> RemovePlayerFromGameAsync(Guid playerId, Guid gameId, CancellationToken cancellationToken);
     }

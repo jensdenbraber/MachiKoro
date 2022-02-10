@@ -1,6 +1,8 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Domain.Enums;
 using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,7 +21,16 @@ namespace MachiKoro.Application.v1.Game.Commands.AddPlayerToGame
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            bool added = await _gameRepository.AddPlayerToGameAsync(request.PlayerId, request.GameId, cancellationToken);
+            var player = new Domain.Models.Player.Player()
+            {
+                Id = request.PlayerId,
+                CoinAmount = 3,
+                PlayerType = PlayerType.Human,
+                EstablishmentCards = new List<Domain.Models.Cards.Establishments.Basic.EstablishmentBase>(),
+                LandmarkCards = new List<Domain.Models.Cards.Landmarks.Basic.LandMark>()
+            };
+
+            bool added = await _gameRepository.AddPlayerToGameAsync(player, request.GameId, cancellationToken);
 
             if (!added)
             {

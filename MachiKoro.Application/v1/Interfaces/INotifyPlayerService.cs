@@ -9,10 +9,6 @@ namespace MachiKoro.Application.v1.Interfaces
 {
     public interface INotifyPlayerService
     {
-        //Task SendNotificationToPlayerAsync(Guid playerId, string message, CancellationToken cancellationToken = default);
-
-        //Task SendNotificationToAllPlayersAsync(string message, CancellationToken cancellationToken = default);
-
         Task SendNotificationDiceRollAsync(object message, CancellationToken cancellationToken);
 
         Task SendNotificationConstructionEstablishmentsOptionsAsync(Guid playerId, object message, CancellationToken cancellationToken);
@@ -25,7 +21,7 @@ namespace MachiKoro.Application.v1.Interfaces
 
         Task SendNotificationDiceRerollAsync(CancellationToken cancellationToken);
 
-        Task SendNotificationDiceAmountAsync(CancellationToken cancellationToken);
+        Task SendNotificationDiceAmountAsync(Guid playerId, CancellationToken cancellationToken);
 
         Task SendNotificationPlayerCoinsAsync(Domain.Models.Player.Player player, CancellationToken cancellationToken);
 

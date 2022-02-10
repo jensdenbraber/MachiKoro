@@ -20,7 +20,7 @@ namespace MachiKoro.Application.v1.CardEffects.Landmarks.Basic
             {
                 // TODO send to GameHub for client to chose for 1 or 2 dice
 
-                await _playerService.SendNotificationDiceAmountAsync(cancellationToken);
+                await _playerService.SendNotificationDiceAmountAsync(game.ActivePlayer.Id, cancellationToken);
             }
         }
     }

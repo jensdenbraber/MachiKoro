@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace MachiKoro.Data.Migrations.GameData
 {
     [DbContext(typeof(GameDataContext))]
@@ -15,9 +17,25 @@ namespace MachiKoro.Data.Migrations.GameData
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.11")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("GamePlayer", b =>
+                {
+                    b.Property<Guid>("GamesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PlayersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GamesId", "PlayersId");
+
+                    b.HasIndex("PlayersId");
+
+                    b.ToTable("GamePlayer", (string)null);
+                });
 
             modelBuilder.Entity("MachiKoro.Persistence.Models.Game", b =>
                 {
@@ -34,15 +52,13 @@ namespace MachiKoro.Data.Migrations.GameData
                     b.Property<DateTime>("FinishedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("MaxNumberOfPlayers")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlayerId");
 
                     b.ToTable("Games");
                 });
@@ -63,6 +79,10 @@ namespace MachiKoro.Data.Migrations.GameData
 
             modelBuilder.Entity("MachiKoro.Persistence.Models.Step", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("ActionType")
                         .HasColumnType("int");
 
@@ -81,23 +101,57 @@ namespace MachiKoro.Data.Migrations.GameData
                     b.Property<int>("StepIndex")
                         .HasColumnType("int");
 
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("PlayerId");
+
                     b.ToTable("Steps");
                 });
 
-            modelBuilder.Entity("MachiKoro.Persistence.Models.Game", b =>
+            modelBuilder.Entity("GamePlayer", b =>
                 {
+                    b.HasOne("MachiKoro.Persistence.Models.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MachiKoro.Persistence.Models.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Step", b =>
+                {
+                    b.HasOne("MachiKoro.Persistence.Models.Game", "Game")
+                        .WithMany("Step")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MachiKoro.Persistence.Models.Player", "Player")
-                        .WithMany("Games")
+                        .WithMany("Steps")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Game");
+
                     b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("MachiKoro.Persistence.Models.Game", b =>
+                {
+                    b.Navigation("Step");
                 });
 
             modelBuilder.Entity("MachiKoro.Persistence.Models.Player", b =>
                 {
-                    b.Navigation("Games");
+                    b.Navigation("Steps");
                 });
 #pragma warning restore 612, 618
         }

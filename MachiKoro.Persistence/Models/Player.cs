@@ -9,10 +9,11 @@ namespace MachiKoro.Persistence.Models
     {
         [Key]
         public Guid Id { get; internal set; }
+
         //[ForeignKey(nameof(Id))]
         //public Guid UserId { get; set; }
 
-        //    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]       
+        //    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
         //    [Required(ErrorMessage = "Name is required")]
@@ -23,7 +24,9 @@ namespace MachiKoro.Persistence.Models
 
         //    //public virtual ICollection<Game> HistoryGames { get; set; }
 
-        //    [Required]
-        public virtual ICollection<Game> Games { get; set; }
+        public ICollection<Step> Steps { get; set; }
+
+        [Required]
+        public ICollection<Game> Games { get; set; }
     }
 }

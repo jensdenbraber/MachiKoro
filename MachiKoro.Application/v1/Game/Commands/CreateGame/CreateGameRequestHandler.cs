@@ -13,13 +13,11 @@ namespace MachiKoro.Application.v1.Game.Commands.CreateGame
     public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest, CreateGameResponse>
     {
         private readonly IGamesRepository _gameRepository;
-        private readonly IIdentityService _identityService;
         private readonly INotifyPlayerService _playerService;
 
-        public CreateGameRequestHandler(IGamesRepository gameRepository, IIdentityService identityService, INotifyPlayerService playerService)
+        public CreateGameRequestHandler(IGamesRepository gameRepository, INotifyPlayerService playerService)
         {
             _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
             _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
         }
 
@@ -29,7 +27,7 @@ namespace MachiKoro.Application.v1.Game.Commands.CreateGame
 
             var player = new Domain.Models.Player.Player()
             {
-                Id = Guid.NewGuid(),
+                Id = request.PlayerId,
                 CoinAmount = 3,
                 PlayerType = PlayerType.Human,
                 EstablishmentCards = new List<Domain.Models.Cards.Establishments.Basic.EstablishmentBase>(),

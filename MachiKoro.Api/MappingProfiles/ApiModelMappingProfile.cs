@@ -20,8 +20,8 @@ namespace MachiKoro.Api.MappingProfiles
             CreateMap<Game, Persistence.Models.Game>();
             CreateMap<Persistence.Models.Game, Game>();
 
-            //CreateMap<Persistence.Models.Player, Player>();
-            //CreateMap<Player, Persistence.Models.Player>();
+            CreateMap<Persistence.Models.Player, Player>();
+            CreateMap<Player, Persistence.Models.Player>();
 
             //CreateMap<Persistence.Models.PlayerProfile, PlayerProfile>();
             //CreateMap<PlayerProfile, Persistence.Models.PlayerProfile>();
@@ -52,6 +52,9 @@ namespace MachiKoro.Api.MappingProfiles
 
             CreateMap<Contracts.Game.CreateGame.CreateGameRequest, Application.v1.Game.Commands.CreateGame.CreateGameRequest>();
             CreateMap<Contracts.Game.CreateGame.CreateGameResponse, Application.v1.Game.Commands.CreateGame.CreateGameResponse>();
+
+            CreateMap<Contracts.Game.AddPlayer.AddPlayerToGameRequest, Application.v1.Game.Commands.AddPlayerToGame.AddPlayerToGameRequest>();
+            CreateMap<Contracts.Game.AddPlayer.AddPlayerToGameResponse, Application.v1.Game.Commands.AddPlayerToGame.AddPlayerToGameResponse>();
 
             CreateMap<Contracts.Game.GetGame.GetGameRequest, Application.v1.Game.Queries.GetGame.GetGameRequest>();
             CreateMap<Contracts.Game.GetGame.GetGameResponse, Application.v1.Game.Queries.GetGame.GetGameResponse>();

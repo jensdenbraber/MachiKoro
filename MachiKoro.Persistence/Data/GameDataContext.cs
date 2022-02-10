@@ -1,6 +1,7 @@
 ﻿using MachiKoro.Persistence.Identity.Models;
 using MachiKoro.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace MachiKoro.Persistence
 {
@@ -14,19 +15,26 @@ namespace MachiKoro.Persistence
         public DbSet<Game> Games { get; set; }
         public DbSet<Step> Steps { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Game>()
-        //        .Property(x => x.ExpensionType)
-        //        .HasConversion<int>();
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<Game>()
+            //    .Property(x => x.ExpensionType)
+            //    .HasConversion<int>();
 
-        //    //modelBuilder.Entity<Game>()
-        //    //    .HasMany<ApplicationUser>(p => p.Players)
-        //    //    .WithMany(g => g.Games)
-        //    //    .UsingEntity(j => j.ToTable("GamePlayer"));
+            modelBuilder.Entity<Game>()
+                .HasMany<Player>(p => p.Players)
+                .WithMany(g => g.Games)
+                .UsingEntity(j => j.ToTable("GamePlayer"));
 
-        //    base.OnModelCreating(modelBuilder);
-        //}
+            // configures one-to-many relationship
+            modelBuilder.Entity<Game>()
+                .HasMany<Step>(s => s.Step)
+                .WithOne(g => g.Game)
+                .HasForeignKey(s => s.GameId)
+                .IsRequired();
+
+            base.OnModelCreating(modelBuilder);
+        }
 
         //public override int SaveChanges()
         //{

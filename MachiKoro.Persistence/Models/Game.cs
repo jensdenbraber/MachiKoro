@@ -1,9 +1,8 @@
 ﻿using MachiKoro.Domain.Enums;
-using MachiKoro.Persistence.Identity.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MachiKoro.Persistence.Models
 {
@@ -19,12 +18,15 @@ namespace MachiKoro.Persistence.Models
 
         public DateTime FinishedDate { get; set; } = DateTime.Now;
 
+        public int MaxNumberOfPlayers { get; set; }
+
         [Required]
         [EnumDataType(typeof(ExpensionType))]
         public ExpensionType ExpensionType { get; set; }
 
+        public ICollection<Step> Step { get; set; }
+
         [Required]
-        public virtual Guid PlayerId { get; set; }
-        public virtual Player Player { get; set; }
+        public ICollection<Player> Players { get; set; }
     }
 }

@@ -72,9 +72,9 @@ namespace MachiKoro.Api.Hubs
             throw new NotImplementedException();
         }
 
-        public Task SendNotificationDiceAmountAsync(CancellationToken cancellationToken = default)
+        public async Task SendNotificationDiceAmountAsync(Guid playerId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await _hubContext.Clients.Client(playerId.ToString()).SendAsync("DiceAmount", cancellationToken);
         }
 
         public Task SendNotificationExtraTurnAsync(Domain.Models.Player.Player activePlayer, CancellationToken cancellationToken = default)

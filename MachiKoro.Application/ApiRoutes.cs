@@ -27,7 +27,7 @@
 
             public const string Choose = Base + "/games/{gameId}/choose";
 
-            public const string AddPlayer = Base + "/games/{gameId}/players";
+            public const string AddPlayer = Base + "/games/{gameId}/players/{playerId}";
 
             public const string RemovePlayer = Base + "/games/{gameId}/players/{playerId}";
 
