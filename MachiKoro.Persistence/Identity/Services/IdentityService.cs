@@ -1,17 +1,19 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Application.v1.Models;
-using MachiKoro.Persistence.Identity.Models.Authentication;
 using MachiKoro.Persistence.Identity.Extensions;
 using MachiKoro.Persistence.Identity.Models;
-using Microsoft.AspNetCore.Authorization;
+using MachiKoro.Persistence.Identity.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,23 +22,20 @@ namespace MachiKoro.Persistence.Identity.Services
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
-        private readonly IAuthorizationService _authorizationService;
         private readonly Token _token;
-        //private readonly JwtConfig _jwtConfig;
+        private readonly IConfiguration _configuration;
+        private readonly IdentityDataContext _identityDataContext;
 
         public IdentityService(
             UserManager<ApplicationUser> userManager,
-            IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
-            IAuthorizationService authorizationService,
-            Token token)
-        //IOptionsMonitor<JwtConfig> optionsMonitor)
+            Token token,
+            IConfiguration configuration, 
+            IdentityDataContext identityDataContext)
         {
             _userManager = userManager;
-            _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
-            _authorizationService = authorizationService;
             _token = token;
-            //_jwtConfig = optionsMonitor.CurrentValue;
+            _configuration = configuration;
+            _identityDataContext = identityDataContext;
         }
 
         public async Task<string> GetUserNameAsync(string userId)
@@ -48,18 +47,17 @@ namespace MachiKoro.Persistence.Identity.Services
 
         public async Task<(Result Result, Result TokenResponse, string UserId)> CreateUserAsync(string userName, string email, string password)
         {
+            var userExists = await _userManager.FindByNameAsync(userName);
+            if (userExists != null)
+            {
+            }
+
             var user = new ApplicationUser
             {
                 UserName = userName,
                 Email = email,
             };
 
-            //// We can utilise the model
-            //var existingUser = await _userManager.FindByEmailAsync(user.Email);
-            ////var existingUserName = await _userManager.FindByNameAsync(user.UserName);
-
-            //if (existingUser != null)
-            //{
             var result = await _userManager.CreateAsync(user, password);
 
             if (result.Succeeded)
@@ -70,12 +68,9 @@ namespace MachiKoro.Persistence.Identity.Services
                 {
                     var jwtToken = await GenerateJwtToken(user);
 
-                    var roles = await _userManager.GetRolesAsync(user);
-
-                    return (result.ToApplicationResult(), new TokenResponse(user, jwtToken).ToApplicationResult(), user.Id);
+                    return (result.ToApplicationResult(), new TokenResponse(jwtToken).ToApplicationResult(), user.Id);
                 }
             }
-            //}
 
             return (result.ToApplicationResult(), null, null);
         }
@@ -100,31 +95,16 @@ namespace MachiKoro.Persistence.Identity.Services
             {
                 return (null, null);
             }
-            
+
             var isCorrect = await _userManager.CheckPasswordAsync(user, password);
 
             if (!isCorrect)
             {
             }
 
-            var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
-
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
-
-            foreach (var userRole in userRoles)
-            {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            }
-
             var jwtToken = await GenerateJwtToken(user);
 
-            return (new TokenResponse(user, jwtToken).ToApplicationResult(), user.Id);
+            return (new TokenResponse(jwtToken).ToApplicationResult(), user.Id);
         }
 
         public async Task<Result> DeleteUserAsync(string userId)
@@ -139,6 +119,91 @@ namespace MachiKoro.Persistence.Identity.Services
             var result = await _userManager.DeleteAsync(user);
 
             return result.ToApplicationResult();
+        }
+
+        public async Task<Result> RefreshToken(string token, string ipAddress)
+{
+            var user = getUserByRefreshToken(token);
+            var refreshToken = _identityDataContext.RefreshTokens.Single(x => x.Token == token);
+
+            if (refreshToken.IsRevoked)
+            {
+                // revoke all descendant tokens in case this token has been compromised
+                revokeDescendantRefreshTokens(refreshToken, user, ipAddress, $"Attempted reuse of revoked ancestor token: {token}");
+                _identityDataContext.Update(user);
+                _identityDataContext.SaveChanges();
+            }
+
+            if (!refreshToken.IsActive)
+                throw new Exception("Invalid token");
+
+            // replace old refresh token with a new one (rotate token)
+            var newRefreshToken = rotateRefreshToken(refreshToken, ipAddress);
+            _identityDataContext.RefreshTokens.Add(newRefreshToken);
+
+            // remove old refresh tokens from user
+            removeOldRefreshTokens(user);
+
+            // save changes to db
+            _identityDataContext.Update(user);
+            _identityDataContext.SaveChanges();
+
+            // generate new jwt
+            var jwtToken = await GenerateJwtToken(user);
+
+            var result = new Result(true, new List<string>())
+            {
+                Succeeded = true,
+                RefreshToken = newRefreshToken.ToString(),
+                Token = jwtToken
+            };
+
+            return result;
+        }
+
+        private ApplicationUser getUserByRefreshToken(string token)
+        {
+            var refreshToken = _identityDataContext.RefreshTokens.SingleOrDefault(t => t.Token == token);
+
+            var user = _userManager.Users.SingleOrDefault(u => u.Id == refreshToken.UserId);
+
+            return user;
+        }
+
+        private RefreshToken rotateRefreshToken(RefreshToken refreshToken, string ipAddress)
+        {
+            var newRefreshToken = GenerateRefreshToken(ipAddress);
+            revokeRefreshToken(refreshToken, ipAddress, "Replaced by new token", newRefreshToken.Token);
+            return newRefreshToken;
+        }
+
+        private void revokeDescendantRefreshTokens(RefreshToken refreshToken, ApplicationUser user, string ipAddress, string reason)
+        {
+            // recursively traverse the refresh token chain and ensure all descendants are revoked
+            if (!string.IsNullOrEmpty(refreshToken.ReplacedByToken))
+            {
+                var childToken = _identityDataContext.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken.ReplacedByToken);
+                if (childToken.IsActive)
+                    revokeRefreshToken(childToken, ipAddress, reason);
+                else
+                    revokeDescendantRefreshTokens(childToken, user, ipAddress, reason);
+            }
+        }
+
+        private void revokeRefreshToken(RefreshToken token, string ipAddress, string reason = null, string replacedByToken = null)
+        {
+            token.Revoked = DateTime.UtcNow;
+            token.RevokedByIp = ipAddress;
+            token.ReasonRevoked = reason;
+            token.ReplacedByToken = replacedByToken;
+        }
+
+        private void removeOldRefreshTokens(ApplicationUser user)
+        {
+            // remove old inactive refresh tokens from user based on TTL in app settings
+            //_identityDataContext.RefreshTokens.RemoveAll(x =>
+            //    !x.IsActive &&
+            //    x.Created.AddDays(_appSettings.RefreshTokenTTL) <= DateTime.UtcNow);
         }
 
         private async Task<string> GenerateJwtToken(ApplicationUser user)
@@ -160,10 +225,9 @@ namespace MachiKoro.Persistence.Identity.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("UserId", user.Id),
-                    new Claim("FullName", $"{user.FirstName} {user.LastName}"),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.NameIdentifier, user.Email),
+                    new Claim(ClaimTypes.NameIdentifier, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(ClaimTypes.Role, string.Join(",", roles))
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(_token.Expiry),
@@ -173,6 +237,33 @@ namespace MachiKoro.Persistence.Identity.Services
 
             SecurityToken token = handler.CreateJwtSecurityToken(descriptor);
             return handler.WriteToken(token);
+        }
+
+        private RefreshToken GenerateRefreshToken(string ipAddress)
+        {
+            var refreshToken = new RefreshToken
+            {
+                Token = getUniqueToken(),
+                // token is valid for 7 days
+                ExpiryDate = DateTime.UtcNow.AddDays(7),
+                Created = DateTime.UtcNow,
+                CreatedByIp = ipAddress
+            };
+
+            return refreshToken;
+
+            string getUniqueToken()
+            {
+                // token is a cryptographically strong random sequence of values
+                var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+                // ensure token is unique by checking against db
+                var tokenIsUnique = !_identityDataContext.RefreshTokens.Any(t => t.Token == token);
+
+                if (!tokenIsUnique)
+                    return getUniqueToken();
+
+                return token;
+            }
         }
 
         //private async Task<Result> GenerateJwtToken(IdentityUser user)

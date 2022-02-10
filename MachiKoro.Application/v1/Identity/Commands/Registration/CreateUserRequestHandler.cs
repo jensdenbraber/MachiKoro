@@ -21,8 +21,6 @@ namespace MachiKoro.Application.v1.Identity.Commands.Registration
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            request.Email = $"{request.UserName}@email.com";
-
             var createUserResponse = new CreateUserResponse();
 
             (Models.Result result, Models.Result token, string userId) = await _identityService.CreateUserAsync(request.UserName, request.Email, request.Password);

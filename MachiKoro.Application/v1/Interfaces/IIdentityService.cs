@@ -27,15 +27,15 @@ namespace MachiKoro.Application.v1.Interfaces
         ///// <returns></returns>
         //Task<TokenResponse> Authenticate(TokenRequest request, string ipAddress);
 
-        ///// <summary>
-        /////     If the refresh token is valid, a new JWT token will be issued containing the user details.
-        ///// </summary>
-        ///// <param name="refreshToken">An existing refresh token.</param>
-        ///// <param name="ipAddress">The users current ip</param>
-        ///// <returns>
-        /////     <see cref="TokenResponse" />
-        ///// </returns>
-        //Task<TokenResponse> RefreshToken(string refreshToken, string ipAddress);
+        /// <summary>
+        ///     If the refresh token is valid, a new JWT token will be issued containing the user details.
+        /// </summary>
+        /// <param name="refreshToken">An existing refresh token.</param>
+        /// <param name="ipAddress">The users current ip</param>
+        /// <returns>
+        ///     <see cref="TokenResponse" />
+        /// </returns>
+        Task<Result> RefreshToken(string token, string ipAddress);
 
 
         ///// <summary>
