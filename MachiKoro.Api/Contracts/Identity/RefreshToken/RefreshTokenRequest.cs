@@ -2,7 +2,7 @@
 
 namespace MachiKoro.Api.Contracts.Identity.RefreshToken
 {
-    public class RefreshTokenRequest
+    public record RefreshTokenRequest
     {
         [JsonPropertyName("token")]
         public string Token { get; set; }

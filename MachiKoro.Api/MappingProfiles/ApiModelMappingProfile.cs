@@ -7,6 +7,8 @@ using MachiKoro.Domain.Models.PlayerProfile;
 using MachiKoro.Domain.Models.User;
 using MachiKoro.Persistence.Identity.Models.Authentication;
 using MachiKoro.Persistence.Identity.Models;
+using MachiKoro.Core.Models.Identity;
+using MachiKoro.Application.v1.Identity.Commands.Refresh;
 
 namespace MachiKoro.Api.MappingProfiles
 {
@@ -14,6 +16,15 @@ namespace MachiKoro.Api.MappingProfiles
     {
         public ApiModelMappingProfile()
         {
+            CreateMap<Contracts.Identity.Registration.CreateUserRequest, CreateUserRequest>();
+            CreateMap<CreateUserResponse, Contracts.Identity.Registration.CreateUserResponse>();
+            
+            CreateMap<Contracts.Identity.Login.LoginUserRequest, LoginUserRequest>();
+            CreateMap<LoginUserResponse, Contracts.Identity.Login.LoginUserResponse>();
+
+            CreateMap<Contracts.Identity.RefreshToken.RefreshTokenRequest, RefreshTokenRequest>();
+            CreateMap<RefreshTokenResponse, Contracts.Identity.RefreshToken.RefreshTokenResponse>();
+
             CreateMap<Persistence.Models.Game, Contracts.Game.CreateGame.CreateGameRequest>();
             //CreateMap<Persistence.Models.Player, Contracts.Player.GetPlayerProfile.GetPlayerProfileRequest>();
 

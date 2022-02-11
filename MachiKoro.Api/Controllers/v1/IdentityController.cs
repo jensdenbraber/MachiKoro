@@ -5,7 +5,6 @@ using MachiKoro.Application.v1.Identity.Commands.Refresh;
 using MachiKoro.Application.v1.Identity.Commands.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,7 +30,7 @@ namespace MachiKoro.Api.Controllers.v1
         [Consumes("application/json")]
         [Produces("application/json")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody][Required] CreateUserRequest request)
+        public async Task<IActionResult> Register([FromBody][Required] Contracts.Identity.Registration.CreateUserRequest request)
         {
             var coreRequest = _mapper.Map<CreateUserRequest>(request);
 
@@ -47,7 +46,7 @@ namespace MachiKoro.Api.Controllers.v1
         [Consumes("application/json")]
         [Produces("application/json")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody][Required] LoginUserRequest request)
+        public async Task<IActionResult> Login([FromBody][Required] Contracts.Identity.Login.LoginUserRequest request)
         {
             var coreRequest = _mapper.Map<LoginUserRequest>(request);
 
@@ -56,13 +55,9 @@ namespace MachiKoro.Api.Controllers.v1
             if (coreResponse == null)
                 return NotFound();
 
-            //return Ok(new AuthSuccessResponse
-            //{
-            //    Token = authResponse.Token,
-            //    RefreshToken = authResponse.RefreshToken
-            //});
+            var response = _mapper.Map<Contracts.Identity.Login.LoginUserResponse>(coreResponse);
 
-            return Ok(coreResponse);
+            return Ok(response);
         }
 
         [HttpPost(ApiRoutes.Identity.Refresh)]
