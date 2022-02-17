@@ -21,7 +21,7 @@ namespace MachiKoro.Application.v1.Identity.Commands.Login
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            var result = await _identityService.AuthorizeAsync(request.UserName, request.Password);
+            var result = await _identityService.AuthorizeAsync(request.UserName, request.Password, request.IpAddress);
 
             var createUserResponse = new LoginUserResponse();
 

@@ -4,12 +4,12 @@ namespace MachiKoro.Persistence.Identity.Models.Authentication
 {
     public class TokenResponse
     {
-        public TokenResponse(string token
-                             //string refreshToken
+        public TokenResponse(string token,
+                             string refreshToken
                             )
         {
             Token = token;
-            //RefreshToken = refreshToken;
+            RefreshToken = refreshToken;
         }
 
         public string Id { get; set; }
@@ -17,8 +17,6 @@ namespace MachiKoro.Persistence.Identity.Models.Authentication
         public string EmailAddress { get; set; }
         public string Token { get; set; }
         public string Role { get; set; }
-
-        //[JsonIgnore]
-        //public string RefreshToken { get; set; }
+        public string RefreshToken { get; set; }
     }
 }

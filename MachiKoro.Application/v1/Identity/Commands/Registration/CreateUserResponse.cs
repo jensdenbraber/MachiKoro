@@ -7,6 +7,7 @@ namespace MachiKoro.Core.Models.Identity
     {
         public Guid? UserId { get; set; }
         public string Token { get; set; }
+        public string RefreshToken { get; set; }
         public List<string> Errors { get; set; }
     }
 }

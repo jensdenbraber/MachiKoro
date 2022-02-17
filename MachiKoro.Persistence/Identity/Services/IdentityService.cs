@@ -45,7 +45,7 @@ namespace MachiKoro.Persistence.Identity.Services
             return user.UserName;
         }
 
-        public async Task<(Result Result, Result TokenResponse, string UserId)> CreateUserAsync(string userName, string email, string password)
+        public async Task<(Result Result, Result TokenResponse, string UserId)> CreateUserAsync(string userName, string email, string password, string ipAdress)
         {
             var userExists = await _userManager.FindByNameAsync(userName);
             if (userExists != null)
@@ -67,8 +67,9 @@ namespace MachiKoro.Persistence.Identity.Services
                 if (addToRolesResult.Succeeded)
                 {
                     var jwtToken = await GenerateJwtToken(user);
+                    var refreshToken = GenerateRefreshToken(ipAdress);
 
-                    return (result.ToApplicationResult(), new TokenResponse(jwtToken).ToApplicationResult(), user.Id);
+                    return (result.ToApplicationResult(), new TokenResponse(jwtToken, refreshToken.Token).ToApplicationResult(), user.Id);
                 }
             }
 
@@ -87,7 +88,7 @@ namespace MachiKoro.Persistence.Identity.Services
             throw new NotImplementedException();
         }
 
-        public async Task<(Result, string)> AuthorizeAsync(string userName, string password)
+        public async Task<(Result, string)> AuthorizeAsync(string userName, string password, string ipAdress)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
@@ -103,8 +104,9 @@ namespace MachiKoro.Persistence.Identity.Services
             }
 
             var jwtToken = await GenerateJwtToken(user);
+            var refreshToken = GenerateRefreshToken(ipAdress);
 
-            return (new TokenResponse(jwtToken).ToApplicationResult(), user.Id);
+            return (new TokenResponse(jwtToken, refreshToken.Token).ToApplicationResult(), user.Id);
         }
 
         public async Task<Result> DeleteUserAsync(string userId)

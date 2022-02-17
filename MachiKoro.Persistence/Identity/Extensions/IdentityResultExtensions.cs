@@ -18,6 +18,7 @@ namespace MachiKoro.Persistence.Identity.Extensions
         {
             var result = Result.Success();
             result.Token = tokenResponse.Token;
+            result.RefreshToken = tokenResponse.RefreshToken;
 
             return result;
         }

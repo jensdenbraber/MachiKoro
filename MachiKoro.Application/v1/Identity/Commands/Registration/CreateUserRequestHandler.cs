@@ -23,12 +23,13 @@ namespace MachiKoro.Application.v1.Identity.Commands.Registration
 
             var createUserResponse = new CreateUserResponse();
 
-            (Models.Result result, Models.Result token, string userId) = await _identityService.CreateUserAsync(request.UserName, request.Email, request.Password);
+            (Models.Result result, Models.Result token, string userId) = await _identityService.CreateUserAsync(request.UserName, request.Email, request.Password, request.IpAddress);
 
             if (result.Succeeded)
             {
                 createUserResponse.UserId = Guid.Parse(userId);
                 createUserResponse.Token = token.Token;
+                createUserResponse.RefreshToken = token.RefreshToken;
             }
             else
             {

@@ -33,13 +33,16 @@ namespace MachiKoro.Api.Controllers.v1
         public async Task<IActionResult> Register([FromBody][Required] Contracts.Identity.Registration.CreateUserRequest request)
         {
             var coreRequest = _mapper.Map<CreateUserRequest>(request);
+            coreRequest.IpAddress = ipAddress();
 
             var coreResponse = await _mediator.Send(coreRequest);
 
             if (coreResponse.Errors?.Any() ?? false)
                 return BadRequest(coreResponse.Errors);
 
-            return Ok(coreResponse);
+            var response = _mapper.Map<Contracts.Identity.Registration.CreateUserResponse>(coreResponse);
+
+            return Ok(response);
         }
 
         [HttpPost(ApiRoutes.Identity.Login)]
@@ -49,6 +52,7 @@ namespace MachiKoro.Api.Controllers.v1
         public async Task<IActionResult> Login([FromBody][Required] Contracts.Identity.Login.LoginUserRequest request)
         {
             var coreRequest = _mapper.Map<LoginUserRequest>(request);
+            coreRequest.IpAddress = ipAddress();
 
             var coreResponse = await _mediator.Send(coreRequest);
 
@@ -56,11 +60,14 @@ namespace MachiKoro.Api.Controllers.v1
                 return NotFound();
 
             var response = _mapper.Map<Contracts.Identity.Login.LoginUserResponse>(coreResponse);
+            setTokenCookie(response.RefreshToken);
 
             return Ok(response);
         }
 
         [HttpPost(ApiRoutes.Identity.Refresh)]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Refresh([FromBody] Contracts.Identity.RefreshToken.RefreshTokenRequest request)
         {
             var coreRequest = _mapper.Map<RefreshTokenRequest>(request);
@@ -73,7 +80,9 @@ namespace MachiKoro.Api.Controllers.v1
             if (coreResponse == null)
                 return NotFound();
 
-            return Ok(coreResponse);
+            var response = _mapper.Map<Contracts.Identity.RefreshToken.RefreshTokenResponse>(coreResponse);
+
+            return Ok(response);
         }
 
         private void setTokenCookie(string token)
