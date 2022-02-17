@@ -1,4 +1,5 @@
-﻿using MachiKoro.Application.v1.Interfaces;
+﻿using MachiKoro.Application.v1.Exceptions;
+using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Application.v1.Models;
 using MachiKoro.Persistence.Identity.Extensions;
 using MachiKoro.Persistence.Identity.Models;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -29,7 +29,7 @@ namespace MachiKoro.Persistence.Identity.Services
         public IdentityService(
             UserManager<ApplicationUser> userManager,
             Token token,
-            IConfiguration configuration, 
+            IConfiguration configuration,
             IdentityDataContext identityDataContext)
         {
             _userManager = userManager;
@@ -50,6 +50,7 @@ namespace MachiKoro.Persistence.Identity.Services
             var userExists = await _userManager.FindByNameAsync(userName);
             if (userExists != null)
             {
+                throw new UserAlreadyExistsException(userName);
             }
 
             var user = new ApplicationUser
@@ -67,7 +68,10 @@ namespace MachiKoro.Persistence.Identity.Services
                 if (addToRolesResult.Succeeded)
                 {
                     var jwtToken = await GenerateJwtToken(user);
-                    var refreshToken = GenerateRefreshToken(ipAdress);
+                    var refreshToken = GenerateRefreshToken(ipAdress, user.Id);
+
+                    await _identityDataContext.RefreshTokens.AddAsync(refreshToken);
+                    await _identityDataContext.SaveChangesAsync();
 
                     return (result.ToApplicationResult(), new TokenResponse(jwtToken, refreshToken.Token).ToApplicationResult(), user.Id);
                 }
@@ -94,17 +98,18 @@ namespace MachiKoro.Persistence.Identity.Services
 
             if (user == null)
             {
-                return (null, null);
+                throw new LoginException(userName, password);
             }
 
             var isCorrect = await _userManager.CheckPasswordAsync(user, password);
 
             if (!isCorrect)
             {
+                throw new LoginException(userName, password);
             }
 
             var jwtToken = await GenerateJwtToken(user);
-            var refreshToken = GenerateRefreshToken(ipAdress);
+            var refreshToken = GenerateRefreshToken(ipAdress, user.Id);
 
             return (new TokenResponse(jwtToken, refreshToken.Token).ToApplicationResult(), user.Id);
         }
@@ -124,7 +129,7 @@ namespace MachiKoro.Persistence.Identity.Services
         }
 
         public async Task<Result> RefreshToken(string token, string ipAddress)
-{
+        {
             var user = getUserByRefreshToken(token);
             var refreshToken = _identityDataContext.RefreshTokens.Single(x => x.Token == token);
 
@@ -140,7 +145,7 @@ namespace MachiKoro.Persistence.Identity.Services
                 throw new Exception("Invalid token");
 
             // replace old refresh token with a new one (rotate token)
-            var newRefreshToken = rotateRefreshToken(refreshToken, ipAddress);
+            var newRefreshToken = rotateRefreshToken(refreshToken, ipAddress, user.Id);
             _identityDataContext.RefreshTokens.Add(newRefreshToken);
 
             // remove old refresh tokens from user
@@ -172,9 +177,9 @@ namespace MachiKoro.Persistence.Identity.Services
             return user;
         }
 
-        private RefreshToken rotateRefreshToken(RefreshToken refreshToken, string ipAddress)
+        private RefreshToken rotateRefreshToken(RefreshToken refreshToken, string ipAddress, string userId)
         {
-            var newRefreshToken = GenerateRefreshToken(ipAddress);
+            var newRefreshToken = GenerateRefreshToken(ipAddress, userId);
             revokeRefreshToken(refreshToken, ipAddress, "Replaced by new token", newRefreshToken.Token);
             return newRefreshToken;
         }
@@ -227,7 +232,7 @@ namespace MachiKoro.Persistence.Identity.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("UserId", user.Id),
-                    new Claim(ClaimTypes.Email, user.Email),
+                    //new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.NameIdentifier, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(ClaimTypes.Role, string.Join(",", roles))
@@ -241,7 +246,7 @@ namespace MachiKoro.Persistence.Identity.Services
             return handler.WriteToken(token);
         }
 
-        private RefreshToken GenerateRefreshToken(string ipAddress)
+        private RefreshToken GenerateRefreshToken(string ipAddress, string userId)
         {
             var refreshToken = new RefreshToken
             {
@@ -249,7 +254,8 @@ namespace MachiKoro.Persistence.Identity.Services
                 // token is valid for 7 days
                 ExpiryDate = DateTime.UtcNow.AddDays(7),
                 Created = DateTime.UtcNow,
-                CreatedByIp = ipAddress
+                CreatedByIp = ipAddress,
+                UserId = userId
             };
 
             return refreshToken;

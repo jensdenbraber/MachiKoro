@@ -7,6 +7,7 @@ namespace MachiKoro.Application.v1.Identity.Commands.Login
     {
         public Guid? UserId { get; set; }
         public string Token { get; set; }
+        public string RefreshToken { get; set; }
         public List<string> Errors { get; set; }
     }
 }

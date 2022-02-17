@@ -35,14 +35,22 @@ namespace MachiKoro.Api.Controllers.v1
             var coreRequest = _mapper.Map<CreateUserRequest>(request);
             coreRequest.IpAddress = ipAddress();
 
-            var coreResponse = await _mediator.Send(coreRequest);
+            try
+            {
+                var coreResponse = await _mediator.Send(coreRequest);
 
-            if (coreResponse.Errors?.Any() ?? false)
-                return BadRequest(coreResponse.Errors);
+                if (coreResponse.Errors?.Any() ?? false)
+                    return BadRequest(coreResponse.Errors);
 
-            var response = _mapper.Map<Contracts.Identity.Registration.CreateUserResponse>(coreResponse);
+                var response = _mapper.Map<Contracts.Identity.Registration.CreateUserResponse>(coreResponse);
+                setTokenCookie(coreResponse.RefreshToken);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost(ApiRoutes.Identity.Login)]
@@ -54,15 +62,22 @@ namespace MachiKoro.Api.Controllers.v1
             var coreRequest = _mapper.Map<LoginUserRequest>(request);
             coreRequest.IpAddress = ipAddress();
 
-            var coreResponse = await _mediator.Send(coreRequest);
+            try
+            {
+                var coreResponse = await _mediator.Send(coreRequest);
 
-            if (coreResponse == null)
-                return NotFound();
+                if (coreResponse == null)
+                    return NotFound();
 
-            var response = _mapper.Map<Contracts.Identity.Login.LoginUserResponse>(coreResponse);
-            setTokenCookie(response.RefreshToken);
+                var response = _mapper.Map<Contracts.Identity.Login.LoginUserResponse>(coreResponse);
+                setTokenCookie(response.RefreshToken);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost(ApiRoutes.Identity.Refresh)]
@@ -75,12 +90,12 @@ namespace MachiKoro.Api.Controllers.v1
             coreRequest.IpAddress = ipAddress();
 
             var coreResponse = await _mediator.Send(coreRequest);
-            setTokenCookie(coreResponse.RefreshToken);
 
             if (coreResponse == null)
                 return NotFound();
 
             var response = _mapper.Map<Contracts.Identity.RefreshToken.RefreshTokenResponse>(coreResponse);
+            setTokenCookie(coreResponse.RefreshToken);
 
             return Ok(response);
         }

@@ -35,6 +35,7 @@ namespace MachiKoro.Application.v1.Identity.Commands.Login
 
             createUserResponse.UserId = new Guid(result.UserId);
             createUserResponse.Token = result.Result.Token;
+            createUserResponse.RefreshToken = result.Result.RefreshToken;
 
             return createUserResponse;
         }

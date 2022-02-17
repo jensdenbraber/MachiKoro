@@ -60,7 +60,7 @@ namespace MachiKoro.Api
                 {
                     policy.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .WithOrigins("http://localhost:27143")
+                        .WithOrigins("http://localhost:3000")
                         .AllowCredentials();
                 });
             });
