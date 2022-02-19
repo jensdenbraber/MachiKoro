@@ -1,12 +1,13 @@
 using FluentAssertions;
 using MachiKoro.Application.CardDecks;
-using Xunit;
+using NUnit.Framework;
 
 namespace MachiKoro.Application.UnitTests
 {
     public class CardDeckTests
     {
-        [Fact]
+        [Test]
+        [Ignore("Ignore a test")]
         public void BuildCardDecksBasicGame()
         {
             var cardDecks = new CardDeckBuilder(null).BuildCardDecksBasicGame();

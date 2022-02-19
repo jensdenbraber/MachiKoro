@@ -49,6 +49,8 @@ namespace MachiKoro.Api
 
             services.AddSwaggerServices(Configuration);
 
+            services.AddFluentValidationServices(Configuration);
+
             services.AddTransient<INotifyPlayerService, GameHubContext>();
             services.AddTransient<Application.v1.Services.GamesService, Application.v1.Services.GamesService>();
 
@@ -58,7 +60,7 @@ namespace MachiKoro.Api
                 {
                     policy.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .WithOrigins("http://localhost:27143")
+                        .WithOrigins("http://localhost:3000")
                         .AllowCredentials();
                 });
             });

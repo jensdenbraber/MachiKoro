@@ -21,20 +21,20 @@ namespace MachiKoro.Application.v1.Identity.Commands.Login
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            var result = await _identityService.AuthorizeAsync(request.UserName, request.Password);
-
             var createUserResponse = new LoginUserResponse();
 
-            if (!result.Result.Succeeded)
+            try
             {
-                createUserResponse.Errors = new List<string>();
-                createUserResponse.Errors.AddRange(result.Result.Errors);
+                var result = await _identityService.AuthorizeAsync(request.UserName, request.Password, request.IpAddress);
 
-                return createUserResponse;
+                createUserResponse.UserName = result.UserName;
+                createUserResponse.Token = result.Token;
+                createUserResponse.RefreshToken = result.RefreshToken;
             }
-
-            createUserResponse.UserId = new Guid(result.UserId);
-            createUserResponse.Token = result.Result.Token;
+            catch (Exception)
+            {
+                throw;
+            }
 
             return createUserResponse;
         }
