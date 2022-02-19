@@ -1,11 +1,8 @@
-﻿using MachiKoro.Application.v1.Identity.Commands.Registration;
-using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core.Models.Identity;
+﻿using MachiKoro.Application.v1.Interfaces;
 using MediatR;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MachiKoro.Application.v1.Identity.Commands.Refresh
 {
@@ -21,20 +18,14 @@ namespace MachiKoro.Application.v1.Identity.Commands.Refresh
         public async Task<RefreshTokenResponse> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
-            
-            var refreshTokenResponse = new RefreshTokenResponse();
 
             var result = await _identityService.RefreshToken(request.Token, request.IpAddress);
-            
-            if (result.Succeeded)
+
+            var refreshTokenResponse = new RefreshTokenResponse
             {
-                refreshTokenResponse.JwtToken = request.Token;
-                refreshTokenResponse.RefreshToken = result.RefreshToken;
-            }
-            else
-            {
-                //refreshTokenResponse.Errors = new List<string>(result.Errors);
-            }
+                JwtToken = request.Token,
+                RefreshToken = result.RefreshToken
+            };
 
             return refreshTokenResponse;
         }

@@ -1,12 +1,11 @@
 ﻿using MachiKoro.Application.v1.Exceptions;
 using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Application.v1.Models;
-using MachiKoro.Persistence.Identity.Extensions;
 using MachiKoro.Persistence.Identity.Models;
 using MachiKoro.Persistence.Identity.Models.Authentication;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -23,18 +22,15 @@ namespace MachiKoro.Persistence.Identity.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly Token _token;
-        private readonly IConfiguration _configuration;
         private readonly IdentityDataContext _identityDataContext;
 
         public IdentityService(
             UserManager<ApplicationUser> userManager,
             Token token,
-            IConfiguration configuration,
             IdentityDataContext identityDataContext)
         {
             _userManager = userManager;
             _token = token;
-            _configuration = configuration;
             _identityDataContext = identityDataContext;
         }
 
@@ -45,7 +41,7 @@ namespace MachiKoro.Persistence.Identity.Services
             return user.UserName;
         }
 
-        public async Task<(Result Result, Result TokenResponse, string UserId)> CreateUserAsync(string userName, string email, string password, string ipAdress)
+        public async Task<Unit> CreateUserAsync(string userName, string email, string password, string ipAdress)
         {
             var userExists = await _userManager.FindByNameAsync(userName);
             if (userExists != null)
@@ -73,11 +69,11 @@ namespace MachiKoro.Persistence.Identity.Services
                     await _identityDataContext.RefreshTokens.AddAsync(refreshToken);
                     await _identityDataContext.SaveChangesAsync();
 
-                    return (result.ToApplicationResult(), new TokenResponse(jwtToken, refreshToken.Token).ToApplicationResult(), user.Id);
+                    return Unit.Value;
                 }
             }
 
-            return (result.ToApplicationResult(), null, null);
+            throw new RegisterException(result.Errors);
         }
 
         public async Task<bool> IsInRoleAsync(string userId, string role)
@@ -92,7 +88,7 @@ namespace MachiKoro.Persistence.Identity.Services
             throw new NotImplementedException();
         }
 
-        public async Task<(Result, string)> AuthorizeAsync(string userName, string password, string ipAdress)
+        public async Task<AuthorizeResult> AuthorizeAsync(string userName, string password, string ipAdress)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
@@ -111,24 +107,36 @@ namespace MachiKoro.Persistence.Identity.Services
             var jwtToken = await GenerateJwtToken(user);
             var refreshToken = GenerateRefreshToken(ipAdress, user.Id);
 
-            return (new TokenResponse(jwtToken, refreshToken.Token).ToApplicationResult(), user.Id);
+            var authorizeResult = new AuthorizeResult
+            {
+                UserName = userName,
+                Token = jwtToken,
+                RefreshToken = refreshToken.Token
+            };
+
+            return authorizeResult;
         }
 
-        public async Task<Result> DeleteUserAsync(string userId)
+        public async Task<bool> DeleteUserAsync(string userId)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
-            return user != null ? await DeleteUserAsync(user) : Result.Success();
+            return user != null ? await DeleteUserAsync(user) : false;
         }
 
-        public async Task<Result> DeleteUserAsync(ApplicationUser user)
+        public async Task<bool> DeleteUserAsync(ApplicationUser user)
         {
             var result = await _userManager.DeleteAsync(user);
 
-            return result.ToApplicationResult();
+            if (result.Succeeded)
+            {
+                return true;
+            }
+
+            throw new DeleteUserException(result.Errors);
         }
 
-        public async Task<Result> RefreshToken(string token, string ipAddress)
+        public async Task<RefreshTokenResult> RefreshToken(string token, string ipAddress)
         {
             var user = getUserByRefreshToken(token);
             var refreshToken = _identityDataContext.RefreshTokens.Single(x => x.Token == token);
@@ -158,14 +166,13 @@ namespace MachiKoro.Persistence.Identity.Services
             // generate new jwt
             var jwtToken = await GenerateJwtToken(user);
 
-            var result = new Result(true, new List<string>())
+            var refreshTokenResult = new RefreshTokenResult
             {
-                Succeeded = true,
                 RefreshToken = newRefreshToken.ToString(),
                 Token = jwtToken
             };
 
-            return result;
+            return refreshTokenResult;
         }
 
         private ApplicationUser getUserByRefreshToken(string token)
@@ -273,49 +280,5 @@ namespace MachiKoro.Persistence.Identity.Services
                 return token;
             }
         }
-
-        //private async Task<Result> GenerateJwtToken(IdentityUser user)
-        //{
-        //    var jwtTokenHandler = new JwtSecurityTokenHandler();
-
-        //    var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
-
-        //    var tokenDescriptor = new SecurityTokenDescriptor
-        //    {
-        //        Subject = new ClaimsIdentity(new[]
-        //        {
-        //            new Claim("Id", user.Id),
-        //            new Claim(JwtRegisteredClaimNames.Email, user.Email),
-        //            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-        //            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        //        }),
-        //        Expires = DateTime.UtcNow.AddSeconds(30), // 5-10
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //    };
-
-        //    var token = jwtTokenHandler.CreateToken(tokenDescriptor);
-        //    var jwtToken = jwtTokenHandler.WriteToken(token);
-
-        //    var refreshToken = new RefreshToken()
-        //    {
-        //        JwtId = token.Id,
-        //        IsUsed = false,
-        //        IsRevorked = false,
-        //        UserId = user.Id,
-        //        AddedDate = DateTime.UtcNow,
-        //        ExpiryDate = DateTime.UtcNow.AddMonths(6),
-        //        Token = RandomString(35) + Guid.NewGuid()
-        //    };
-
-        //    await _apiDbContext.RefreshTokens.AddAsync(refreshToken);
-        //    await _apiDbContext.SaveChangesAsync();
-
-        //    return new AuthResult()
-        //    {
-        //        Token = jwtToken,
-        //        Success = true,
-        //        RefreshToken = refreshToken.Token
-        //    };
-        //}
     }
 }

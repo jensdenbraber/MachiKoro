@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MachiKoro.Application.v1;
+using MachiKoro.Application.v1.Exceptions;
 using MachiKoro.Application.v1.Identity.Commands.Login;
 using MachiKoro.Application.v1.Identity.Commands.Refresh;
 using MachiKoro.Application.v1.Identity.Commands.Registration;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Controllers.v1
@@ -37,15 +37,17 @@ namespace MachiKoro.Api.Controllers.v1
 
             try
             {
-                var coreResponse = await _mediator.Send(coreRequest);
+                await _mediator.Send(coreRequest);
 
-                if (coreResponse.Errors?.Any() ?? false)
-                    return BadRequest(coreResponse.Errors);
-
-                var response = _mapper.Map<Contracts.Identity.Registration.CreateUserResponse>(coreResponse);
-                setTokenCookie(coreResponse.RefreshToken);
-
-                return Ok(response);
+                return NoContent();
+            }
+            catch (RegisterException e)
+            {
+                return new BadRequestObjectResult(e.Errors);
+            }
+            catch (UserAlreadyExistsException e)
+            {
+                return new BadRequestObjectResult(e.Message);
             }
             catch (Exception)
             {
@@ -73,6 +75,10 @@ namespace MachiKoro.Api.Controllers.v1
                 setTokenCookie(response.RefreshToken);
 
                 return Ok(response);
+            }
+            catch (LoginException e)
+            {
+                return new BadRequestObjectResult(e.Message);
             }
             catch (Exception)
             {

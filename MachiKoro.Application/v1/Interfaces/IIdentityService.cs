@@ -1,4 +1,5 @@
 ﻿using MachiKoro.Application.v1.Models;
+using MediatR;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Application.v1.Interfaces
@@ -10,14 +11,12 @@ namespace MachiKoro.Application.v1.Interfaces
         Task<bool> IsInRoleAsync(string userId, string role);
 
         Task<bool> AuthorizeByIdAsync(string userId, string policyName);
-        Task<(Result Result, string UserId)> AuthorizeAsync(string userName, string password, string ipAddress);
 
-        Task<(Result Result, Result TokenResponse, string UserId)> CreateUserAsync(string userName, string email, string password, string ipAdress);
+        Task<AuthorizeResult> AuthorizeAsync(string userName, string password, string ipAddress);
 
-        Task<Result> DeleteUserAsync(string userId);
+        Task<Unit> CreateUserAsync(string userName, string email, string password, string ipAdress);
 
-
-
+        Task<bool> DeleteUserAsync(string userId);
 
         ///// <summary>
         /////     Validate the credentials entered when logging in.
@@ -35,8 +34,7 @@ namespace MachiKoro.Application.v1.Interfaces
         /// <returns>
         ///     <see cref="TokenResponse" />
         /// </returns>
-        Task<Result> RefreshToken(string token, string ipAddress);
-
+        Task<RefreshTokenResult> RefreshToken(string token, string ipAddress);
 
         ///// <summary>
         /////     Check if the credentials passed in are valid.

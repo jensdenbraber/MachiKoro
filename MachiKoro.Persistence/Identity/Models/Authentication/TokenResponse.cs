@@ -13,6 +13,7 @@ namespace MachiKoro.Persistence.Identity.Models.Authentication
         }
 
         public string Id { get; set; }
+        public string UserName { get; set; }
         public string FullName { get; set; }
         public string EmailAddress { get; set; }
         public string Token { get; set; }
