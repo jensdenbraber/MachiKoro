@@ -1,14 +1,12 @@
 ﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Core.Models.Identity;
 using MediatR;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Application.v1.Identity.Commands.Registration
 {
-    public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, CreateUserResponse>
+    public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, Unit>
     {
         private readonly IIdentityService _identityService;
 
@@ -17,27 +15,13 @@ namespace MachiKoro.Application.v1.Identity.Commands.Registration
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
         }
 
-        public async Task<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
-            request.Email = $"{request.UserName}@email.com";
+            await _identityService.CreateUserAsync(request.UserName, request.Email, request.Password, request.IpAddress);
 
-            var createUserResponse = new CreateUserResponse();
-
-            (Models.Result result, Models.Result token, string userId) = await _identityService.CreateUserAsync(request.UserName, request.Email, request.Password);
-
-            if (result.Succeeded)
-            {
-                createUserResponse.UserId = Guid.Parse(userId);
-                createUserResponse.Token = token.Token;
-            }
-            else
-            {
-                createUserResponse.Errors = new List<string>(result.Errors);
-            }
-
-            return createUserResponse;
+            return Unit.Value;
         }
     }
 }

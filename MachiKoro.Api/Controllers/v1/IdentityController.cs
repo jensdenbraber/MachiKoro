@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using MachiKoro.Application.v1;
+using MachiKoro.Application.v1.Exceptions;
 using MachiKoro.Application.v1.Identity.Commands.Login;
 using MachiKoro.Application.v1.Identity.Commands.Refresh;
 using MachiKoro.Application.v1.Identity.Commands.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Controllers.v1
@@ -30,60 +30,100 @@ namespace MachiKoro.Api.Controllers.v1
         [Consumes("application/json")]
         [Produces("application/json")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody][Required] CreateUserRequest request)
+        public async Task<IActionResult> Register([FromBody][Required] Contracts.Identity.Registration.CreateUserRequest request)
         {
             var coreRequest = _mapper.Map<CreateUserRequest>(request);
+            coreRequest.IpAddress = ipAddress();
 
-            var coreResponse = await _mediator.Send(coreRequest);
+            try
+            {
+                await _mediator.Send(coreRequest);
 
-            if (coreResponse.Errors?.Any() ?? false)
-                return BadRequest(coreResponse.Errors);
-
-            return Ok(coreResponse);
+                return NoContent();
+            }
+            catch (RegisterException e)
+            {
+                return new BadRequestObjectResult(e.Errors);
+            }
+            catch (UserAlreadyExistsException e)
+            {
+                return new BadRequestObjectResult(e.Message);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost(ApiRoutes.Identity.Login)]
         [Consumes("application/json")]
         [Produces("application/json")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody][Required] LoginUserRequest request)
+        public async Task<IActionResult> Login([FromBody][Required] Contracts.Identity.Login.LoginUserRequest request)
         {
             var coreRequest = _mapper.Map<LoginUserRequest>(request);
+            coreRequest.IpAddress = ipAddress();
+
+            try
+            {
+                var coreResponse = await _mediator.Send(coreRequest);
+
+                if (coreResponse == null)
+                    return NotFound();
+
+                var response = _mapper.Map<Contracts.Identity.Login.LoginUserResponse>(coreResponse);
+                setTokenCookie(response.RefreshToken);
+
+                return Ok(response);
+            }
+            catch (LoginException e)
+            {
+                return new BadRequestObjectResult(e.Message);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost(ApiRoutes.Identity.Refresh)]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Refresh([FromBody] Contracts.Identity.RefreshToken.RefreshTokenRequest request)
+        {
+            var coreRequest = _mapper.Map<RefreshTokenRequest>(request);
+
+            coreRequest.IpAddress = ipAddress();
 
             var coreResponse = await _mediator.Send(coreRequest);
 
             if (coreResponse == null)
                 return NotFound();
 
-            //return Ok(new AuthSuccessResponse
-            //{
-            //    Token = authResponse.Token,
-            //    RefreshToken = authResponse.RefreshToken
-            //});
+            var response = _mapper.Map<Contracts.Identity.RefreshToken.RefreshTokenResponse>(coreResponse);
+            setTokenCookie(coreResponse.RefreshToken);
 
-            return Ok(coreResponse);
+            return Ok(response);
         }
 
-        [HttpPost(ApiRoutes.Identity.Refresh)]
-        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request)
+        private void setTokenCookie(string token)
         {
-            //var authResponse = await _identityService.RefreshTokenAsync(request.Token, request.RefreshToken);
+            // append cookie with refresh token to the http response
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+            Response.Cookies.Append("refreshToken", token, cookieOptions);
+        }
 
-            //if (!authResponse.Success)
-            //{
-            //    return BadRequest(new AuthFailedResponse
-            //    {
-            //        Errors = authResponse.Errors
-            //    });
-            //}
-
-            //return Ok(new AuthSuccessResponse
-            //{
-            //    Token = authResponse.Token,
-            //    RefreshToken = authResponse.RefreshToken
-            //});
-
-            return Ok();
+        private string ipAddress()
+        {
+            // get source ip address for the current request
+            if (Request.Headers.ContainsKey("X-Forwarded-For"))
+                return Request.Headers["X-Forwarded-For"];
+            else
+                return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
         }
     }
 }

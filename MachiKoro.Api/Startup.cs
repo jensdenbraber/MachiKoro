@@ -49,6 +49,8 @@ namespace MachiKoro.Api
 
             services.AddSwaggerServices(Configuration);
 
+            services.AddFluentValidationServices(Configuration);
+
             services.AddTransient<INotifyPlayerService, GameHubContext>();
             services.AddTransient<Application.v1.Services.GamesService, Application.v1.Services.GamesService>();
 

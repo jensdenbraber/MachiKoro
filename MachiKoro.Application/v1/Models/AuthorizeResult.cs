@@ -1,6 +1,6 @@
-﻿namespace MachiKoro.Application.v1.Identity.Commands.Login
+﻿namespace MachiKoro.Application.v1.Models
 {
-    public class LoginUserResponse
+    public class AuthorizeResult
     {
         public string UserName { get; set; }
         public string Token { get; set; }

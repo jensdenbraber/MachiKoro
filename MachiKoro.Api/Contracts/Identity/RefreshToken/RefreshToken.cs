@@ -1,7 +1,6 @@
-using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace MachiKoro.Api.Contracts.Identity
+namespace MachiKoro.Api.Contracts.Identity.RefreshToken
 {
     public class RefreshToken
     {
@@ -18,7 +17,5 @@ namespace MachiKoro.Api.Contracts.Identity
         public bool Invalidated { get; set; }
 
         public string UserId { get; set; }
-
-        //public IdentityUser User { get; set; }
     }
 }

@@ -1,15 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace MachiKoro.Persistence.Identity.Models
 {
-    [Owned]
     public class RefreshToken
     {
         [Key]
@@ -29,6 +24,7 @@ namespace MachiKoro.Persistence.Identity.Models
         public DateTime? Revoked { get; set; }
         public string RevokedByIp { get; set; }
         public string ReplacedByToken { get; set; }
+        public string ReasonRevoked { get; set; }
 
         public bool IsActive
         {
@@ -38,7 +34,7 @@ namespace MachiKoro.Persistence.Identity.Models
         public string UserId { get; set; }
         public string JwtId { get; set; }
         public bool IsUsed { get; set; }
-        public bool IsRevorked { get; set; }
+        public bool IsRevoked { get; set; }
         public DateTime AddedDate { get; set; }
         public DateTime ExpiryDate { get; set; }
 
