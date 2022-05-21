@@ -1,12 +1,8 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace MachiKoro.Domain.Enums;
 
-namespace MachiKoro.Domain.Enums
+public enum TurnType
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum TurnType
-    {
-        RollDice,
-        EarnIncome,
-        Construction
-    }
+    RollDice,
+    EarnIncome,
+    Construction
 }

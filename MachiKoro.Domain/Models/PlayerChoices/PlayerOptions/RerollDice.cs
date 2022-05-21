@@ -1,7 +1,6 @@
-﻿namespace MachiKoro.Domain.Models.PlayerChoices.PlayerOptions
+﻿namespace MachiKoro.Domain.Models.PlayerChoices.PlayerOptions;
+
+public class RerollDice : IPlayerOption
 {
-    public class RerollDice : IPlayerOption
-    {
-        public bool Reroll;
-    }
+    public bool Reroll;
 }

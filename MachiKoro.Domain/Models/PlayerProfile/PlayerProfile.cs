@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace MachiKoro.Domain.Models.PlayerProfile
+namespace MachiKoro.Domain.Models.PlayerProfile;
+
+public class PlayerProfile
 {
-    public class PlayerProfile
-    {
-        public Guid PlayerId { get; set; }
-        public string UserName { get; set; }
-        public int GamesPlayed { get; set; }
-        public int GamesWon { get; set; }
-        public int GamesLost { get; set; }
-    }
+    public Guid PlayerId { get; set; }
+    public string UserName { get; set; }
+    public int GamesPlayed { get; set; }
+    public int GamesWon { get; set; }
+    public int GamesLost { get; set; }
 }

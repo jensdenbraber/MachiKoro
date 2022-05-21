@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace MachiKoro.Application.v1.Game.Commands.RemovePlayerFromGame
+namespace MachiKoro.Application.v1.Game.Commands.RemovePlayerFromGame;
+
+public class RemovePlayerFromGameRequestValidator : AbstractValidator<RemovePlayerFromGameCommand>
 {
-    public class RemovePlayerFromGameRequestValidator : AbstractValidator<RemovePlayerFromGameRequest>
+    public RemovePlayerFromGameRequestValidator()
     {
-        public RemovePlayerFromGameRequestValidator()
-        {
-            RuleFor(x => x.GameId).NotEmpty();
-            RuleFor(x => x.PlayerId).NotEmpty();
-        }
+        RuleFor(x => x.GameId).NotEmpty();
+        RuleFor(x => x.PlayerId).NotEmpty();
     }
 }

@@ -1,11 +1,10 @@
 using System;
 
-namespace MachiKoro.Api.Options
+namespace MachiKoro.Api.Options;
+
+public class JwtSettings
 {
-    public class JwtSettings
-    {
-        public string Secret { get; set; }
-        
-        public TimeSpan TokenLifetime { get; set; }
-    }
+    public string Secret { get; set; }
+
+    public TimeSpan TokenLifetime { get; set; }
 }

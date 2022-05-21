@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace MachiKoro.Api.Contracts.Game.GetGame
+namespace MachiKoro.Api.Contracts.Game.StartGame;
+
+public record GetGameResponse
 {
-    public class GetGameResponse
-    {
-        public int NumberOfTurns { get; private set; }
-        public int NumberOfOrbits { get; private set; }
-        public List<CardDeck> CardDecks;
-        public List<Guid> PlayersList { get; set; }
-    }
+    public int NumberOfTurns { get; init; }
+    public int NumberOfOrbits { get; init; }
+    public List<CardDeck> CardDecks;
+    public List<Guid> PlayersList { get; init; }
 }

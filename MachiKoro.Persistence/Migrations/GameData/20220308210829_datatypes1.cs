@@ -4,7 +4,7 @@
 
 namespace MachiKoro.Data.Migrations.GameData
 {
-    public partial class nokey3 : Migration
+    public partial class datatypes1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

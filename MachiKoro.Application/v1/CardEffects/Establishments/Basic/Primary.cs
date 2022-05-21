@@ -2,27 +2,26 @@ using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Domain.Interfaces;
 using System.Threading;
 
-namespace MachiKoro.Application.v1.CardEffects.Establishments.Basic
+namespace MachiKoro.Application.v1.CardEffects.Establishments.Basic;
+
+public class PrimaryCardEffect : IEstablishmentEffect
 {
-    public class PrimaryCardEffect : IEstablishmentEffect
+    private readonly INotifyPlayerService _playerService;
+    public readonly int CoinReward;
+
+    public PrimaryCardEffect(INotifyPlayerService playerService, int coinReward)
     {
-        private readonly INotifyPlayerService _playerService;
-        public readonly int CoinReward;
+        _playerService = playerService;
+        CoinReward = coinReward;
+    }
 
-        public PrimaryCardEffect(INotifyPlayerService playerService, int coinReward)
+    public async void Activate(Domain.Models.Game.Game game, Domain.Models.Player.Player player, CancellationToken cancellationToken)
+    {
+        if (game.ActivePlayer.Equals(player))
         {
-            _playerService = playerService;
-            CoinReward = coinReward;
-        }
+            game.ActivePlayer.CoinAmount += CoinReward;
 
-        public async void Activate(Domain.Models.Game.Game game, Domain.Models.Player.Player player, CancellationToken cancellationToken)
-        {
-            if (game.ActivePlayer.Equals(player))
-            {
-                game.ActivePlayer.CoinAmount += CoinReward;
-
-                await _playerService.SendNotificationPlayersIncomeAsync(game.ActivePlayer.Id, game.ActivePlayer.CoinAmount, cancellationToken);
-            }
+            await _playerService.SendNotificationPlayersIncomeAsync(game.ActivePlayer.Id, game.ActivePlayer.CoinAmount, cancellationToken);
         }
     }
 }

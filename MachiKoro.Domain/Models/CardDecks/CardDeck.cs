@@ -2,21 +2,23 @@
 using System;
 using System.Collections.Generic;
 
-namespace MachiKoro.Domain.Models.CardDecks
-{
-    public class CardDeck
-    {
-        public Guid Id { get; set; }
-        public int MaxRevealedCards { get; }
-        public Stack<EstablishmentBase> EstablishmentCards { get; set; }
-        public List<EstablishmentBase> RevealedCards { get; set; }
+namespace MachiKoro.Domain.Models.CardDecks;
 
-        public CardDeck(Guid id, Stack<EstablishmentBase> establishmentCards, List<EstablishmentBase> revealedCards, int maxRevealCards)
-        {
-            Id = id;
-            EstablishmentCards = establishmentCards;
-            RevealedCards = revealedCards;
-            MaxRevealedCards = maxRevealCards;
-        }
+public class CardDeck
+{
+    public Guid Id { get; set; }
+    public int MaxRevealedCards { get; }
+    public Stack<EstablishmentBase> EstablishmentCards { get; set; }
+    public List<EstablishmentBase> RevealedCards { get; set; }
+
+    public CardDeck()
+    { }
+
+    public CardDeck(Guid id, Stack<EstablishmentBase> establishmentCards, List<EstablishmentBase> revealedCards, int maxRevealCards)
+    {
+        Id = id;
+        EstablishmentCards = establishmentCards;
+        RevealedCards = revealedCards;
+        MaxRevealedCards = maxRevealCards;
     }
 }

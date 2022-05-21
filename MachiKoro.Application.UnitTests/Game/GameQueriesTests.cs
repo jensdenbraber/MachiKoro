@@ -1,7 +1,5 @@
-﻿namespace MachiKoro.Application.UnitTests.Game
-{
-    public class GameQueriesTests
-    {
+﻿namespace MachiKoro.Application.UnitTests.Game;
 
-    }
+public class GameQueriesTests
+{
 }

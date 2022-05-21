@@ -1,6 +1,5 @@
-﻿namespace MachiKoro.Domain.Models.PlayerChoices
+﻿namespace MachiKoro.Domain.Models.PlayerChoices;
+
+public interface IPlayerOption
 {
-    public interface IPlayerOption
-    {
-    }
 }

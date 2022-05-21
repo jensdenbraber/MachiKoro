@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MachiKoro.Application.v1;
+using MachiKoro.Application;
 using MachiKoro.Application.v1.Exceptions;
 using MachiKoro.Application.v1.Identity.Commands.Login;
 using MachiKoro.Application.v1.Identity.Commands.Refresh;
@@ -12,118 +12,117 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Api.Controllers.v1
+namespace MachiKoro.Api.Controllers.v1;
+
+[ApiController]
+public class IdentityController : ControllerBase
 {
-    [ApiController]
-    public class IdentityController : ControllerBase
+    private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
+
+    public IdentityController(IMapper mapper, IMediator mediator)
     {
-        private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+    }
 
-        public IdentityController(IMapper mapper, IMediator mediator)
+    [HttpPost(ApiRoutes.Identity.Register)]
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Register([FromBody][Required] Contracts.Identity.Registration.CreateUserRequest request)
+    {
+        var coreRequest = _mapper.Map<CreateUserRequest>(request);
+        coreRequest.IpAddress = IpAddress();
+
+        try
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            await _mediator.Send(coreRequest);
+
+            return NoContent();
         }
-
-        [HttpPost(ApiRoutes.Identity.Register)]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody][Required] Contracts.Identity.Registration.CreateUserRequest request)
+        catch (RegisterException e)
         {
-            var coreRequest = _mapper.Map<CreateUserRequest>(request);
-            coreRequest.IpAddress = ipAddress();
-
-            try
-            {
-                await _mediator.Send(coreRequest);
-
-                return NoContent();
-            }
-            catch (RegisterException e)
-            {
-                return new BadRequestObjectResult(e.Errors);
-            }
-            catch (UserAlreadyExistsException e)
-            {
-                return new BadRequestObjectResult(e.Message);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return new BadRequestObjectResult(e.Errors);
         }
-
-        [HttpPost(ApiRoutes.Identity.Login)]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody][Required] Contracts.Identity.Login.LoginUserRequest request)
+        catch (UserAlreadyExistsException e)
         {
-            var coreRequest = _mapper.Map<LoginUserRequest>(request);
-            coreRequest.IpAddress = ipAddress();
-
-            try
-            {
-                var coreResponse = await _mediator.Send(coreRequest);
-
-                if (coreResponse == null)
-                    return NotFound();
-
-                var response = _mapper.Map<Contracts.Identity.Login.LoginUserResponse>(coreResponse);
-                setTokenCookie(response.RefreshToken);
-
-                return Ok(response);
-            }
-            catch (LoginException e)
-            {
-                return new BadRequestObjectResult(e.Message);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return new BadRequestObjectResult(e.Message);
         }
-
-        [HttpPost(ApiRoutes.Identity.Refresh)]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> Refresh([FromBody] Contracts.Identity.RefreshToken.RefreshTokenRequest request)
+        catch (Exception)
         {
-            var coreRequest = _mapper.Map<RefreshTokenRequest>(request);
+            throw;
+        }
+    }
 
-            coreRequest.IpAddress = ipAddress();
+    [HttpPost(ApiRoutes.Identity.Login)]
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login([FromBody][Required] Contracts.Identity.Login.LoginUserRequest request)
+    {
+        var coreRequest = _mapper.Map<LoginUserRequest>(request);
+        coreRequest.IpAddress = IpAddress();
 
+        try
+        {
             var coreResponse = await _mediator.Send(coreRequest);
 
-            if (coreResponse == null)
+            if (coreResponse is null)
                 return NotFound();
 
-            var response = _mapper.Map<Contracts.Identity.RefreshToken.RefreshTokenResponse>(coreResponse);
-            setTokenCookie(coreResponse.RefreshToken);
+            var response = _mapper.Map<Contracts.Identity.Login.LoginUserResponse>(coreResponse);
+            SetTokenCookie(response.RefreshToken);
 
             return Ok(response);
         }
-
-        private void setTokenCookie(string token)
+        catch (LoginException e)
         {
-            // append cookie with refresh token to the http response
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
-            Response.Cookies.Append("refreshToken", token, cookieOptions);
+            return new BadRequestObjectResult(e.Message);
         }
-
-        private string ipAddress()
+        catch (Exception)
         {
-            // get source ip address for the current request
-            if (Request.Headers.ContainsKey("X-Forwarded-For"))
-                return Request.Headers["X-Forwarded-For"];
-            else
-                return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            throw;
         }
+    }
+
+    [HttpPost(ApiRoutes.Identity.Refresh)]
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    public async Task<IActionResult> Refresh([FromBody] Contracts.Identity.RefreshToken.RefreshTokenRequest request)
+    {
+        var coreRequest = _mapper.Map<RefreshTokenRequest>(request);
+
+        coreRequest.IpAddress = IpAddress();
+
+        var coreResponse = await _mediator.Send(coreRequest);
+
+        if (coreResponse is null)
+            return NotFound();
+
+        var response = _mapper.Map<Contracts.Identity.RefreshToken.RefreshTokenResponse>(coreResponse);
+        SetTokenCookie(coreResponse.RefreshToken);
+
+        return Ok(response);
+    }
+
+    private void SetTokenCookie(string token)
+    {
+        // append cookie with refresh token to the http response
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = DateTime.UtcNow.AddDays(7)
+        };
+        Response.Cookies.Append("refreshToken", token, cookieOptions);
+    }
+
+    private string IpAddress()
+    {
+        // get source ip address for the current request
+        if (Request.Headers.ContainsKey("X-Forwarded-For"))
+            return Request.Headers["X-Forwarded-For"];
+        else
+            return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace MachiKoro.Application.v1.Responses
-{
-    public class AuthSuccessResponse
-    {
-        public string Token { get; set; }
+﻿namespace MachiKoro.Application.v1.Responses;
 
-        public string RefreshToken { get; set; }
-    }
+public record AuthSuccessResponse
+{
+    public string Token { get; init; }
+
+    public string RefreshToken { get; init; }
 }

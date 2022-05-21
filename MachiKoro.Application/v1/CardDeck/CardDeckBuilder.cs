@@ -6,125 +6,124 @@ using MachiKoro.Domain.Models.Cards.Establishments.Basic;
 using System;
 using System.Collections.Generic;
 
-namespace MachiKoro.Application.CardDecks
+namespace MachiKoro.Application.CardDecks;
+
+public class CardDeckBuilder
 {
-    public class CardDeckBuilder
+    private static readonly List<CardDeck> _cardDecks = new List<CardDeck>();
+    private readonly INotifyPlayerService _playerService;
+
+    public CardDeckBuilder(INotifyPlayerService playerService)
     {
-        private static readonly List<CardDeck> _cardDecks = new List<CardDeck>();
-        private readonly INotifyPlayerService _playerService;
+        _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
+    }
 
-        public CardDeckBuilder(INotifyPlayerService playerService)
+    public List<CardDeck> BuildCardDecksBasicGame(int revealedLowCards = 4, int revealedHighCards = 4, int revealedMajorCards = 2)
+    {
+        BuildCardDeckLowBasicGame(revealedLowCards);
+        BuildCardDeckHighBasicGame(revealedHighCards);
+        BuildCardDeckMajorBasicGame(revealedMajorCards);
+
+        return _cardDecks;
+    }
+
+    private void BuildCardDeckLowBasicGame(int numberOfRevealedCards)
+    {
+        var establishments = new Stack<EstablishmentBase>();
+
+        for (int i = 0; i < 6; i++)
         {
-            _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
+            var wheatField = new PrimaryIndustry("Wheat Field", CardCategory.Wheat, new List<int>() { 1 }, 1, new PrimaryCardEffect(_playerService, 1));
+            var ranch = new PrimaryIndustry("Ranch", CardCategory.Cow, new List<int>() { 2 }, 1, new PrimaryCardEffect(_playerService, 1));
+            var forest = new PrimaryIndustry("Forest", CardCategory.Gear, new List<int>() { 5 }, 3, new PrimaryCardEffect(_playerService, 1));
+
+            var bakery = new SecondaryIndustryCard("Bakery", CardCategory.Bread, new List<int>() { 2, 3 }, 1, new SecondayCardEffect(_playerService, 1));
+            var convenienceStore = new SecondaryIndustryCard("Convenience Store", CardCategory.Bread, new List<int>() { 4 }, 2, new SecondayCardEffect(_playerService, 3));
+
+            var restaurants = new Restaurants("Cafe", CardCategory.Cup, new List<int>() { 3 }, 3, new RestaurantsCardEffect(1));
+
+            establishments.Push(wheatField);
+            establishments.Push(ranch);
+            establishments.Push(forest);
+            establishments.Push(bakery);
+            establishments.Push(convenienceStore);
+            establishments.Push(restaurants);
         }
 
-        public List<CardDeck> BuildCardDecksBasicGame(int revealedLowCards = 4, int revealedHighCards = 4, int revealedMajorCards = 2)
-        {
-            BuildCardDeckLowBasicGame(revealedLowCards);
-            BuildCardDeckHighBasicGame(revealedHighCards);
-            BuildCardDeckMajorBasicGame(revealedMajorCards);
+        var revealedEstablishments = new List<EstablishmentBase>();
 
-            return _cardDecks;
+        for (int i = 0; i < numberOfRevealedCards; i++)
+        {
+            var establishment = establishments.Pop();
+            revealedEstablishments.Add(establishment);
         }
 
-        private void BuildCardDeckLowBasicGame(int numberOfRevealedCards)
+        var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
+
+        _cardDecks.Add(cardDeck);
+    }
+
+    private void BuildCardDeckHighBasicGame(int numberOfRevealedCards)
+    {
+        var establishments = new Stack<EstablishmentBase>();
+
+        for (int i = 0; i < 6; i++)
         {
-            var establishments = new Stack<EstablishmentBase>();
+            var mine = new PrimaryIndustry("Mine", CardCategory.Gear, new List<int>() { 9 }, 6, new PrimaryCardEffect(_playerService, 5));
+            var appleOrchard = new PrimaryIndustry("Apple Orchard", CardCategory.Wheat, new List<int>() { 10 }, 3, new PrimaryCardEffect(_playerService, 3));
 
-            for (int i = 0; i < 6; i++)
-            {
-                var wheatField = new PrimaryIndustry("Wheat Field", CardCategory.Wheat, new List<int>() { 1 }, 1, new PrimaryCardEffect(_playerService, 1));
-                var ranch = new PrimaryIndustry("Ranch", CardCategory.Cow, new List<int>() { 2 }, 1, new PrimaryCardEffect(_playerService, 1));
-                var forest = new PrimaryIndustry("Forest", CardCategory.Gear, new List<int>() { 5 }, 3, new PrimaryCardEffect(_playerService, 1));
+            var cheeseFactory = new SecondaryIndustryCard("Cheese Factory", CardCategory.Factory, new List<int>() { 7 }, 5, new SecondayCardEffect(_playerService, 3));
+            var furnitureFactory = new SecondaryIndustryCard("Furniture Factory", CardCategory.Factory, new List<int>() { 8 }, 3, new SecondayCardEffect(_playerService, 3));
+            var fruitAndVegetableMarket = new SecondaryIndustryCard("Fruit and Vegetable Market", CardCategory.Fruit, new List<int>() { 11, 12 }, 2, new SecondayCardEffect(_playerService, 3));
 
-                var bakery = new SecondaryIndustryCard("Bakery", CardCategory.Bread, new List<int>() { 2, 3 }, 1, new SecondayCardEffect(_playerService, 1));
-                var convenienceStore = new SecondaryIndustryCard("Convenience Store", CardCategory.Bread, new List<int>() { 4 }, 2, new SecondayCardEffect(_playerService, 3));
+            var familyRestaurant = new Restaurants("Family Restaurant", CardCategory.Cup, new List<int>() { 9, 10 }, 3, new RestaurantsCardEffect(2));
 
-                var restaurants = new Restaurants("Cafe", CardCategory.Cup, new List<int>() { 3 }, 3, new RestaurantsCardEffect(1));
-
-                establishments.Push(wheatField);
-                establishments.Push(ranch);
-                establishments.Push(forest);
-                establishments.Push(bakery);
-                establishments.Push(convenienceStore);
-                establishments.Push(restaurants);
-            }
-
-            var revealedEstablishments = new List<EstablishmentBase>();
-
-            for (int i = 0; i < numberOfRevealedCards; i++)
-            {
-                var establishment = establishments.Pop();
-                revealedEstablishments.Add(establishment);
-            }
-
-            var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
-
-            _cardDecks.Add(cardDeck);
+            establishments.Push(mine);
+            establishments.Push(appleOrchard);
+            establishments.Push(cheeseFactory);
+            establishments.Push(furnitureFactory);
+            establishments.Push(fruitAndVegetableMarket);
+            establishments.Push(familyRestaurant);
         }
 
-        private void BuildCardDeckHighBasicGame(int numberOfRevealedCards)
+        var revealedEstablishments = new List<EstablishmentBase>();
+
+        for (int i = 0; i < numberOfRevealedCards; i++)
         {
-            var establishments = new Stack<EstablishmentBase>();
-
-            for (int i = 0; i < 6; i++)
-            {
-                var mine = new PrimaryIndustry("Mine", CardCategory.Gear, new List<int>() { 9 }, 6, new PrimaryCardEffect(_playerService, 5));
-                var appleOrchard = new PrimaryIndustry("Apple Orchard", CardCategory.Wheat, new List<int>() { 10 }, 3, new PrimaryCardEffect(_playerService, 3));
-
-                var cheeseFactory = new SecondaryIndustryCard("Cheese Factory", CardCategory.Factory, new List<int>() { 7 }, 5, new SecondayCardEffect(_playerService, 3));
-                var furnitureFactory = new SecondaryIndustryCard("Furniture Factory", CardCategory.Factory, new List<int>() { 8 }, 3, new SecondayCardEffect(_playerService, 3));
-                var fruitAndVegetableMarket = new SecondaryIndustryCard("Fruit and Vegetable Market", CardCategory.Fruit, new List<int>() { 11, 12 }, 2, new SecondayCardEffect(_playerService, 3));
-
-                var familyRestaurant = new Restaurants("Family Restaurant", CardCategory.Cup, new List<int>() { 9, 10 }, 3, new RestaurantsCardEffect(2));
-
-                establishments.Push(mine);
-                establishments.Push(appleOrchard);
-                establishments.Push(cheeseFactory);
-                establishments.Push(furnitureFactory);
-                establishments.Push(fruitAndVegetableMarket);
-                establishments.Push(familyRestaurant);
-            }
-
-            var revealedEstablishments = new List<EstablishmentBase>();
-
-            for (int i = 0; i < numberOfRevealedCards; i++)
-            {
-                var establishment = establishments.Pop();
-                revealedEstablishments.Add(establishment);
-            }
-
-            var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
-
-            _cardDecks.Add(cardDeck);
+            var establishment = establishments.Pop();
+            revealedEstablishments.Add(establishment);
         }
 
-        private void BuildCardDeckMajorBasicGame(int numberOfRevealedCards)
+        var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
+
+        _cardDecks.Add(cardDeck);
+    }
+
+    private void BuildCardDeckMajorBasicGame(int numberOfRevealedCards)
+    {
+        var establishments = new Stack<EstablishmentBase>();
+
+        for (int i = 0; i < 4; i++)
         {
-            var establishments = new Stack<EstablishmentBase>();
+            var stadium = new MajorEstablishment("Stadium", CardCategory.Tower, new List<int>() { 6 }, 6, new v1.CardEffects.Establishments.Basic.Major.CardEffectStadium(_playerService));
+            var tvStation = new MajorEstablishment("TV Station", CardCategory.Tower, new List<int>() { 6 }, 7, new v1.CardEffects.Establishments.Basic.Major.CardEffectTvStation(_playerService));
+            var businessCenter = new MajorEstablishment("Business Center", CardCategory.Tower, new List<int>() { 6 }, 8, new v1.CardEffects.Establishments.Basic.Major.CardEffectBusinessCenter(_playerService));
 
-            for (int i = 0; i < 4; i++)
-            {
-                var stadium = new MajorEstablishment("Stadium", CardCategory.Tower, new List<int>() { 6 }, 6, new v1.CardEffects.Establishments.Basic.Major.CardEffectStadium(_playerService));
-                var tvStation = new MajorEstablishment("TV Station", CardCategory.Tower, new List<int>() { 6 }, 7, new v1.CardEffects.Establishments.Basic.Major.CardEffectTvStation(_playerService));
-                var businessCenter = new MajorEstablishment("Business Center", CardCategory.Tower, new List<int>() { 6 }, 8, new v1.CardEffects.Establishments.Basic.Major.CardEffectBusinessCenter(_playerService));
-
-                establishments.Push(stadium);
-                establishments.Push(tvStation);
-                establishments.Push(businessCenter);
-            }
-
-            var revealedEstablishments = new List<EstablishmentBase>();
-
-            for (int i = 0; i < numberOfRevealedCards; i++)
-            {
-                var establishment = establishments.Pop();
-                revealedEstablishments.Add(establishment);
-            }
-
-            var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
-
-            _cardDecks.Add(cardDeck);
+            establishments.Push(stadium);
+            establishments.Push(tvStation);
+            establishments.Push(businessCenter);
         }
+
+        var revealedEstablishments = new List<EstablishmentBase>();
+
+        for (int i = 0; i < numberOfRevealedCards; i++)
+        {
+            var establishment = establishments.Pop();
+            revealedEstablishments.Add(establishment);
+        }
+
+        var cardDeck = new CardDeck(Guid.NewGuid(), establishments, revealedEstablishments, numberOfRevealedCards);
+
+        _cardDecks.Add(cardDeck);
     }
 }

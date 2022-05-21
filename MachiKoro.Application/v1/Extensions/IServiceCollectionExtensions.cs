@@ -2,14 +2,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MachiKoro.Application.v1.Extensions
+namespace MachiKoro.Application.v1.Extensions;
+
+[ExcludeFromCodeCoverage]
+public static class IServiceCollectionExtensions
 {
-    [ExcludeFromCodeCoverage]
-	public static class IServiceCollectionExtensions
-	{
-		public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
-		{
-			return services;
-		}
-	}
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        return services;
+    }
 }

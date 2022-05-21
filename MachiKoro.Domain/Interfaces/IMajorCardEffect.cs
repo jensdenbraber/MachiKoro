@@ -1,6 +1,5 @@
-namespace MachiKoro.Domain.Interfaces
+namespace MachiKoro.Domain.Interfaces;
+
+public interface IMajorCardEffect : IEstablishmentEffect
 {
-    public interface IMajorCardEffect : IEstablishmentEffect
-    {
-    }
 }

@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace MachiKoro.Application.v1.Game.Commands.Choose
+namespace MachiKoro.Application.v1.Game.Commands.Choose;
+
+public class ChooseRequestValidator : AbstractValidator<ChooseRequest>
 {
-    public class ChooseRequestValidator : AbstractValidator<ChooseRequest>
+    public ChooseRequestValidator()
     {
-        public ChooseRequestValidator()
-        {
-            RuleFor(x => x.Index).NotEmpty();
-        }
+        RuleFor(x => x.Index).NotEmpty();
     }
 }

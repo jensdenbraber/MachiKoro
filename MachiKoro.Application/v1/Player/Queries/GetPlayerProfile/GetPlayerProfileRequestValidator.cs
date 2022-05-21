@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace MachiKoro.Application.v1.Player.Queries.GetPlayerProfile
+namespace MachiKoro.Application.v1.Player.Queries.GetPlayerProfile;
+
+public class GetPlayerProfileRequestValidator : AbstractValidator<GetPlayerProfileRequest>
 {
-    public class GetPlayerProfileRequestValidator : AbstractValidator<GetPlayerProfileRequest>
+    public GetPlayerProfileRequestValidator()
     {
-        public GetPlayerProfileRequestValidator()
-        {
-            RuleFor(x => x.PlayerId).NotEmpty();
-        }
+        RuleFor(x => x.PlayerId).NotEmpty();
     }
 }

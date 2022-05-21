@@ -1,6 +1,5 @@
-﻿namespace MachiKoro.Api.UnitTests.Player
+﻿namespace MachiKoro.Api.UnitTests.Player;
+
+public class GetPlayerProfileTests
 {
-    public class GetPlayerProfileTests
-    {
-    }
 }

@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
+using MachiKoro.Api.Contracts.Game.StartGame;
 
-namespace MachiKoro.Api.Contracts.Game.GetGame
+namespace MachiKoro.Api.Contracts.Game.StartGame;
+
+public class GetGameRequestValidator : AbstractValidator<StartGameRequest>
 {
-    public class GetGameRequestValidator : AbstractValidator<GetGameRequest>
+    public GetGameRequestValidator()
     {
-        public GetGameRequestValidator()
-        {
-            RuleFor(x => x.GameId).NotEmpty();
-        }
+        RuleFor(x => x.GameId).NotEmpty();
     }
 }

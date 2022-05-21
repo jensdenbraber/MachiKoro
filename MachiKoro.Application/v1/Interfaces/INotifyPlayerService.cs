@@ -5,34 +5,35 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.Interfaces
+namespace MachiKoro.Application.v1.Interfaces;
+
+public interface INotifyPlayerService
 {
-    public interface INotifyPlayerService
-    {
-        Task SendNotificationDiceRollAsync(object message, CancellationToken cancellationToken);
+    Task SendNotificationDiceRollAsync(object message, CancellationToken cancellationToken);
 
-        Task SendNotificationConstructionEstablishmentsOptionsAsync(Guid playerId, object message, CancellationToken cancellationToken);
+    Task SendNotificationConstructionEstablishmentsOptionsAsync(Guid playerId, object message, CancellationToken cancellationToken);
 
-        Task SendNotificationConstructionLandmarksOptionsAsync(Guid playerId, object message, CancellationToken cancellationToken);
+    Task SendNotificationConstructionLandmarksOptionsAsync(Guid playerId, object message, CancellationToken cancellationToken);
 
-        Task SendNotificationExtraTurnAsync(Domain.Models.Player.Player activePlayer, CancellationToken cancellationToken);
+    Task SendNotificationExtraTurnAsync(Domain.Models.Player.Player activePlayer, CancellationToken cancellationToken);
 
-        Task SendNotificationChooseTargetOpponentAsync(List<Domain.Models.Player.Player> opponents, CancellationToken cancellationToken);
+    Task SendNotificationChooseTargetOpponentAsync(List<Domain.Models.Player.Player> opponents, CancellationToken cancellationToken);
 
-        Task SendNotificationDiceRerollAsync(CancellationToken cancellationToken);
+    Task SendNotificationDiceRerollAsync(CancellationToken cancellationToken);
 
-        Task SendNotificationDiceAmountAsync(Guid playerId, CancellationToken cancellationToken);
+    Task SendNotificationDiceAmountAsync(Guid playerId, CancellationToken cancellationToken);
 
-        Task SendNotificationPlayerCoinsAsync(Domain.Models.Player.Player player, CancellationToken cancellationToken);
+    Task SendNotificationPlayerCoinsAsync(Domain.Models.Player.Player player, CancellationToken cancellationToken);
 
-        Task SendNotificationEstablishmentsBonusAsync(List<CardCategory> cardCategories, int bonus, CancellationToken cancellationToken);
+    Task SendNotificationEstablishmentsBonusAsync(List<CardCategory> cardCategories, int bonus, CancellationToken cancellationToken);
 
-        Task SendNotificationPlayersCoinsAsync(IEnumerable<Domain.Models.Player.Player> players, CancellationToken cancellationToken);
+    Task SendNotificationPlayersCoinsAsync(IEnumerable<Domain.Models.Player.Player> players, CancellationToken cancellationToken);
 
-        Task SendNotificationPlayersIncomeAsync(Guid playerId, object message, CancellationToken cancellationToken);
+    Task SendNotificationPlayersIncomeAsync(Guid playerId, object message, CancellationToken cancellationToken);
 
-        Task SendNotificationWinnerAsync(Guid playerId, CancellationToken cancellationToken = default);
+    Task SendNotificationWinnerAsync(Guid playerId, CancellationToken cancellationToken = default);
 
-        Task SendNotificationTargetAsync(IEnumerable<EstablishmentBase> opponentsTargets, CancellationToken cancellationToken);
-    }
+    Task SendNotificationTargetAsync(IEnumerable<EstablishmentBase> opponentsTargets, CancellationToken cancellationToken);
+
+    Task StartGame(string game);
 }

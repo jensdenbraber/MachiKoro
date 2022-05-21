@@ -1,9 +1,8 @@
-﻿namespace MachiKoro.Domain.Enums
+﻿namespace MachiKoro.Domain.Enums;
+
+public enum ActionType
 {
-    public enum ActionType
-    {
-        DiceThrow,
-        EarnIncome,
-        Construction
-    }
+    DiceThrow,
+    EarnIncome,
+    Construction
 }

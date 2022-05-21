@@ -1,5 +1,5 @@
 ﻿using MachiKoro.Api.Options;
-using MachiKoro.Persistence;
+using MachiKoro.Persistence.Data;
 using MachiKoro.Persistence.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -46,7 +46,6 @@ namespace MachiKoro.Api.Extensions
             //Token token = configuration.GetSection("token").Get<Token>();
             //byte[] secret = Encoding.ASCII.GetBytes(token.Secret);
 
-
             //var tokenValidationParameters = new TokenValidationParameters
             //{
             //    ClockSkew = TimeSpan.Zero,
@@ -81,23 +80,21 @@ namespace MachiKoro.Api.Extensions
                         options.IncludeErrorDetails = true;
                         options.Validate(JwtBearerDefaults.AuthenticationScheme);
                         options.TokenValidationParameters = tokenValidationParameters;
-                            //new TokenValidationParameters
-                            //{
-                            //    ClockSkew = TimeSpan.Zero,
-                            //    ValidateIssuer = true,
-                            //    ValidateAudience = true,
-                            //    ValidateLifetime = true,
-                            //    ValidateIssuerSigningKey = true,
-                            //    ValidIssuer = token.Issuer,
-                            //    ValidAudience = token.Audience,
-                            //    IssuerSigningKey = new SymmetricSecurityKey(secret),
-                            //    NameClaimType = ClaimTypes.NameIdentifier,
-                            //    RequireSignedTokens = true,
-                            //    RequireExpirationTime = true
-                            //};
+                        //new TokenValidationParameters
+                        //{
+                        //    ClockSkew = TimeSpan.Zero,
+                        //    ValidateIssuer = true,
+                        //    ValidateAudience = true,
+                        //    ValidateLifetime = true,
+                        //    ValidateIssuerSigningKey = true,
+                        //    ValidIssuer = token.Issuer,
+                        //    ValidAudience = token.Audience,
+                        //    IssuerSigningKey = new SymmetricSecurityKey(secret),
+                        //    NameClaimType = ClaimTypes.NameIdentifier,
+                        //    RequireSignedTokens = true,
+                        //    RequireExpirationTime = true
+                        //};
                     });
-
-
 
             return services;
         }

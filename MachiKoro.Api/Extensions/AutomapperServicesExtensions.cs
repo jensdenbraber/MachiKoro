@@ -2,21 +2,20 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
 
-namespace MachiKoro.Api.Extensions
+namespace MachiKoro.Api.Extensions;
+
+public static class AutomapperServicesExtensions
 {
-    public static class AutomapperServicesExtensions
+    public static IServiceCollection AddAutoMapperServices(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddAutoMapperServices(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddAutoMapper(typeof(Startup));
+        services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers()
-       .AddJsonOptions(x =>
-       {
-           x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-       });
+        services.AddControllers()
+   .AddJsonOptions(x =>
+   {
+       x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+   });
 
-            return services;
-        }
+        return services;
     }
 }

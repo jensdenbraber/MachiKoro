@@ -1,0 +1,23 @@
+{
+  "AllowedHosts": "*",
+  "ApiKey": "MySecretKey",
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=MachiKoro;Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
+  "JwtSettings": {
+    "Secret": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "TokenLifetime": "01:00:00"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "SwaggerOptions": {
+    "JsonRoute": "swagger/{documentName}/swagger.json",
+    "Description": "Version 1",
+    "UIEndpoint": "v1/swagger.json"
+  }
+}

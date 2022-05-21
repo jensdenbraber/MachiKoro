@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
 
-namespace MachiKoro.Domain.Models.PlayerChoices
+namespace MachiKoro.Domain.Models.PlayerChoices;
+
+public class PlayerChoice
 {
-    public class PlayerChoice
+    private readonly IPlayerOption _option;
+    private readonly List<IPlayerOption> _options = new List<IPlayerOption>();
+
+    public PlayerChoice(IPlayerOption option)
     {
-        private readonly IPlayerOption _option;
-        private readonly List<IPlayerOption> _options = new List<IPlayerOption>();
+        _option = option;
+    }
 
-        public PlayerChoice(IPlayerOption option)
-        {
-            _option = option;
-        }
-
-        public PlayerChoice(List<IPlayerOption> options)
-        {
-            _options = options;
-        }
+    public PlayerChoice(List<IPlayerOption> options)
+    {
+        _options = options;
     }
 }

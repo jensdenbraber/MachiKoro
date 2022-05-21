@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace MachiKoro.Api.Contracts.Game.DeleteGame
+namespace MachiKoro.Api.Contracts.Game.DeleteGame;
+
+public class DeleteGameRequestValidator : AbstractValidator<DeleteGameRequest>
 {
-    public class DeleteGameRequestValidator : AbstractValidator<DeleteGameRequest>
+    public DeleteGameRequestValidator()
     {
-        public DeleteGameRequestValidator()
-        {
-            RuleFor(x => x.GameId).NotEmpty();
-        }
+        RuleFor(x => x.GameId).NotEmpty();
     }
 }

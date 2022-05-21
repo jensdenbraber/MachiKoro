@@ -1,13 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace MachiKoro.Domain.Enums;
 
-namespace MachiKoro.Domain.Enums
+public enum ChoiceType
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum ChoiceType
-    {
-        AmountDices,
-        ConstructEstablishment,
-        ConstructLandmark,
-        Swap
-    }
+    AmountDices,
+    ConstructEstablishment,
+    ConstructLandmark,
+    Swap
 }

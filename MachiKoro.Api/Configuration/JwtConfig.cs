@@ -1,9 +1,6 @@
-using Newtonsoft.Json;
+namespace MachiKoro.Api.Configuration;
 
-namespace MachiKoro.Api.Configuration
+public class JwtConfig
 {
-    public class JwtConfig
-    {
-        public string Secret { get; set; }
-    }
+    public string Secret { get; set; }
 }

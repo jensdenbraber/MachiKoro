@@ -1,6 +1,5 @@
-﻿namespace MachiKoro.Application.v1.Game.Commands.Choose
+﻿namespace MachiKoro.Application.v1.Game.Commands.Choose;
+
+public class ChooseResponse
 {
-    public class ChooseResponse
-    {
-    }
 }

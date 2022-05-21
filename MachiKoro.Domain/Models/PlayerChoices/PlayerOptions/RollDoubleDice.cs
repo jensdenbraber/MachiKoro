@@ -1,7 +1,6 @@
-﻿namespace MachiKoro.Domain.Models.PlayerChoices.PlayerOptions
+﻿namespace MachiKoro.Domain.Models.PlayerChoices.PlayerOptions;
+
+public class RollDoubleDice : IPlayerOption
 {
-    public class RollDoubleDice : IPlayerOption
-    {
-        public bool rollDoubleDice;
-    }
+    public bool rollDoubleDice;
 }

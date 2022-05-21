@@ -2,10 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.Interfaces
+namespace MachiKoro.Application.v1.Interfaces;
+
+public interface IStepsRepository
 {
-    public interface IStepsRepository
-    {
-        Task<bool> AddStepAsync(Domain.Models.Game.Game game, Step step, CancellationToken cancellationToken);
-    }
+    Task<bool> AddStepAsync(Domain.Models.Game.Game game, Step step, CancellationToken cancellationToken);
 }

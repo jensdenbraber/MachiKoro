@@ -1,6 +1,5 @@
-﻿namespace MachiKoro.Api.Contracts.Game.AddPlayer
+﻿namespace MachiKoro.Api.Contracts.Game.AddPlayer;
+
+public class AddPlayerToGameResponse
 {
-    public class AddPlayerToGameResponse
-    {
-    }
 }
