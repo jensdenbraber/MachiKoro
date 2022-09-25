@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Hubs;
 
-[SignalRHub(path: "/hubs/GameHub")]
+[SignalRHub(path: "/hubs/gameHub")]
 public class GameHub : Hub<IGameClient>, IGameClient
 {
     private readonly GamesService _gamesService;
@@ -21,16 +21,16 @@ public class GameHub : Hub<IGameClient>, IGameClient
         _gameHub = gameHub;
     }
 
-    [SignalRMethod(name: "Choice", Microsoft.OpenApi.Models.OperationType.Post)]
+    [SignalRMethod(name: "choice", Microsoft.OpenApi.Models.OperationType.Post)]
     public async Task Choice(Guid gameId, string data)
     {
         await _gamesService.AnalizeChoiceAsync(gameId, data, CancellationToken.None);
     }
 
-    [SignalRMethod(name: "ConstructEstabishment", Microsoft.OpenApi.Models.OperationType.Post)]
+    [SignalRMethod(name: "constructEstabishment", Microsoft.OpenApi.Models.OperationType.Post)]
     public async Task ConstructEstabishment(Guid gameId, Guid cardId)
     {
-        BuyChoice buyChoice = new BuyChoice
+        var buyChoice = new BuyChoice
         {
             CardId = cardId,
             ChoiceType = Domain.Enums.ChoiceType.ConstructEstablishment,
@@ -40,7 +40,7 @@ public class GameHub : Hub<IGameClient>, IGameClient
         await _gamesService.PostActionConstructionEstablishmentAsync(gameId, buyChoice, CancellationToken.None);
     }
 
-    [SignalRMethod(name: "ConstructLandMark", Microsoft.OpenApi.Models.OperationType.Post)]
+    [SignalRMethod(name: "constructLandMark", Microsoft.OpenApi.Models.OperationType.Post)]
     public Task ConstructLandMark(Guid gameId, Guid cardId)
     {
         throw new NotImplementedException();
@@ -52,7 +52,7 @@ public class GameHub : Hub<IGameClient>, IGameClient
     //    await Clients.All.SendAsync("ReceiveMessage", user, message);
     //}
 
-    [SignalRMethod(name: "RollDice", Microsoft.OpenApi.Models.OperationType.Post)]
+    [SignalRMethod(name: "rollDice", Microsoft.OpenApi.Models.OperationType.Post)]
     public async Task RollDice(Guid gameId)
     {
         DiceAmountChoice diceAmountChoice = new DiceAmountChoice

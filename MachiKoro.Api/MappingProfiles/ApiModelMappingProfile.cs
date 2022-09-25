@@ -7,9 +7,11 @@ using MachiKoro.Domain.Models.Game;
 using MachiKoro.Domain.Models.User;
 using MachiKoro.Persistence.Identity.Models;
 using MachiKoro.Persistence.Identity.Models.Authentication;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MachiKoro.Api.MappingProfiles;
 
+[ExcludeFromCodeCoverage]
 public class ApiModelMappingProfile : Profile
 {
     public ApiModelMappingProfile()

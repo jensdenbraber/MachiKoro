@@ -41,7 +41,7 @@ public class GamesRepository : IGamesRepository
 
         await _gameDataContext.Games.AddAsync(gameData, cancellationToken);
 
-        var created = await _gameDataContext.SaveChangesAsync();
+        var created = await _gameDataContext.SaveChangesAsync(cancellationToken);
         return created > 0;
     }
 

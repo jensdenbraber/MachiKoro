@@ -6,11 +6,13 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 
 namespace MachiKoro.Api.Extensions;
 
+[ExcludeFromCodeCoverage]
 public static class SwaggerServicesExtensions
 {
     public static IServiceCollection AddSwaggerServices(this IServiceCollection services, IConfiguration configuration)

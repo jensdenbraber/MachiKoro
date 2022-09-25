@@ -25,8 +25,7 @@ public static class IServiceCollectionExtensions
             options.UseSqlServer(
                 configuration.GetConnectionString(ConnectionString)));
         services.AddDbContext<GameDataContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString(ConnectionString)));
+            options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=MachiKoro;Trusted_Connection=True;MultipleActiveResultSets=true"));
         services.AddDbContext<IdentityDataContext>(options =>
             options.UseSqlServer(
                 configuration.GetConnectionString(ConnectionString)));

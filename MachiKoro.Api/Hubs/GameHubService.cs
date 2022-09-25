@@ -15,13 +15,13 @@ public class GameHubService
         _gameHub = gameHub;
     }
 
-    [SignalRMethod(name: "SendMessage2", Microsoft.OpenApi.Models.OperationType.Get)]
+    [SignalRMethod(name: "sendMessage2", Microsoft.OpenApi.Models.OperationType.Get)]
     public async Task SendMessage2(string user, string message)
     {
         throw new NotImplementedException();
     }
 
-    [SignalRMethod(name: "RollDice", Microsoft.OpenApi.Models.OperationType.Get)]
+    [SignalRMethod(name: "rollDice", Microsoft.OpenApi.Models.OperationType.Get)]
     public async Task RollDice()
     {
         //await _gameHub.Clients.All.RollDice();
