@@ -1,6 +1,5 @@
-﻿namespace MachiKoro.Api.Contracts.Game.RemovePlayer
+﻿namespace MachiKoro.Api.Contracts.Game.RemovePlayer;
+
+public class RemovePlayerFromGameResponse
 {
-    public class RemovePlayerFromGameResponse
-    {
-    }
 }

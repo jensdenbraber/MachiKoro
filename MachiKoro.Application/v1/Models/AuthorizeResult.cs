@@ -1,9 +1,9 @@
-﻿namespace MachiKoro.Application.v1.Models
+﻿namespace MachiKoro.Application.v1.Models;
+
+public class AuthorizeResult
 {
-    public class AuthorizeResult
-    {
-        public string UserName { get; set; }
-        public string Token { get; set; }
-        public string RefreshToken { get; set; }
-    }
+    public string UserId { get; set; }
+    public string UserName { get; set; }
+    public string Token { get; set; }
+    public string RefreshToken { get; set; }
 }

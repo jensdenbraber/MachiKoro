@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace MachiKoro.Application.v1.Responses
+namespace MachiKoro.Application.v1.Responses;
+
+public record AuthFailedResponse
 {
-    public class AuthFailedResponse
-    {
-        public IEnumerable<string> Errors { get; set; }
-    }
+    public IEnumerable<string> Errors { get; init; }
 }

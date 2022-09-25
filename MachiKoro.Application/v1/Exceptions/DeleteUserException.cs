@@ -2,15 +2,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace MachiKoro.Application.v1.Exceptions
-{
-    public class DeleteUserException : ApplicationException
-    {
-        public IEnumerable<IdentityError> Errors { get; }
+namespace MachiKoro.Application.v1.Exceptions;
 
-        public DeleteUserException(IEnumerable<IdentityError> errors)
-        {
-            Errors = errors;
-        }
+public class DeleteUserException : ApplicationException
+{
+    public IEnumerable<IdentityError> Errors { get; }
+
+    public DeleteUserException(IEnumerable<IdentityError> errors)
+    {
+        Errors = errors;
     }
 }

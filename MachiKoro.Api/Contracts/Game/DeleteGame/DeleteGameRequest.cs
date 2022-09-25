@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace MachiKoro.Api.Contracts.Game.DeleteGame
+namespace MachiKoro.Api.Contracts.Game.DeleteGame;
+
+public record DeleteGameRequest
 {
-    public class DeleteGameRequest
-    {
-        [JsonPropertyName("gameId")]
-        public Guid GameId { get; set; }
-    }
+    [JsonPropertyName("gameId")]
+    public Guid GameId { get; init; }
 }

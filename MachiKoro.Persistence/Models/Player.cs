@@ -3,27 +3,33 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MachiKoro.Persistence.Models
+namespace MachiKoro.Persistence.Models;
+
+public class Player
 {
-    public class Player
-    {
-        [Key]
-        public Guid Id { get; internal set; }
-        //[ForeignKey(nameof(Id))]
-        //public Guid UserId { get; set; }
+    [Key]
+    public Guid Id { get; internal set; }
 
-        //    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]       
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+    public Guid UserId { get; internal set; }
 
-        //    [Required(ErrorMessage = "Name is required")]
-        //    public string UserName { get; set; }
+    //[ForeignKey(nameof(Id))]
+    //public Guid PlayerId { get; set; }
 
-        //    [Required]
-        //    public virtual PlayerProfile PlayerProfile { get; set; }
+    //    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        //    //public virtual ICollection<Game> HistoryGames { get; set; }
+    //    [Required(ErrorMessage = "Name is required")]
+    //    public string UserName { get; set; }
 
-        //    [Required]
-        public virtual ICollection<Game> Games { get; set; }
-    }
+    //    [Required]
+    //    public virtual PlayerProfile PlayerProfile { get; set; }
+
+    //    //public virtual ICollection<Game> HistoryGames { get; set; }
+
+    public ICollection<Step> Steps { get; set; }
+
+    [Required]
+    public ICollection<Game> Games { get; set; }
+
+    public ICollection<GamePlayer> GamePlayers { get; set; }
 }

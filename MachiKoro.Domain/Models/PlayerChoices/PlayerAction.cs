@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace MachiKoro.Domain.Models.PlayerChoices
+namespace MachiKoro.Domain.Models.PlayerChoices;
+
+public class PlayerAction
 {
-    public class PlayerAction
+    internal object Execute()
     {
-        internal object Execute()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

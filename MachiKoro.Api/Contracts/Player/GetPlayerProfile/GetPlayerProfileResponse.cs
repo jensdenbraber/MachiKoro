@@ -1,10 +1,9 @@
-﻿namespace MachiKoro.Api.Contracts.Player.GetPlayerProfile
+﻿namespace MachiKoro.Api.Contracts.Player.GetPlayerProfile;
+
+public record GetPlayerProfileResponse
 {
-    public class GetPlayerProfileResponse
-    {
-        public string UserName { get; set; }
-        public int GamesPlayed { get; set; }
-        public int GamesWon { get; set; }
-        public int GamesLost { get; set; }
-    }
+    public string UserName { get; init; }
+    public int GamesPlayed { get; init; }
+    public int GamesWon { get; init; }
+    public int GamesLost { get; init; }
 }

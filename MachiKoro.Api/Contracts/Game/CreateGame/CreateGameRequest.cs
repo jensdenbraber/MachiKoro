@@ -1,13 +1,16 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
-namespace MachiKoro.Api.Contracts.Game.CreateGame
+namespace MachiKoro.Api.Contracts.Game.CreateGame;
+
+public record CreateGameRequest
 {
-    public record CreateGameRequest
-    {
-        [JsonPropertyName("maxNumberOfPlayers")]
-        public int MaxNumberOfPlayers { get; set; }
+    [JsonPropertyName("playerId")]
+    public Guid playerId { get; init; }
 
-        [JsonPropertyName("expensionType")]
-        public ExpensionTypeResponse ExpensionType { get; set; }
-    }
+    [JsonPropertyName("maxNumberOfPlayers")]
+    public int MaxNumberOfPlayers { get; init; }
+
+    [JsonPropertyName("expansionType")]
+    public ExpansionTypeResponse ExpansionType { get; init; }
 }

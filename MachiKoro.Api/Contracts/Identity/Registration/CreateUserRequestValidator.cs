@@ -1,14 +1,13 @@
 ﻿using FluentValidation;
 
-namespace MachiKoro.Api.Contracts.Identity.Registration
+namespace MachiKoro.Api.Contracts.Identity.Registration;
+
+public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
 {
-    public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
+    public CreateUserRequestValidator()
     {
-        public CreateUserRequestValidator()
-        {
-            RuleFor(x => x.UserName).NotEmpty();
-            RuleFor(x => x.Email).NotEmpty();
-            RuleFor(x => x.Password).NotEmpty();
-        }
+        RuleFor(x => x.UserName).NotEmpty();
+        RuleFor(x => x.Email).NotEmpty();
+        RuleFor(x => x.Password).NotEmpty();
     }
 }

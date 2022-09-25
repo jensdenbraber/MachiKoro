@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace MachiKoro.Api.Contracts.Game.CreateGame
+namespace MachiKoro.Api.Contracts.Game.CreateGame;
+
+public class CreateGameRequestValidator : AbstractValidator<CreateGameRequest>
 {
-    public class CreateGameRequestValidator : AbstractValidator<CreateGameRequest>
+    public CreateGameRequestValidator()
     {
-        public CreateGameRequestValidator()
-        {
-            RuleFor(x => x.MaxNumberOfPlayers).NotEmpty().InclusiveBetween(2, 4);
-            RuleFor(x => x.ExpensionType).NotEmpty();
-        }
+        RuleFor(x => x.MaxNumberOfPlayers).NotEmpty().InclusiveBetween(2, 4);
+        RuleFor(x => x.ExpansionType).NotEmpty();
     }
 }

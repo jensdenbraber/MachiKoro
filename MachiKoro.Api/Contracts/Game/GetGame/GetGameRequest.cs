@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace MachiKoro.Api.Contracts.Game.GetGame
+namespace MachiKoro.Api.Contracts.Game.StartGame;
+
+public record GetGameRequest
 {
-    public class GetGameRequest
-    {
-        [JsonPropertyName("gameId")]
-        public Guid GameId { get; set; }
-    }
+    [JsonPropertyName("gameId")]
+    public Guid GameId { get; init; }
 }

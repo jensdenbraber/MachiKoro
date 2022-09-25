@@ -1,9 +1,9 @@
-﻿namespace MachiKoro.Domain.Enums
+﻿namespace MachiKoro.Domain.Enums;
+
+public enum ChoiceType
 {
-    public enum ChoiceType
-    {
-        AmountDices,
-        ConstructEstablishment,
-        ConstructLandmark
-    }
+    AmountDices,
+    ConstructEstablishment,
+    ConstructLandmark,
+    Swap
 }

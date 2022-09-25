@@ -1,7 +1,6 @@
 using MachiKoro.Api.Extensions;
 using MachiKoro.Api.Options;
 using MachiKoro.Application.v1.Extensions;
-using MachiKoro.Infrastructure.Identity;
 using MachiKoro.Persistence.Identity.Models.Authentication;
 using MachiKoro.Persistence.Extensions;
 using MediatR.Extensions.FluentValidation.AspNetCore;
@@ -14,6 +13,7 @@ using System.Reflection;
 using MachiKoro.Api.Hubs;
 using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Persistence.Repositories;
+using MachiKoro.Persistence.Identity;
 
 namespace MachiKoro.Api
 {

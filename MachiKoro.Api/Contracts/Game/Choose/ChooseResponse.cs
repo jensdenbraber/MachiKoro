@@ -1,6 +1,5 @@
-﻿namespace MachiKoro.Api.Contracts.Game.Choose
+﻿namespace MachiKoro.Api.Contracts.Game.Choose;
+
+public class ChooseResponse
 {
-    public class ChooseResponse
-    {
-    }
 }

@@ -4,32 +4,31 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.Game.Queries.GetGame
+namespace MachiKoro.Application.v1.Game.Queries.GetGame;
+
+public class GetGameRequestHandler : IRequestHandler<GetGameRequest, GetGameResponse>
 {
-    public class GetGameRequestHandler : IRequestHandler<GetGameRequest, GetGameResponse>
+    private readonly IGamesRepository _gameRepository;
+
+    public GetGameRequestHandler(IGamesRepository gameRepository)
     {
-        private readonly IGamesRepository _gameRepository;
+        _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
+    }
 
-        public GetGameRequestHandler(IGamesRepository gameRepository)
+    public async Task<GetGameResponse> Handle(GetGameRequest request, CancellationToken cancellationToken)
+    {
+        request = request ?? throw new ArgumentNullException(nameof(request));
+
+        var game = await _gameRepository.GetGameAsync(request.GameId, cancellationToken);
+
+        if (game == null)
         {
-            _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
+            return null;
         }
 
-        public async Task<GetGameResponse> Handle(GetGameRequest request, CancellationToken cancellationToken)
+        return new GetGameResponse()
         {
-            request = request ?? throw new ArgumentNullException(nameof(request));
-
-            var game = await _gameRepository.GetGameAsync(request.GameId, cancellationToken);
-
-            if (game == null)
-            {
-                return null;
-            }
-
-            return new GetGameResponse()
-            {
-                Game = game
-            };
-        }
+            Game = game
+        };
     }
 }

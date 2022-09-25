@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace MachiKoro.Application.v1.Game.Commands.AddPlayerToGame
+namespace MachiKoro.Application.v1.Game.Commands.AddPlayerToGame;
+
+public class AddPlayerToGameResponse
 {
-    public class AddPlayerToGameResponse
-    {
-        public Guid? PlayerId { get; set; }
-        public Guid? GameId { get; set; }
-    }
+    public Guid? PlayerId { get; set; }
+    public Guid? GameId { get; set; }
 }

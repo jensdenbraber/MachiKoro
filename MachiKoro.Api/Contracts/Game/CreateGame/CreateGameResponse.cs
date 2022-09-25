@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace MachiKoro.Api.Contracts.Game.CreateGame
+namespace MachiKoro.Api.Contracts.Game.CreateGame;
+
+public record CreateGameResponse
 {
-    public class CreateGameResponse
-    {
-        public Guid GameId { get; set; }
-    }
+    public Guid GameId { get; init; }
 }

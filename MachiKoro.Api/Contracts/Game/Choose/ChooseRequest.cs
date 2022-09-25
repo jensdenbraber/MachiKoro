@@ -1,10 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MachiKoro.Api.Contracts.Game.Choose
+namespace MachiKoro.Api.Contracts.Game.Choose;
+
+public record ChooseRequest
 {
-    public class ChooseRequest
-    {
-        [JsonPropertyName("index")]
-        public int Index { get; set; }
-    }
+    [JsonPropertyName("index")]
+    public int Index { get; init; }
 }

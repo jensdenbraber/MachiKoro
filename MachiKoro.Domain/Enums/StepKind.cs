@@ -1,9 +1,8 @@
-﻿namespace MachiKoro.Domain.Enums
+﻿namespace MachiKoro.Domain.Enums;
+
+public enum StepKind
 {
-    public enum StepKind
-    {
-        Action,
-        Question,
-        Answer
-    }
+    Action,
+    Question,
+    Answer
 }

@@ -1,6 +1,5 @@
-﻿namespace MachiKoro.Api.Contracts.Game.DeleteGame
+﻿namespace MachiKoro.Api.Contracts.Game.DeleteGame;
+
+public record DeleteGameResponse
 {
-    public class DeleteGameResponse
-    {
-    }
 }

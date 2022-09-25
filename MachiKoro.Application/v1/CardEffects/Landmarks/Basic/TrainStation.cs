@@ -2,26 +2,25 @@ using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Domain.Interfaces;
 using System.Threading;
 
-namespace MachiKoro.Application.v1.CardEffects.Landmarks.Basic
+namespace MachiKoro.Application.v1.CardEffects.Landmarks.Basic;
+
+public class TrainStation : ILandmarkEffect
 {
-    public class TrainStation : ILandmarkEffect
+    private readonly INotifyPlayerService _playerService;
+
+    public TrainStation(INotifyPlayerService playerService)
     {
-        private readonly INotifyPlayerService _playerService;
+        _playerService = playerService ?? throw new System.ArgumentNullException(nameof(playerService));
+    }
 
-        public TrainStation(INotifyPlayerService playerService)
+    public async void Effect(Domain.Models.Game.Game game, Domain.Models.Player.Player player, CancellationToken cancellationToken)
+    {
+        //TODO able to throw with 2 dice
+        if (game.ActivePlayer.Equals(player))
         {
-            _playerService = playerService ?? throw new System.ArgumentNullException(nameof(playerService));
-        }
+            // TODO send to GameHub for client to chose for 1 or 2 dice
 
-        public async void Effect(Domain.Models.Game.Game game, Domain.Models.Player.Player player, CancellationToken cancellationToken)
-        {
-            //TODO able to throw with 2 dice
-            if (game.ActivePlayer.Equals(player))
-            {
-                // TODO send to GameHub for client to chose for 1 or 2 dice
-
-                await _playerService.SendNotificationDiceAmountAsync(cancellationToken);
-            }
+            await _playerService.SendNotificationDiceAmountAsync(game.ActivePlayer.Id, cancellationToken);
         }
     }
 }

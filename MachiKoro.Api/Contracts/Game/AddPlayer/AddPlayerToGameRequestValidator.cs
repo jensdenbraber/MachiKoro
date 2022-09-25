@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace MachiKoro.Api.Contracts.Game.AddPlayer
+namespace MachiKoro.Api.Contracts.Game.AddPlayer;
+
+public class AddPlayerToGameRequestValidator : AbstractValidator<AddPlayerToGameRequest>
 {
-    public class AddPlayerToGameRequestValidator : AbstractValidator<AddPlayerToGameRequest>
+    public AddPlayerToGameRequestValidator()
     {
-        public AddPlayerToGameRequestValidator()
-        {
-            RuleFor(x => x.GameId).NotEmpty();
-            RuleFor(x => x.PlayerId).NotEmpty();
-        }
+        RuleFor(x => x.GameId).NotEmpty();
+        RuleFor(x => x.PlayerId).NotEmpty();
     }
 }

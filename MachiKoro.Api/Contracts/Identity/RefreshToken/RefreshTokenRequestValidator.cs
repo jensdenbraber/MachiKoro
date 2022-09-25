@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace MachiKoro.Api.Contracts.Identity.RefreshToken
+namespace MachiKoro.Api.Contracts.Identity.RefreshToken;
+
+public class RefreshTokenRequestValidator : AbstractValidator<RefreshTokenRequest>
 {
-    public class RefreshTokenRequestValidator : AbstractValidator<RefreshTokenRequest>
+    public RefreshTokenRequestValidator()
     {
-        public RefreshTokenRequestValidator()
-        {
-            RuleFor(x => x.RefreshToken).NotEmpty();
-            RuleFor(x => x.Token).NotEmpty();
-        }
+        RuleFor(x => x.RefreshToken).NotEmpty();
+        RuleFor(x => x.Token).NotEmpty();
     }
 }

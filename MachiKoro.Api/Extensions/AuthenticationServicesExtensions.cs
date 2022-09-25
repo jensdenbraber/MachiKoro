@@ -1,5 +1,5 @@
 ﻿using MachiKoro.Api.Options;
-using MachiKoro.Persistence;
+using MachiKoro.Persistence.Data;
 using MachiKoro.Persistence.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -11,95 +11,91 @@ using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 using System.Text;
 
-namespace MachiKoro.Api.Extensions
+namespace MachiKoro.Api.Extensions;
+
+[ExcludeFromCodeCoverage]
+public static class AuthenticationServicesExtensions
 {
-    [ExcludeFromCodeCoverage]
-    public static class AuthenticationServicesExtensions
+    public static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
+        services//AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddIdentity<ApplicationUser, IdentityRole>()
+                .AddDefaultTokenProviders()
+                .AddUserManager<UserManager<ApplicationUser>>()
+                .AddSignInManager<SignInManager<ApplicationUser>>()
+            .AddEntityFrameworkStores<IdentityDataContext>();
+
+        var jwtSettings = new JwtSettings();
+        configuration.Bind(nameof(jwtSettings), jwtSettings);
+        services.AddSingleton(jwtSettings);
+
+        var tokenValidationParameters = new TokenValidationParameters
         {
-            services//AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddIdentity<ApplicationUser, IdentityRole>()
-                    .AddDefaultTokenProviders()
-                    .AddUserManager<UserManager<ApplicationUser>>()
-                    .AddSignInManager<SignInManager<ApplicationUser>>()
-                .AddEntityFrameworkStores<IdentityDataContext>();
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("jwtSettings.Secret")),
+            ValidateIssuer = true,
+            ValidIssuer = "http://mysite.com",
+            ValidAudience = "http://mysite.com",
+            ValidateAudience = true,
+            RequireExpirationTime = false,
+            ValidateLifetime = true,
+            NameClaimType = ClaimTypes.NameIdentifier,
+            ClockSkew = TimeSpan.Zero
+        };
 
-            var jwtSettings = new JwtSettings();
-            configuration.Bind(nameof(jwtSettings), jwtSettings);
-            services.AddSingleton(jwtSettings);
+        //Token token = configuration.GetSection("token").Get<Token>();
+        //byte[] secret = Encoding.ASCII.GetBytes(token.Secret);
 
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-                ValidateIssuer = true,
-                ValidIssuer = "http://mysite.com",
-                ValidAudience = "http://mysite.com",
-                ValidateAudience = true,
-                RequireExpirationTime = false,
-                ValidateLifetime = true,
-                NameClaimType = ClaimTypes.NameIdentifier,
-                ClockSkew = TimeSpan.Zero
-            };
+        //var tokenValidationParameters = new TokenValidationParameters
+        //{
+        //    ClockSkew = TimeSpan.Zero,
+        //    ValidateIssuer = true,
+        //    ValidateAudience = true,
+        //    ValidateLifetime = true,
+        //    ValidateIssuerSigningKey = true,
+        //    ValidIssuer = token.Issuer,
+        //    ValidAudience = token.Audience,
+        //    IssuerSigningKey = new SymmetricSecurityKey(secret),
+        //    NameClaimType = ClaimTypes.NameIdentifier,
+        //    RequireSignedTokens = true,
+        //    RequireExpirationTime = true
+        //};
 
-            //Token token = configuration.GetSection("token").Get<Token>();
-            //byte[] secret = Encoding.ASCII.GetBytes(token.Secret);
+        //services.AddSingleton(tokenValidationParameters);
 
+        services
+            .AddAuthentication(
+                options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+            .AddJwtBearer(
+                options =>
+                {
+                    options.RequireHttpsMetadata = true;
+                    options.SaveToken = true;
+                    //options.ClaimsIssuer = token.Issuer;
+                    options.IncludeErrorDetails = true;
+                    options.Validate(JwtBearerDefaults.AuthenticationScheme);
+                    options.TokenValidationParameters = tokenValidationParameters;
+                    //new TokenValidationParameters
+                    //{
+                    //    ClockSkew = TimeSpan.Zero,
+                    //    ValidateIssuer = true,
+                    //    ValidateAudience = true,
+                    //    ValidateLifetime = true,
+                    //    ValidateIssuerSigningKey = true,
+                    //    ValidIssuer = token.Issuer,
+                    //    ValidAudience = token.Audience,
+                    //    IssuerSigningKey = new SymmetricSecurityKey(secret),
+                    //    NameClaimType = ClaimTypes.NameIdentifier,
+                    //    RequireSignedTokens = true,
+                    //    RequireExpirationTime = true
+                    //};
+                });
 
-            //var tokenValidationParameters = new TokenValidationParameters
-            //{
-            //    ClockSkew = TimeSpan.Zero,
-            //    ValidateIssuer = true,
-            //    ValidateAudience = true,
-            //    ValidateLifetime = true,
-            //    ValidateIssuerSigningKey = true,
-            //    ValidIssuer = token.Issuer,
-            //    ValidAudience = token.Audience,
-            //    IssuerSigningKey = new SymmetricSecurityKey(secret),
-            //    NameClaimType = ClaimTypes.NameIdentifier,
-            //    RequireSignedTokens = true,
-            //    RequireExpirationTime = true
-            //};
-
-            //services.AddSingleton(tokenValidationParameters);
-
-            services
-                .AddAuthentication(
-                    options =>
-                    {
-                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    })
-                .AddJwtBearer(
-                    options =>
-                    {
-                        options.RequireHttpsMetadata = true;
-                        options.SaveToken = true;
-                        //options.ClaimsIssuer = token.Issuer;
-                        options.IncludeErrorDetails = true;
-                        options.Validate(JwtBearerDefaults.AuthenticationScheme);
-                        options.TokenValidationParameters = tokenValidationParameters;
-                            //new TokenValidationParameters
-                            //{
-                            //    ClockSkew = TimeSpan.Zero,
-                            //    ValidateIssuer = true,
-                            //    ValidateAudience = true,
-                            //    ValidateLifetime = true,
-                            //    ValidateIssuerSigningKey = true,
-                            //    ValidIssuer = token.Issuer,
-                            //    ValidAudience = token.Audience,
-                            //    IssuerSigningKey = new SymmetricSecurityKey(secret),
-                            //    NameClaimType = ClaimTypes.NameIdentifier,
-                            //    RequireSignedTokens = true,
-                            //    RequireExpirationTime = true
-                            //};
-                    });
-
-
-
-            return services;
-        }
+        return services;
     }
 }

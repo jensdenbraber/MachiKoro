@@ -2,29 +2,31 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace MachiKoro.Persistence
+namespace MachiKoro.Persistence.Data;
+
+public class PlayerDataContext : DbContext
 {
-    public class PlayerDataContext : DbContext
+    public PlayerDataContext(DbContextOptions<PlayerDataContext> options)
+        : base(options)
     {
-        public PlayerDataContext(DbContextOptions<PlayerDataContext> options)
-            : base(options)
-        {
-        }
+    }
 
-        public DbSet<Player> Players { get; set; }
+    public DbSet<Player> Players { get; set; }
 
-        //public DbSet<PlayerProfile> PlayersProfiles { get; set; }
+    //public DbSet<PlayerProfile> PlayersProfiles { get; set; }
 
-        //public DbSet<PlayersStatistics> PlayersStatistics { get; set; }
+    //public DbSet<PlayersStatistics> PlayersStatistics { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // configures one-to-many relationship
-            modelBuilder.Entity<Game>()
-                .HasOne<Player>(s => s.Player)
-                .WithMany(g => g.Games)
-                .HasForeignKey(s => s.PlayerId);
-        }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Player>()
+            .HasKey("Id", "PlayerId");
+
+        //modelBuilder.Entity<Player>()
+        //    .HasMany<Step>(s => s.Steps)
+        //    .WithOne(g => g.Player)
+        //    .HasForeignKey(g => g.PlayerId);
+    }
 
     //protected override void OnModelCreating(ModelBuilder modelBuilder)
     //{
@@ -40,5 +42,4 @@ namespace MachiKoro.Persistence
 
     //    base.OnModelCreating(modelBuilder);
     //}
-}
 }

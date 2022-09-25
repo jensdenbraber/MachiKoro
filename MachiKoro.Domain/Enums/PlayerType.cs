@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
 
-namespace MachiKoro.Domain.Enums
+namespace MachiKoro.Domain.Enums;
+
+public enum PlayerType
 {
-    public enum PlayerType
-    {
-        [Description("Human")]
-        Human = 0,
-        [Description("Computer")]
-        Computer = 1
-    }
+    [Description("Human")]
+    Human = 0,
+
+    [Description("Computer")]
+    Computer = 1
 }

@@ -1,32 +1,18 @@
-﻿using MachiKoro.Application.v1.Game.Commands.CreateGame;
-using MachiKoro.Application.v1.Game.Commands.DeleteGame;
-using MachiKoro.Application.v1.Game.Queries.GetGame;
-using MachiKoro.Application.v1.Player.Queries.GetPlayerProfile;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace MachiKoro.Api.Extensions
+namespace MachiKoro.Api.Extensions;
+
+[ExcludeFromCodeCoverage]
+public static class MediatrServicesExtensions
 {
-    [ExcludeFromCodeCoverage]
-	public static class MediatrServicesExtensions
+    public static IServiceCollection AddMediatRServices(this IServiceCollection services, IConfiguration configuration)
     {
-		public static IServiceCollection AddMediatRServices(this IServiceCollection services, IConfiguration configuration)
-		{
-			Assembly[] assemblies = new Assembly[]
-			{
-				Assembly.GetAssembly(typeof(Startup)),
-				Assembly.GetAssembly(typeof(CreateGameRequestHandler)),
-				Assembly.GetAssembly(typeof(GetGameRequestHandler)),
-				Assembly.GetAssembly(typeof(DeleteGameRequestHandler)),
-				//Assembly.GetAssembly(typeof(GetPlayerProfileRequestHandler))
-			};
+        services.AddMediatR(Assembly.GetExecutingAssembly());
 
-			services.AddMediatR(assemblies);
-
-			return services;
-		}
-	}
+        return services;
+    }
 }
