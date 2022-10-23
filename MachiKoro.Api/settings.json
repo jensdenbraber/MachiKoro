@@ -8,6 +8,12 @@
     "Secret": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "TokenLifetime": "01:00:00"
   },
+  "AzureAd": {
+    "Instance": "",
+    "Domain": "",
+    "TenantId": "",
+    "ClientId": ""
+  },
   "Logging": {
     "LogLevel": {
       "Default": "Information",

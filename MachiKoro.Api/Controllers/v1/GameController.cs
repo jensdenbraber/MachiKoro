@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MachiKoro.Application;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Controllers.v1;
 
+[Authorize]
 [ApiController]
 public class GameController : ControllerBase
 {

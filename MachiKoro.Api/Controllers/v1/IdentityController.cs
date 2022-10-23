@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -61,6 +62,8 @@ public class IdentityController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody][Required] Contracts.Identity.Login.LoginUserRequest request)
     {
+        var qwe = HttpContext.User.GetObjectId();
+
         var coreRequest = _mapper.Map<LoginUserRequest>(request);
         coreRequest.IpAddress = IpAddress();
 

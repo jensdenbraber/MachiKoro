@@ -21,67 +21,71 @@ namespace MachiKoro.Persistence.Identity.Services;
 
 public class IdentityService : IIdentityService
 {
-    private readonly UserManager<ApplicationUser> _userManager;
+    //private readonly UserManager<ApplicationUser> _userManager;
     private readonly Token _token;
     private readonly IdentityDataContext _identityDataContext;
 
     public IdentityService(
-        UserManager<ApplicationUser> userManager,
+        //UserManager<ApplicationUser> userManager,
         Token token,
         IdentityDataContext identityDataContext)
     {
-        _userManager = userManager;
+        //_userManager = userManager;
         _token = token;
         _identityDataContext = identityDataContext;
     }
 
     public async Task<string> GetUserNameAsync(string userId)
     {
-        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+        //var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
-        return user.UserName;
+        //return user.UserName;
+
+        return "";
     }
 
     public async Task<Unit> CreateUserAsync(string userName, string email, string password, string ipAdress)
     {
-        var userExists = await _userManager.FindByNameAsync(userName);
-        if (userExists is not null)
-        {
-            throw new UserAlreadyExistsException(userName);
-        }
+        //var userExists = await _userManager.FindByNameAsync(userName);
+        //if (userExists is not null)
+        //{
+        //    throw new UserAlreadyExistsException(userName);
+        //}
 
-        var user = new ApplicationUser
-        {
-            UserName = userName,
-            Email = email,
-        };
+        //var user = new ApplicationUser
+        //{
+        //    UserName = userName,
+        //    Email = email,
+        //};
 
-        var result = await _userManager.CreateAsync(user, password);
+        //var result = await _userManager.CreateAsync(user, password);
 
-        if (result.Succeeded)
-        {
-            var addToRolesResult = await _userManager.AddToRoleAsync(user, "Member");
+        //if (result.Succeeded)
+        //{
+        //    var addToRolesResult = await _userManager.AddToRoleAsync(user, "Member");
 
-            if (addToRolesResult.Succeeded)
-            {
-                var jwtToken = await GenerateJwtToken(user);
-                var refreshToken = GenerateRefreshToken(ipAdress, user.Id);
+        //    if (addToRolesResult.Succeeded)
+        //    {
+        //        var jwtToken = await GenerateJwtToken(user);
+        //        var refreshToken = GenerateRefreshToken(ipAdress, user.Id);
 
-                await _identityDataContext.RefreshTokens.AddAsync(refreshToken);
-                await _identityDataContext.SaveChangesAsync();
+        //        await _identityDataContext.RefreshTokens.AddAsync(refreshToken);
+        //        await _identityDataContext.SaveChangesAsync();
 
                 return Unit.Value;
-            }
-        }
+        //    }
+        //}
 
-        throw new RegisterException(result.Errors);
+        //throw new RegisterException(result.Errors);
     }
 
     public async Task<bool> IsInRoleAsync(string userId, string role)
     {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        //var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
-        return user is not null && await _userManager.IsInRoleAsync(user, role);
+        //return user is not null && await _userManager.IsInRoleAsync(user, role);
+
+        return false;
     }
 
     public async Task<bool> AuthorizeByIdAsync(string userId, string policyName)
@@ -91,29 +95,29 @@ public class IdentityService : IIdentityService
 
     public async Task<AuthorizeResult> AuthorizeAsync(string userName, string password, string ipAdress)
     {
-        var user = await _userManager.FindByNameAsync(userName);
+        //var user = await _userManager.FindByNameAsync(userName);
 
-        if (user is null)
-        {
-            throw new LoginException(userName, password);
-        }
+        //if (user is null)
+        //{
+        //    throw new LoginException(userName, password);
+        //}
 
-        var isCorrect = await _userManager.CheckPasswordAsync(user, password);
+        //var isCorrect = await _userManager.CheckPasswordAsync(user, password);
 
-        if (!isCorrect)
-        {
-            throw new LoginException(userName, password);
-        }
+        //if (!isCorrect)
+        //{
+        //    throw new LoginException(userName, password);
+        //}
 
-        var jwtToken = await GenerateJwtToken(user);
-        var refreshToken = GenerateRefreshToken(ipAdress, user.Id);
+        //var jwtToken = await GenerateJwtToken(user);
+        //var refreshToken = GenerateRefreshToken(ipAdress, user.Id);
 
         var authorizeResult = new AuthorizeResult
         {
-            UserId = user.Id,
-            UserName = userName,
-            Token = jwtToken,
-            RefreshToken = refreshToken.Token
+            //UserId = user.Id,
+            //UserName = userName,
+            //Token = jwtToken,
+            //RefreshToken = refreshToken.Token
         };
 
         return authorizeResult;
@@ -121,21 +125,25 @@ public class IdentityService : IIdentityService
 
     public async Task<bool> DeleteUserAsync(string userId)
     {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        //var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
-        return user is not null && await DeleteUserAsync(user);
+        //return user is not null && await DeleteUserAsync(user);
+
+        return false;
     }
 
     public async Task<bool> DeleteUserAsync(ApplicationUser user)
     {
-        var result = await _userManager.DeleteAsync(user);
+        //var result = await _userManager.DeleteAsync(user);
 
-        if (result.Succeeded)
-        {
-            return true;
-        }
+        //if (result.Succeeded)
+        //{
+        //    return true;
+        //}
 
-        throw new DeleteUserException(result.Errors);
+        //throw new DeleteUserException(result.Errors);
+
+        return false;
     }
 
     public async Task<RefreshTokenResult> RefreshToken(string token, string ipAddress)
@@ -179,11 +187,13 @@ public class IdentityService : IIdentityService
 
     private ApplicationUser GetUserByRefreshToken(string token)
     {
-        var refreshToken = _identityDataContext.RefreshTokens.SingleOrDefault(t => t.Token == token);
+        //var refreshToken = _identityDataContext.RefreshTokens.SingleOrDefault(t => t.Token == token);
 
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == refreshToken.UserId);
+        //var user = _userManager.Users.SingleOrDefault(u => u.Id == refreshToken.UserId);
 
-        return user;
+        //return user;
+
+        return new ApplicationUser();
     }
 
     private RefreshToken RotateRefreshToken(RefreshToken refreshToken, string ipAddress, string userId)
@@ -230,7 +240,7 @@ public class IdentityService : IIdentityService
         _token.RefreshExpiry = 10000000;
         _token.Secret = "E3238CFA-0449-47F0-BA46-C9136B9C5497";
 
-        List<string> roles = (await _userManager.GetRolesAsync(user)).ToList();
+        List<string> roles = new List<string>();// (await _userManager.GetRolesAsync(user)).ToList();
         byte[] secret = Encoding.ASCII.GetBytes(_token.Secret);
 
         JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();

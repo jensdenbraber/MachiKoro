@@ -62,7 +62,7 @@ public static class SwaggerServicesExtensions
             x.IncludeXmlComments(xmlPath);
         });
 
-        services.AddSwaggerExamplesFromAssemblyOf<Startup>();
+        //services.AddSwaggerExamplesFromAssemblyOf<Startup>();
 
         return services;
     }

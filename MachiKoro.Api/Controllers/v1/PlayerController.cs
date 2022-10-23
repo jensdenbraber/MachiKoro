@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace MachiKoro.Api.Controllers.v1;
 
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize]
 public class PlayerController : ControllerBase
 {
     //private readonly IMapper _mapper;

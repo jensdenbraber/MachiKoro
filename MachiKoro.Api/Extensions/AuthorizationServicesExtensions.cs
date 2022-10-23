@@ -11,16 +11,16 @@ public static class AuthorizationServicesExtensions
 {
     public static IServiceCollection AddAuthorizationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAuthorization(
-         options =>
-         {
-             options.AddPolicy(
-                 JwtBearerDefaults.AuthenticationScheme,
-                 new AuthorizationPolicyBuilder()
-                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                     .RequireAuthenticatedUser()
-                     .Build());
-         });
+        //services.AddAuthorization(
+        // options =>
+        // {
+        //     options.AddPolicy(
+        //         JwtBearerDefaults.AuthenticationScheme,
+        //         new AuthorizationPolicyBuilder()
+        //             .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+        //             .RequireAuthenticatedUser()
+        //             .Build());
+        // });
 
         return services;
     }

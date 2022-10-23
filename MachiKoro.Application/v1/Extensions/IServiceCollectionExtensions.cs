@@ -3,6 +3,7 @@ using MachiKoro.Application.v1.Game.Commands.CreateGame;
 using MachiKoro.Application.v1.Game.Commands.DeleteGame;
 using MachiKoro.Application.v1.Game.Commands.RemovePlayerFromGame;
 using MachiKoro.Application.v1.Game.Queries.GetGame;
+using MachiKoro.Application.v1.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

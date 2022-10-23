@@ -18,80 +18,79 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Api
+namespace MachiKoro.Api;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        //CreateHostBuilder(args).Build().Run();
+
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Strongly-typed configurations using IOptions
+        builder.Services.Configure<Token>(builder.Configuration.GetSection("token"));
+        builder.Services.Configure<TokenServiceProvider>(builder.Configuration.GetSection("TokenServiceProvider"));
+
+        //services.SetupAuthentication(Configuration);
+        //services.SetAuthorization();
+
+        //builder.Services.AddPersistenceServices(builder.Configuration);
+        builder.Services.AddMediatRServices(builder.Configuration);
+        builder.Services.AddAutoMapperServices(builder.Configuration);
+        builder.Services.AddFluentValidation(new[] { Assembly.GetExecutingAssembly() });
+        builder.Services.AddApplicationServices(builder.Configuration);
+        builder.Services.AddPersistenceServices(builder.Configuration);
+        builder.Services.AddAuthenticationServices(builder.Configuration);
+        builder.Services.AddAuthorizationServices(builder.Configuration);
+
+        builder.Services.AddSwaggerServices(builder.Configuration);
+
+        builder.Services.AddFluentValidationServices(builder.Configuration);
+
+        builder.Services.AddTransient<INotifyPlayerService, GameHubContext>();
+
+        builder.Services.AddCors(options =>
         {
-            //CreateHostBuilder(args).Build().Run();
-
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Strongly-typed configurations using IOptions
-            builder.Services.Configure<Token>(builder.Configuration.GetSection("token"));
-            builder.Services.Configure<TokenServiceProvider>(builder.Configuration.GetSection("TokenServiceProvider"));
-
-            //services.SetupAuthentication(Configuration);
-            //services.SetAuthorization();
-
-            //builder.Services.AddPersistenceServices(builder.Configuration);
-            builder.Services.AddMediatRServices(builder.Configuration);
-            builder.Services.AddAutoMapperServices(builder.Configuration);
-            builder.Services.AddFluentValidation(new[] { Assembly.GetExecutingAssembly() });
-            builder.Services.AddApplicationServices(builder.Configuration);
-            builder.Services.AddPersistenceServices(builder.Configuration);
-            builder.Services.AddAuthenticationServices(builder.Configuration);
-            builder.Services.AddAuthorizationServices(builder.Configuration);
-
-            builder.Services.AddSwaggerServices(builder.Configuration);
-
-            builder.Services.AddFluentValidationServices(builder.Configuration);
-
-            builder.Services.AddTransient<INotifyPlayerService, GameHubContext>();
-
-            builder.Services.AddCors(options =>
+            options.AddPolicy("ClientPermission", policy =>
             {
-                options.AddPolicy("ClientPermission", policy =>
-                {
-                    policy.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .WithOrigins("http://localhost:3000")
-                        .AllowCredentials();
-                });
+                policy.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("http://localhost:3000")
+                    .AllowCredentials();
             });
+        });
 
-            // Add services to the container.
-            builder.Services.AddControllers();
-            builder.Services.AddSignalR();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+        // Add services to the container.
+        builder.Services.AddControllers();
+        builder.Services.AddSignalR();
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
-            var app = builder.Build();
+        var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            app.Run();
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
-        //public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //    Host.CreateDefaultBuilder(args)
-        //        .ConfigureWebHostDefaults(webBuilder =>
-        //        {
-        //            webBuilder.UseStartup<Startup>();
-        //        });
+        app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
     }
+
+    //public static IHostBuilder CreateHostBuilder(string[] args) =>
+    //    Host.CreateDefaultBuilder(args)
+    //        .ConfigureWebHostDefaults(webBuilder =>
+    //        {
+    //            webBuilder.UseStartup<Startup>();
+    //        });
 }

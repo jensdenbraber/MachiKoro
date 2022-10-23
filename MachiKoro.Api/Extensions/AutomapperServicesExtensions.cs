@@ -10,7 +10,7 @@ public static class AutomapperServicesExtensions
 {
     public static IServiceCollection AddAutoMapperServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAutoMapper(typeof(Startup));
+        //services.AddAutoMapper(typeof(Startup));
 
         services.AddControllers()
    .AddJsonOptions(x =>
