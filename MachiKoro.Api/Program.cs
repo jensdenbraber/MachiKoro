@@ -29,8 +29,8 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Strongly-typed configurations using IOptions
-        builder.Services.Configure<Token>(builder.Configuration.GetSection("token"));
-        builder.Services.Configure<TokenServiceProvider>(builder.Configuration.GetSection("TokenServiceProvider"));
+        //builder.Services.Configure<Token>(builder.Configuration.GetSection("token"));
+        //builder.Services.Configure<TokenServiceProvider>(builder.Configuration.GetSection("TokenServiceProvider"));
 
         //services.SetupAuthentication(Configuration);
         //services.SetAuthorization();
@@ -44,7 +44,7 @@ public class Program
         builder.Services.AddAuthenticationServices(builder.Configuration);
         builder.Services.AddAuthorizationServices(builder.Configuration);
 
-        builder.Services.AddSwaggerServices(builder.Configuration);
+        //builder.Services.AddSwaggerServices(builder.Configuration);
 
         builder.Services.AddFluentValidationServices(builder.Configuration);
 

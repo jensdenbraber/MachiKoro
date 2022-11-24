@@ -9,6 +9,7 @@ using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -51,8 +52,8 @@ public static class AuthenticationServicesExtensions
                     //};
                 }, options => { configuration.Bind("AzureAd", options); });
 
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"));
+        //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        //    .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"));
 
         //services//AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
         //        .AddIdentity<ApplicationUser, IdentityRole>()

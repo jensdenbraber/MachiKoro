@@ -10,13 +10,13 @@ public static class AutomapperServicesExtensions
 {
     public static IServiceCollection AddAutoMapperServices(this IServiceCollection services, IConfiguration configuration)
     {
-        //services.AddAutoMapper(typeof(Startup));
+        services.AddAutoMapper(typeof(Program));
 
         services.AddControllers()
-   .AddJsonOptions(x =>
-   {
-       x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-   });
+           .AddJsonOptions(x =>
+           {
+               x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+           });
 
         return services;
     }
