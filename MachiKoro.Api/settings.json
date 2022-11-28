@@ -4,6 +4,12 @@
   "ConnectionStrings": {
     "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=MachiKoro;Trusted_Connection=True;MultipleActiveResultSets=true"
   },
+  "AzureAd": {
+    "Instance": "",
+    "Domain": "",
+    "TenantId": "",
+    "ClientId": ""
+  },
   "JwtSettings": {
     "Secret": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "TokenLifetime": "01:00:00"

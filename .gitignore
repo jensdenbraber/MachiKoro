@@ -539,3 +539,4 @@ FodyWeavers.xsd
 *.sln.iml
 .vscode/settings.json
 .vscode/launch.json
+MachiKoro.Api/local.settings.json
