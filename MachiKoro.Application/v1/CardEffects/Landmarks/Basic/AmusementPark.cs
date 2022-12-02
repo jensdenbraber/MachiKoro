@@ -1,5 +1,4 @@
 using MachiKoro.Application.v1.Dice;
-using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Domain.Interfaces;
 using System.Threading;
 

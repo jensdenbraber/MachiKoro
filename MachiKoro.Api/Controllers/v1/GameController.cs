@@ -39,7 +39,7 @@ public class GameController : ControllerBase
             return NotFound();
 
         var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-        var locationUri = baseUrl + "/" + ApiRoutes.Games.Get.Replace("{gameId}", coreResponse.GameId.ToString());
+        var locationUri = $"{baseUrl}/{ApiRoutes.Games.Get.Replace("{gameId}", coreResponse.GameId.ToString())}";
         return Created(locationUri, coreResponse.GameId);
     }
 
@@ -67,6 +67,9 @@ public class GameController : ControllerBase
     }
 
     [HttpGet(ApiRoutes.Games.Get)]
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    //[ProducesResponseType(typeof(Application.v1.Game.Queries.GetGame.GetGameResponse), 200)]
     public async Task<IActionResult> GetAsync([FromRoute][Required] Contracts.Game.StartGame.GetGameRequest request)
     {
         var coreRequest = _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(request);
@@ -81,6 +84,7 @@ public class GameController : ControllerBase
 
     [HttpPost(ApiRoutes.Games.AddPlayer)]
     [Consumes("application/json")]
+    [Produces("application/json")]
     public async Task<IActionResult> AddPlayer([FromRoute][Required] Contracts.Game.AddPlayer.AddPlayerToGameRequest request)
     {
         var coreRequest = _mapper.Map<Application.v1.Game.Commands.AddPlayerToGame.AddPlayerToGameCommand>(request);
@@ -97,7 +101,7 @@ public class GameController : ControllerBase
             return NotFound(request.PlayerId);
 
         var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-        var locationUri = baseUrl + "/" + ApiRoutes.Games.AddPlayer.Replace("{gameId}", coreResponse.GameId.ToString());
+        var locationUri = $"{baseUrl}/{ApiRoutes.Games.AddPlayer.Replace("{gameId}", coreResponse.GameId.ToString())}";
         return Created(locationUri, coreResponse.GameId);
     }
 
@@ -130,6 +134,7 @@ public class GameController : ControllerBase
     }
 
     [HttpPost(ApiRoutes.Games.Get + "/start")]
+    [Consumes("application/json")]
     public async Task<IActionResult> Start([FromRoute][Required] Contracts.Game.StartGame.StartGameRequest request)
     {
         var coreRequest = _mapper.Map<Application.v1.Game.Commands.StartGame.StartGameRequest>(request);

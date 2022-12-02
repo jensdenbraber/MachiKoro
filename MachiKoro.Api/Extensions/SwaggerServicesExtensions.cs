@@ -36,7 +36,7 @@ public static class SwaggerServicesExtensions
                     Url = new Uri("https://example.com/license"),
                 }
             });
-            x.DocumentFilter<SignalRSwaggerGen.SignalRSwaggerGen>(new List<Assembly> { typeof(GameHub).Assembly, typeof(GameHub).Assembly });
+            x.AddSignalRSwaggerGen();
             x.ExampleFilters();
 
             x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

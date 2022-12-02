@@ -1,7 +1,7 @@
 using MachiKoro.Api.Extensions;
 using MachiKoro.Api.Hubs;
 using MachiKoro.Application.v1.Extensions;
-using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Domain.Interfaces;
 using MachiKoro.Persistence.Extensions;
 using MachiKoro.Persistence.Identity;
 using MachiKoro.Persistence.Identity.Models.Authentication;

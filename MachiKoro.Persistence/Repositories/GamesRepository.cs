@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Domain.Interfaces;
 using MachiKoro.Domain.Models.CardDecks;
 using MachiKoro.Domain.Models.Cards.Establishments.Basic;
 using MachiKoro.Domain.Models.Cards.Landmarks.Basic;

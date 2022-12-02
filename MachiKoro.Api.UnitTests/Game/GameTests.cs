@@ -1,13 +1,7 @@
-﻿using MachiKoro.Api.Contracts.Game.StartGame;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Newtonsoft.Json;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Reflection.PortableExecutable;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Api.UnitTests.Game;
@@ -32,7 +26,22 @@ public class GameTests
     }
 
     [Test]
+    public async Task CreateGame_Should_Return_Successfully()
+    {
+    }
+
+    [Test]
+    public async Task CreateGame_Should_Return_Throw_Unsuccessfully()
+    {
+    }
+
+    [Test]
     public async Task GetAllGames_Should_Return_Games()
+    {
+    }
+
+    [Test]
+    public async Task GetAllGames_Should_Throw_Games_Not_Found()
     {
     }
 

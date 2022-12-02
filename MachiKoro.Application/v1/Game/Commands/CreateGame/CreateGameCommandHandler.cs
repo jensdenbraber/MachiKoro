@@ -1,7 +1,7 @@
 ﻿using MachiKoro.Application.CardDecks;
-using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Domain.Enums;
 using MachiKoro.Domain.Extensions;
+using MachiKoro.Domain.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;

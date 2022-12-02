@@ -49,5 +49,5 @@ public class CircularList<T> : List<T>
         get { _currentIndex--; return this[CurrentIndex]; }
     }
 
-    public T Current => this.Count > 0 ? this[CurrentIndex] : default(T);
+    public T Current => this.Count > 0 ? this[CurrentIndex] : default;
 }

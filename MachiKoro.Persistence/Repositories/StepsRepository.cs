@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MachiKoro.Application.v1.Interfaces;
+using MachiKoro.Domain.Interfaces;
 using MachiKoro.Persistence.Data;
 using MachiKoro.Persistence.Models;
 using Microsoft.EntityFrameworkCore;

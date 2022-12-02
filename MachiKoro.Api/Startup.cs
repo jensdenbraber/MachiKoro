@@ -11,9 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using MachiKoro.Api.Hubs;
-using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Persistence.Repositories;
 using MachiKoro.Persistence.Identity;
+using MachiKoro.Domain.Interfaces;
 
 namespace MachiKoro.Api
 {

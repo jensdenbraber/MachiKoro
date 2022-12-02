@@ -1,5 +1,4 @@
-﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Persistence.Identity.Models.Authentication;
+﻿using MachiKoro.Persistence.Identity.Models.Authentication;
 using MachiKoro.Persistence.Identity.Services;
 using MachiKoro.Persistence.Identity.Models;
 using MachiKoro.Persistence.Repositories;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using MachiKoro.Persistence.Data;
+using MachiKoro.Domain.Interfaces;
 
 namespace MachiKoro.Persistence.Extensions;
 

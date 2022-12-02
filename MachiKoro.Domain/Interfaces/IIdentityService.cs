@@ -1,8 +1,7 @@
-﻿using MachiKoro.Application.v1.Models;
-using MediatR;
+﻿using MediatR;
 using System.Threading.Tasks;
 
-namespace MachiKoro.Application.v1.Interfaces;
+namespace MachiKoro.Domain.Interfaces;
 
 public interface IIdentityService
 {
@@ -12,7 +11,7 @@ public interface IIdentityService
 
     Task<bool> AuthorizeByIdAsync(string userId, string policyName);
 
-    Task<AuthorizeResult> AuthorizeAsync(string userName, string password, string ipAddress);
+    //Task<AuthorizeResult> AuthorizeAsync(string userName, string password, string ipAddress);
 
     Task<Unit> CreateUserAsync(string userName, string email, string password, string ipAdress);
 
@@ -34,7 +33,7 @@ public interface IIdentityService
     /// <returns>
     ///     <see cref="TokenResponse" />
     /// </returns>
-    Task<RefreshTokenResult> RefreshToken(string token, string ipAddress);
+    //Task<RefreshTokenResult> RefreshToken(string token, string ipAddress);
 
     ///// <summary>
     /////     Check if the credentials passed in are valid.

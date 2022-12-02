@@ -1,5 +1,4 @@
-﻿using MachiKoro.Application.v1.Interfaces;
-using MachiKoro.Persistence.Models;
+﻿using MachiKoro.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
