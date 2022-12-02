@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using MachiKoro.Domain.Interfaces;
-using MachiKoro.Domain.Models.CardDecks;
-using MachiKoro.Domain.Models.Cards.Establishments.Basic;
-using MachiKoro.Domain.Models.Cards.Landmarks.Basic;
+﻿using MachiKoro.Domain.Interfaces;
 using MachiKoro.Persistence.Data;
+using MachiKoro.Persistence.Mappers;
 using MachiKoro.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,12 +13,10 @@ namespace MachiKoro.Persistence.Repositories;
 
 public class GamesRepository : IGamesRepository
 {
-    private readonly IMapper _mapper;
     private readonly GameDataContext _gameDataContext;
 
-    public GamesRepository(IMapper mapper, GameDataContext gameDataContext)
+    public GamesRepository(GameDataContext gameDataContext)
     {
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _gameDataContext = gameDataContext ?? throw new ArgumentNullException(nameof(gameDataContext));
     }
 
@@ -31,7 +26,7 @@ public class GamesRepository : IGamesRepository
         var startingEstablishments = System.Text.Json.JsonSerializer.Serialize(game.Settings.StartingEstablishmentCards);
         var startingLandmarks = System.Text.Json.JsonSerializer.Serialize(game.Settings.StartingLandmarkCards);
 
-        var gameData = _mapper.Map<Game>(game);
+        var gameData = game.ToPersistence();
         gameData.StartingDecks = cardDecks;
         gameData.StartingEstablishments = startingEstablishments;
         gameData.StartingLandmarks = startingLandmarks;
@@ -57,7 +52,7 @@ public class GamesRepository : IGamesRepository
         if (gameData == null)
             return null;
 
-        var game = _mapper.Map<Domain.Models.Game.Game>(gameData);
+        var game = gameData.ToCore();
 
         //var qwe = System.Text.Json.JsonSerializer.Deserialize<List<CardDeck>>(gameData.StartingDecks);
 
@@ -71,7 +66,7 @@ public class GamesRepository : IGamesRepository
 
     public async Task<bool> UpdateAsync(Domain.Models.Game.Game game, CancellationToken cancellationToken = default)
     {
-        var gameData = _mapper.Map<Game>(game);
+        var gameData = game.ToPersistence();
 
         _gameDataContext.Games.Update(gameData);
 
@@ -94,7 +89,7 @@ public class GamesRepository : IGamesRepository
 
     public async Task<bool> AddPlayerToGameAsync(Domain.Models.Player.Player player, Guid gameId, CancellationToken cancellationToken = default)
     {
-        var playerData = _mapper.Map<Player>(player);
+        var playerData = player.ToPersistence();
         playerData.UserId = player.Id;
         playerData.Id = Guid.NewGuid();
 
