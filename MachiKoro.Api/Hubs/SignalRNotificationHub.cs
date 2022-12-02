@@ -1,17 +1,11 @@
-﻿using AutoMapper;
-using MachiKoro.Api.Contracts.Game.StartGame;
-
-using MachiKoro.Api.Contracts.Game.StartGame;
-
+﻿using MachiKoro.Api.Contracts.Game.StartGame;
+using MachiKoro.Api.Mappers;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SignalRSwaggerGen.Attributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Api.Hubs;
@@ -19,19 +13,17 @@ namespace MachiKoro.Api.Hubs;
 [SignalRHub(path: "/hubs/SignalRNotification")]
 public class SignalRNotificationHub : Hub<Application.v1.Interfaces.INotifyPlayerService>
 {
-    private readonly IMapper _mapper;
     private readonly IMediator _mediator;
 
-    public SignalRNotificationHub(IMapper mapper, IMediator mediator)
+    public SignalRNotificationHub(IMediator mediator)
     {
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
     [SignalRMethod(name: "GetGame", Microsoft.OpenApi.Models.OperationType.Get)]
     public async Task<GetGameResponse> GetGame([FromRoute][Required] StartGameRequest request)
     {
-        var coreRequest = _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(request);
+        var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
 

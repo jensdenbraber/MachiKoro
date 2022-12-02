@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MachiKoro.Api.Mappers;
 using MachiKoro.Application;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +11,10 @@ namespace MachiKoro.Api.Controllers.v1;
 [ApiController]
 public class GameController : ControllerBase
 {
-    private readonly IMapper _mapper;
     private readonly IMediator _mediator;
 
-    public GameController(IMapper mapper, IMediator mediator)
+    public GameController(IMediator mediator)
     {
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
@@ -31,7 +29,7 @@ public class GameController : ControllerBase
     [ProducesResponseType(typeof(Contracts.Game.CreateGame.CreateGameResponse), 201)]
     public async Task<IActionResult> CreateAsync([FromBody][Required] Contracts.Game.CreateGame.CreateGameRequest request)
     {
-        var coreRequest = _mapper.Map<Application.v1.Game.Commands.CreateGame.CreateGameCommand>(request);
+        var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
 
@@ -54,8 +52,8 @@ public class GameController : ControllerBase
             GameId = gameId
         };
 
-        var coreGameRequest = _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(getGameRequest);
-        var coreChooseRequest = _mapper.Map<Application.v1.Game.Commands.Choose.ChooseRequest>(chooseRequest);
+        var coreGameRequest = getGameRequest.ToCore();// _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(getGameRequest);
+        var coreChooseRequest = chooseRequest.ToCore();// _mapper.Map<Application.v1.Game.Commands.Choose.ChooseRequest>(chooseRequest);
         coreChooseRequest.GameId = coreGameRequest.GameId;
 
         var coreResponse = await _mediator.Send(coreChooseRequest);
@@ -69,7 +67,7 @@ public class GameController : ControllerBase
     [HttpGet(ApiRoutes.Games.Get)]
     public async Task<IActionResult> GetAsync([FromRoute][Required] Contracts.Game.StartGame.GetGameRequest request)
     {
-        var coreRequest = _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(request);
+        var coreRequest = request.ToCore();// _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(request);
 
         var coreResponse = await _mediator.Send(coreRequest);
 
@@ -83,7 +81,7 @@ public class GameController : ControllerBase
     [Consumes("application/json")]
     public async Task<IActionResult> AddPlayer([FromRoute][Required] Contracts.Game.AddPlayer.AddPlayerToGameRequest request)
     {
-        var coreRequest = _mapper.Map<Application.v1.Game.Commands.AddPlayerToGame.AddPlayerToGameCommand>(request);
+        var coreRequest = request.ToCore();//_mapper.Map<Application.v1.Game.Commands.AddPlayerToGame.AddPlayerToGameCommand>(request);
 
         var coreResponse = await _mediator.Send(coreRequest);
 
@@ -105,7 +103,7 @@ public class GameController : ControllerBase
     [Consumes("application/json")]
     public async Task<IActionResult> RemovePlayer([FromRoute][Required] Contracts.Game.RemovePlayer.RemovePlayerFromGameRequest request)
     {
-        var coreRequest = _mapper.Map<Application.v1.Game.Commands.RemovePlayerFromGame.RemovePlayerFromGameCommand>(request);
+        var coreRequest = request.ToCore();//_mapper.Map<Application.v1.Game.Commands.RemovePlayerFromGame.RemovePlayerFromGameCommand>(request);
 
         var coreResponse = await _mediator.Send(coreRequest);
 
@@ -119,7 +117,7 @@ public class GameController : ControllerBase
     [Consumes("application/json")]
     public async Task<IActionResult> Delete([FromRoute][Required] Contracts.Game.DeleteGame.DeleteGameRequest request)
     {
-        var coreRequest = _mapper.Map<Application.v1.Game.Commands.DeleteGame.DeleteGameCommand>(request);
+        var coreRequest = request.ToCore();//_mapper.Map<Application.v1.Game.Commands.DeleteGame.DeleteGameCommand>(request);
 
         var coreResponse = await _mediator.Send(coreRequest);
 
@@ -132,7 +130,7 @@ public class GameController : ControllerBase
     [HttpPost(ApiRoutes.Games.Get + "/start")]
     public async Task<IActionResult> Start([FromRoute][Required] Contracts.Game.StartGame.StartGameRequest request)
     {
-        var coreRequest = _mapper.Map<Application.v1.Game.Commands.StartGame.StartGameRequest>(request);
+        var coreRequest = request.ToCore();//_mapper.Map<Application.v1.Game.Commands.StartGame.StartGameRequest>(request);
 
         var coreResponse = await _mediator.Send(coreRequest);
 
