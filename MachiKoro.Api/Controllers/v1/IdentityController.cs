@@ -1,9 +1,6 @@
-﻿using AutoMapper;
+﻿using MachiKoro.Api.Mappers;
 using MachiKoro.Application;
 using MachiKoro.Application.v1.Exceptions;
-using MachiKoro.Application.v1.Identity.Commands.Login;
-using MachiKoro.Application.v1.Identity.Commands.Refresh;
-using MachiKoro.Application.v1.Identity.Commands.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,12 +14,10 @@ namespace MachiKoro.Api.Controllers.v1;
 [ApiController]
 public class IdentityController : ControllerBase
 {
-    private readonly IMapper _mapper;
     private readonly IMediator _mediator;
 
-    public IdentityController(IMapper mapper, IMediator mediator)
+    public IdentityController(IMediator mediator)
     {
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
@@ -32,7 +27,7 @@ public class IdentityController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> Register([FromBody][Required] Contracts.Identity.Registration.CreateUserRequest request)
     {
-        var coreRequest = _mapper.Map<CreateUserRequest>(request);
+        var coreRequest = request.ToCore();
         coreRequest.IpAddress = IpAddress();
 
         try
@@ -61,7 +56,7 @@ public class IdentityController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody][Required] Contracts.Identity.Login.LoginUserRequest request)
     {
-        var coreRequest = _mapper.Map<LoginUserRequest>(request);
+        var coreRequest = request.ToCore();
         coreRequest.IpAddress = IpAddress();
 
         try
@@ -71,7 +66,7 @@ public class IdentityController : ControllerBase
             if (coreResponse is null)
                 return NotFound();
 
-            var response = _mapper.Map<Contracts.Identity.Login.LoginUserResponse>(coreResponse);
+            var response = coreResponse.ToApi();
             SetTokenCookie(response.RefreshToken);
 
             return Ok(response);
@@ -91,7 +86,7 @@ public class IdentityController : ControllerBase
     [Produces("application/json")]
     public async Task<IActionResult> Refresh([FromBody] Contracts.Identity.RefreshToken.RefreshTokenRequest request)
     {
-        var coreRequest = _mapper.Map<RefreshTokenRequest>(request);
+        var coreRequest = request.ToCore();
 
         coreRequest.IpAddress = IpAddress();
 
@@ -100,7 +95,7 @@ public class IdentityController : ControllerBase
         if (coreResponse is null)
             return NotFound();
 
-        var response = _mapper.Map<Contracts.Identity.RefreshToken.RefreshTokenResponse>(coreResponse);
+        var response = request.ToCore();
         SetTokenCookie(coreResponse.RefreshToken);
 
         return Ok(response);
