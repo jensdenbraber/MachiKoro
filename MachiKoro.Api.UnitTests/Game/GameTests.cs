@@ -1,7 +1,12 @@
-﻿using MediatR;
+﻿using MachiKoro.Api.Controllers.v1;
+using MachiKoro.Application.v1.Game.Commands.CreateGame;
+using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MachiKoro.Api.UnitTests.Game;
@@ -10,13 +15,11 @@ namespace MachiKoro.Api.UnitTests.Game;
 public class GameTests
 {
     private Mock<IMediator> _mockMediator;
-    private Mock<HttpRequest> _mockHttpRequest;
 
     [SetUp]
     public void SetUp()
     {
         _mockMediator = new Mock<IMediator>(MockBehavior.Strict);
-        _mockHttpRequest = new Mock<HttpRequest>(MockBehavior.Strict);
     }
 
     [TearDown]
@@ -28,6 +31,34 @@ public class GameTests
     [Test]
     public async Task CreateGame_Should_Return_Successfully()
     {
+        var createGameResponse = new CreateGameResponse
+        {
+            GameId = Guid.Parse("D84468AC-52A7-4C55-95BF-FB70D589A713"),
+        };
+
+        _mockMediator.Setup(x => x.Send(It.IsAny<CreateGameCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(createGameResponse);
+
+        var gameController = new GameController(_mockMediator.Object)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            }
+        };
+
+        var request = new Contracts.Game.CreateGame.CreateGameRequest
+        {
+            PlayerId = Guid.Parse("D84468AC-52A7-4C55-95BF-FB70D589A713"),
+            ExpansionType = Contracts.Game.ExpansionTypeResponse.Basic,
+            MaxNumberOfPlayers = 2
+        };
+
+        var result = (CreatedResult)await gameController.CreateAsync(request);
+
+        Assert.AreEqual(201, result.StatusCode);
+        Assert.AreEqual("D84468AC-52A7-4C55-95BF-FB70D589A713", result.Value.ToString().ToUpper());
+
+        _mockMediator.Verify(x => x.Send(It.IsAny<CreateGameCommand>(), It.IsAny<CancellationToken>()));
     }
 
     [Test]

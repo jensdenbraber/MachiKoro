@@ -1,9 +1,6 @@
 ﻿using MachiKoro.Application.v1.Game.Commands.CreateGame;
-using MachiKoro.Application.v1.Services;
 using MachiKoro.Domain.Enums;
 using MachiKoro.Domain.Interfaces;
-using MachiKoro.Domain.Models.Game;
-using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -32,11 +29,9 @@ public class GameCommandsTests
         _gamesRepository.VerifyNoOtherCalls();
     }
 
-
     [Test]
     public async Task CreateGame_Should_Return_Successfully()
     {
-        //_playerService.Setup(x => x.)
         _gamesRepository.Setup(x => x.CreateAsync(It.IsAny<Domain.Models.Game.Game>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
         var request = new CreateGameCommand
@@ -50,6 +45,8 @@ public class GameCommandsTests
         var result = await handler.Handle(request, It.IsAny<CancellationToken>());
 
         Assert.IsNotEmpty(result.GameId.ToString());
+
+        _gamesRepository.Verify(x => x.CreateAsync(It.IsAny<Domain.Models.Game.Game>(), It.IsAny<CancellationToken>()));
     }
 
     [Test]

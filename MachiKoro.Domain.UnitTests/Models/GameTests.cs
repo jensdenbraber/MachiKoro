@@ -1,10 +1,11 @@
-using Xunit;
+using NUnit.Framework;
 
 namespace MachiKoro.Domain.UnitTests.Models;
 
 public class GameBasicTest
 {
-    [Fact(Skip = "Disabled to due restructure of the program, test not supported at the moment.")]
+    [Test]
+    [Ignore("Disabled to due restructure of the program, test not supported at the moment.")]
     public void InitializeGameBasic()
     {
         //var cardDecks = new CardDeckBuilder().BuildCardDecksBasicGame();

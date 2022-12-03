@@ -1,5 +1,4 @@
-﻿using MachiKoro.Api.Hubs;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -62,7 +61,7 @@ public static class SwaggerServicesExtensions
             x.IncludeXmlComments(xmlPath);
         });
 
-        services.AddSwaggerExamplesFromAssemblyOf<Startup>();
+        services.AddSwaggerExamplesFromAssemblyOf<Program>();
 
         return services;
     }

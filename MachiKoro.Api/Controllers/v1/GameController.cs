@@ -52,8 +52,8 @@ public class GameController : ControllerBase
             GameId = gameId
         };
 
-        var coreGameRequest = getGameRequest.ToCore();// _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(getGameRequest);
-        var coreChooseRequest = chooseRequest.ToCore();// _mapper.Map<Application.v1.Game.Commands.Choose.ChooseRequest>(chooseRequest);
+        var coreGameRequest = getGameRequest.ToCore();
+        var coreChooseRequest = chooseRequest.ToCore();
         coreChooseRequest.GameId = coreGameRequest.GameId;
 
         var coreResponse = await _mediator.Send(coreChooseRequest);
@@ -67,10 +67,9 @@ public class GameController : ControllerBase
     [HttpGet(ApiRoutes.Games.Get)]
     [Consumes("application/json")]
     [Produces("application/json")]
-    //[ProducesResponseType(typeof(Application.v1.Game.Queries.GetGame.GetGameResponse), 200)]
     public async Task<IActionResult> GetAsync([FromRoute][Required] Contracts.Game.StartGame.GetGameRequest request)
     {
-        var coreRequest = request.ToCore();// _mapper.Map<Application.v1.Game.Queries.GetGame.GetGameRequest>(request);
+        var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
 
@@ -85,7 +84,7 @@ public class GameController : ControllerBase
     [Produces("application/json")]
     public async Task<IActionResult> AddPlayer([FromRoute][Required] Contracts.Game.AddPlayer.AddPlayerToGameRequest request)
     {
-        var coreRequest = request.ToCore();//_mapper.Map<Application.v1.Game.Commands.AddPlayerToGame.AddPlayerToGameCommand>(request);
+        var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
 
@@ -107,7 +106,7 @@ public class GameController : ControllerBase
     [Consumes("application/json")]
     public async Task<IActionResult> RemovePlayer([FromRoute][Required] Contracts.Game.RemovePlayer.RemovePlayerFromGameRequest request)
     {
-        var coreRequest = request.ToCore();//_mapper.Map<Application.v1.Game.Commands.RemovePlayerFromGame.RemovePlayerFromGameCommand>(request);
+        var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
 
@@ -121,7 +120,7 @@ public class GameController : ControllerBase
     [Consumes("application/json")]
     public async Task<IActionResult> Delete([FromRoute][Required] Contracts.Game.DeleteGame.DeleteGameRequest request)
     {
-        var coreRequest = request.ToCore();//_mapper.Map<Application.v1.Game.Commands.DeleteGame.DeleteGameCommand>(request);
+        var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
 
@@ -135,7 +134,7 @@ public class GameController : ControllerBase
     [Consumes("application/json")]
     public async Task<IActionResult> Start([FromRoute][Required] Contracts.Game.StartGame.StartGameRequest request)
     {
-        var coreRequest = request.ToCore();//_mapper.Map<Application.v1.Game.Commands.StartGame.StartGameRequest>(request);
+        var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
 
