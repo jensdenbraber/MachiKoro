@@ -1,4 +1,4 @@
-﻿using MachiKoro.Application.v1.Interfaces;
+﻿using MachiKoro.Domain.Interfaces;
 using Microsoft.AspNetCore.SignalR;
 using SignalRSwaggerGen.Attributes;
 using System;
@@ -15,13 +15,13 @@ public class GameHubService
         _gameHub = gameHub;
     }
 
-    [SignalRMethod(name: "sendMessage2", Microsoft.OpenApi.Models.OperationType.Get)]
+    [SignalRMethod(name: "sendMessage2", SignalRSwaggerGen.Enums.Operation.Get)]
     public async Task SendMessage2(string user, string message)
     {
         throw new NotImplementedException();
     }
 
-    [SignalRMethod(name: "rollDice", Microsoft.OpenApi.Models.OperationType.Get)]
+    [SignalRMethod(name: "rollDice", SignalRSwaggerGen.Enums.Operation.Get)]
     public async Task RollDice()
     {
         //await _gameHub.Clients.All.RollDice();

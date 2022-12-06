@@ -1,6 +1,6 @@
 ﻿using MachiKoro.Application.v1.Exceptions;
-using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Application.v1.Models;
+using MachiKoro.Domain.Interfaces;
 using MachiKoro.Persistence.Data;
 using MachiKoro.Persistence.Identity.Models;
 using MachiKoro.Persistence.Identity.Models.Authentication;

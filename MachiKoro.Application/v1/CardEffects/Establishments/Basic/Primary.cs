@@ -1,4 +1,3 @@
-using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Domain.Interfaces;
 using System.Threading;
 

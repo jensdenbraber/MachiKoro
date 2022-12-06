@@ -1,4 +1,4 @@
-﻿using MachiKoro.Application.v1.Interfaces;
+﻿using MachiKoro.Domain.Interfaces;
 using MediatR;
 using System;
 using System.Threading;

@@ -1,5 +1,7 @@
-﻿using MachiKoro.Api.Contracts.Game.StartGame;
+﻿using MachiKoro.Api.Contracts.Game.GetGame;
+using MachiKoro.Api.Contracts.Game.StartGame;
 using MachiKoro.Api.Mappers;
+using MachiKoro.Domain.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 namespace MachiKoro.Api.Hubs;
 
 [SignalRHub(path: "/hubs/SignalRNotification")]
-public class SignalRNotificationHub : Hub<Application.v1.Interfaces.INotifyPlayerService>
+public class SignalRNotificationHub : Hub<INotifyPlayerService>
 {
     private readonly IMediator _mediator;
 
@@ -20,7 +22,7 @@ public class SignalRNotificationHub : Hub<Application.v1.Interfaces.INotifyPlaye
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
-    [SignalRMethod(name: "GetGame", Microsoft.OpenApi.Models.OperationType.Get)]
+    [SignalRMethod(name: "GetGame", SignalRSwaggerGen.Enums.Operation.Get)]
     public async Task<GetGameResponse> GetGame([FromRoute][Required] StartGameRequest request)
     {
         var coreRequest = request.ToCore();

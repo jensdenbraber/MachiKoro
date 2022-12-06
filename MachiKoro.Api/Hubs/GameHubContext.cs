@@ -1,4 +1,5 @@
 ﻿using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Interfaces;
 using MachiKoro.Domain.Models.Cards.Establishments.Basic;
 using Microsoft.AspNetCore.SignalR;
 using SignalRSwaggerGen.Attributes;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace MachiKoro.Api.Hubs;
 
 [SignalRHub(path: "/hubs/gameHub")]
-public class GameHubContext : Application.v1.Interfaces.INotifyPlayerService
+public class GameHubContext : INotifyPlayerService
 {
     private readonly IHubContext<GameHub> _hubContext;
 
@@ -20,13 +21,13 @@ public class GameHubContext : Application.v1.Interfaces.INotifyPlayerService
         _hubContext = hubContext;
     }
 
-    [SignalRMethod(name: "sendMessage2", Microsoft.OpenApi.Models.OperationType.Get)]
+    [SignalRMethod(name: "sendMessage2", SignalRSwaggerGen.Enums.Operation.Get)]
     public async Task SendMessage2(string user, string message)
     {
         throw new NotImplementedException();
     }
 
-    [SignalRMethod(name: "sendNotificationDiceRollAsync", Microsoft.OpenApi.Models.OperationType.Get)]
+    [SignalRMethod(name: "sendNotificationDiceRollAsync", SignalRSwaggerGen.Enums.Operation.Get)]
     public async Task SendNotificationDiceRollAsync(object message, CancellationToken cancellationToken = default)
     {
         await _hubContext.Clients.All.SendAsync("DiceRoll", message, cancellationToken);

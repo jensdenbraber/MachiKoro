@@ -1,6 +1,6 @@
 ﻿using MachiKoro.Application.v1.Game.Commands.Choices;
-using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Application.v1.Services;
+using MachiKoro.Domain.Interfaces;
 using Microsoft.AspNetCore.SignalR;
 using SignalRSwaggerGen.Attributes;
 using System;
@@ -21,13 +21,13 @@ public class GameHub : Hub<IGameClient>, IGameClient
         _gameHub = gameHub;
     }
 
-    [SignalRMethod(name: "choice", Microsoft.OpenApi.Models.OperationType.Post)]
-    public async Task Choice(Guid gameId, string data)
+    [SignalRMethod(name: "choice", SignalRSwaggerGen.Enums.Operation.Post)]
+    public async Task Choice(Guid gameId, string choice)
     {
-        await _gamesService.AnalizeChoiceAsync(gameId, data, CancellationToken.None);
+        await _gamesService.AnalizeChoiceAsync(gameId, choice, CancellationToken.None);
     }
 
-    [SignalRMethod(name: "constructEstabishment", Microsoft.OpenApi.Models.OperationType.Post)]
+    [SignalRMethod(name: "constructEstabishment", SignalRSwaggerGen.Enums.Operation.Post)]
     public async Task ConstructEstabishment(Guid gameId, Guid cardId)
     {
         var buyChoice = new BuyChoice
@@ -40,7 +40,7 @@ public class GameHub : Hub<IGameClient>, IGameClient
         await _gamesService.PostActionConstructionEstablishmentAsync(gameId, buyChoice, CancellationToken.None);
     }
 
-    [SignalRMethod(name: "constructLandMark", Microsoft.OpenApi.Models.OperationType.Post)]
+    [SignalRMethod(name: "constructLandMark", SignalRSwaggerGen.Enums.Operation.Post)]
     public Task ConstructLandMark(Guid gameId, Guid cardId)
     {
         throw new NotImplementedException();
@@ -52,10 +52,10 @@ public class GameHub : Hub<IGameClient>, IGameClient
     //    await Clients.All.SendAsync("ReceiveMessage", user, message);
     //}
 
-    [SignalRMethod(name: "rollDice", Microsoft.OpenApi.Models.OperationType.Post)]
+    [SignalRMethod(name: "rollDice", SignalRSwaggerGen.Enums.Operation.Post, summary: "Roll the dices")]
     public async Task RollDice(Guid gameId)
     {
-        DiceAmountChoice diceAmountChoice = new DiceAmountChoice
+        var diceAmountChoice = new DiceAmountChoice
         {
             DiceAmount = 1,
             ChoiceType = Domain.Enums.ChoiceType.AmountDices,

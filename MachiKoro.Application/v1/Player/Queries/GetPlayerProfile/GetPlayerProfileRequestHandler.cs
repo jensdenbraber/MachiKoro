@@ -1,10 +1,4 @@
-﻿using MachiKoro.Application.v1.Interfaces;
-using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace MachiKoro.Application.v1.Player.Queries.GetPlayerProfile;
+﻿namespace MachiKoro.Application.v1.Player.Queries.GetPlayerProfile;
 
 //public class GetPlayerProfileRequestHandler : IRequestHandler<GetPlayerProfileRequest, GetPlayerProfileResponse>
 //{

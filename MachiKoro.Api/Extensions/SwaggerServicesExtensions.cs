@@ -1,5 +1,4 @@
-﻿using MachiKoro.Api.Hubs;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -36,7 +35,7 @@ public static class SwaggerServicesExtensions
                     Url = new Uri("https://example.com/license"),
                 }
             });
-            x.DocumentFilter<SignalRSwaggerGen.SignalRSwaggerGen>(new List<Assembly> { typeof(GameHub).Assembly, typeof(GameHub).Assembly });
+            x.AddSignalRSwaggerGen();
             x.ExampleFilters();
 
             x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -62,7 +61,7 @@ public static class SwaggerServicesExtensions
             x.IncludeXmlComments(xmlPath);
         });
 
-        services.AddSwaggerExamplesFromAssemblyOf<Startup>();
+        services.AddSwaggerExamplesFromAssemblyOf<Program>();
 
         return services;
     }

@@ -1,4 +1,4 @@
-﻿using MachiKoro.Application.v1.Interfaces;
+﻿using MachiKoro.Domain.Interfaces;
 using MediatR;
 using System;
 using System.Threading;
@@ -19,12 +19,12 @@ public class RefreshTokenRequestHandler : IRequestHandler<RefreshTokenRequest, R
     {
         request = request ?? throw new ArgumentNullException(nameof(request));
 
-        var result = await _identityService.RefreshToken(request.Token, request.IpAddress);
+        //var result = await _identityService.RefreshToken(request.Token, request.IpAddress);
 
         var refreshTokenResponse = new RefreshTokenResponse
         {
             JwtToken = request.Token,
-            RefreshToken = result.RefreshToken
+            RefreshToken = String.Empty
         };
 
         return refreshTokenResponse;

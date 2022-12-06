@@ -1,7 +1,7 @@
 ﻿using MachiKoro.Application.v1.Dice;
 using MachiKoro.Application.v1.Game.Commands.Choices;
-using MachiKoro.Application.v1.Interfaces;
 using MachiKoro.Domain.Enums;
+using MachiKoro.Domain.Interfaces;
 using MachiKoro.Domain.Models.Cards.Establishments.Basic;
 using MachiKoro.Domain.Models.Cards.Landmarks.Basic;
 using MachiKoro.Domain.Models.Game;

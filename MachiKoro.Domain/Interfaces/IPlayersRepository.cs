@@ -1,9 +1,4 @@
-﻿using MachiKoro.Domain.Models.PlayerProfile;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace MachiKoro.Application.v1.Interfaces;
+﻿namespace MachiKoro.Domain.Interfaces;
 
 public interface IPlayersRepository
 {

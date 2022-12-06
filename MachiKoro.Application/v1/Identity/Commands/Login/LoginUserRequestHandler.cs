@@ -1,4 +1,4 @@
-﻿using MachiKoro.Application.v1.Interfaces;
+﻿using MachiKoro.Domain.Interfaces;
 using MachiKoro.Domain.Models.User;
 using MediatR;
 using System;
@@ -25,12 +25,12 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoginUs
 
         try
         {
-            var result = await _identityService.AuthorizeAsync(request.UserName, request.Password, request.IpAddress);
+            //var result = await _identityService.AuthorizeAsync(request.UserName, request.Password, request.IpAddress);
 
-            createUserResponse.UserId = result.UserId;
-            createUserResponse.UserName = result.UserName;
-            createUserResponse.Token = result.Token;
-            createUserResponse.RefreshToken = result.RefreshToken;
+            //createUserResponse.UserId = result.UserId;
+            //createUserResponse.UserName = result.UserName;
+            //createUserResponse.Token = result.Token;
+            //createUserResponse.RefreshToken = result.RefreshToken;
         }
         catch (Exception)
         {

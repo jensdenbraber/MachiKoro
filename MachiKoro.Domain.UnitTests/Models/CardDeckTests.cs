@@ -1,14 +1,14 @@
 using FluentAssertions;
 using MachiKoro.Domain.Models.CardDecks;
 using MachiKoro.Domain.TestModelFactory.Models.CardDeck;
+using NUnit.Framework;
 using System;
-using Xunit;
 
 namespace MachiKoro.Domain.UnitTests.Models;
 
 public class CardDeckTests
 {
-    [Fact]
+    [Test]
     public void BuildCardDeck()
     {
         var id = Guid.NewGuid();
