@@ -4,6 +4,7 @@ using MachiKoro.Application.v1.Game.Commands.CreateGame;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -16,17 +17,20 @@ namespace MachiKoro.Api.UnitTests.Game;
 public class GameTests
 {
     private Mock<IMediator> _mockMediator;
+    private Mock<ILogger> _mockLogger;
 
     [SetUp]
     public void SetUp()
     {
         _mockMediator = new Mock<IMediator>();
+        _mockLogger = new Mock<ILogger>();
     }
 
     [TearDown]
     public void TearDown()
     {
         _mockMediator.VerifyNoOtherCalls();
+        _mockLogger.VerifyNoOtherCalls();
     }
 
     [Test]
@@ -39,7 +43,15 @@ public class GameTests
 
         _mockMediator.Setup(x => x.Send(It.IsAny<CreateGameCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(createGameResponse);
 
-        var gameController = new GameController(_mockMediator.Object)
+        _mockLogger.Setup(x => x.Log(
+                LogLevel.Information,
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()
+            ));
+
+        var gameController = new GameController(_mockMediator.Object, _mockLogger.Object)
         {
             ControllerContext = new ControllerContext
             {
@@ -60,6 +72,14 @@ public class GameTests
         Assert.AreEqual("D84468AC-52A7-4C55-95BF-FB70D589A713", result.Value.ToString().ToUpper());
 
         _mockMediator.Verify(x => x.Send(It.IsAny<CreateGameCommand>(), It.IsAny<CancellationToken>()));
+
+        _mockLogger.Verify(x => x.Log(
+            LogLevel.Information,
+            It.IsAny<EventId>(),
+            It.IsAny<It.IsAnyType>(),
+            It.IsAny<Exception>(),
+            (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()
+        ), Times.Once);
     }
 
     [Test]
@@ -86,8 +106,15 @@ public class GameTests
         };
 
         _mockMediator.Setup(x => x.Send(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(getGameResponse);
+        _mockLogger.Setup(x => x.Log(
+                LogLevel.Information,
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()
+            ));
 
-        var gameController = new GameController(_mockMediator.Object)
+        var gameController = new GameController(_mockMediator.Object, _mockLogger.Object)
         {
             ControllerContext = new ControllerContext
             {
@@ -105,6 +132,14 @@ public class GameTests
         Assert.AreEqual(200, result.StatusCode);
 
         _mockMediator.Verify(x => x.Send(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameRequest>(), It.IsAny<CancellationToken>()));
+
+        _mockLogger.Verify(x => x.Log(
+                LogLevel.Information,
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()
+            ), Times.Once);
     }
 
     [Test]
@@ -112,7 +147,15 @@ public class GameTests
     {
         _mockMediator.Setup(x => x.Send(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameResponse>());
 
-        var gameController = new GameController(_mockMediator.Object)
+        _mockLogger.Setup(x => x.Log(
+                LogLevel.Information,
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()
+            ));
+
+        var gameController = new GameController(_mockMediator.Object, _mockLogger.Object)
         {
             ControllerContext = new ControllerContext
             {
@@ -130,5 +173,13 @@ public class GameTests
         Assert.AreEqual(404, result.StatusCode);
 
         _mockMediator.Verify(x => x.Send(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameRequest>(), It.IsAny<CancellationToken>()));
+
+        _mockLogger.Verify(x => x.Log(
+            LogLevel.Information,
+            It.IsAny<EventId>(),
+            It.IsAny<It.IsAnyType>(),
+            It.IsAny<Exception>(),
+            (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()
+        ), Times.Once);
     }
 }
