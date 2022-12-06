@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace MachiKoro.Api.Contracts.Game.StartGame;
+namespace MachiKoro.Api.Contracts.Game.GetGame;
 
 public record GetGameRequest
 {

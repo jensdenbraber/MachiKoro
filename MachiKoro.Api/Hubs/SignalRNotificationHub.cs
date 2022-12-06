@@ -1,4 +1,5 @@
-﻿using MachiKoro.Api.Contracts.Game.StartGame;
+﻿using MachiKoro.Api.Contracts.Game.GetGame;
+using MachiKoro.Api.Contracts.Game.StartGame;
 using MachiKoro.Api.Mappers;
 using MachiKoro.Domain.Interfaces;
 using MediatR;

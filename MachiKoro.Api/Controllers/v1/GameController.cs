@@ -1,4 +1,5 @@
-﻿using MachiKoro.Api.Mappers;
+﻿using MachiKoro.Api.Contracts.Game.GetGame;
+using MachiKoro.Api.Mappers;
 using MachiKoro.Application;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,7 @@ public class GameController : ControllerBase
     [ProducesResponseType(typeof(Contracts.Game.Choose.ChooseResponse), 201)]
     public async Task<IActionResult> ChooseAsync([FromBody][Required] Contracts.Game.Choose.ChooseRequest chooseRequest, [FromRoute][Required] Guid gameId)
     {
-        var getGameRequest = new Contracts.Game.StartGame.GetGameRequest
+        var getGameRequest = new Contracts.Game.GetGame.GetGameRequest
         {
             GameId = gameId
         };
@@ -67,16 +68,18 @@ public class GameController : ControllerBase
     [HttpGet(ApiRoutes.Games.Get)]
     [Consumes("application/json")]
     [Produces("application/json")]
-    public async Task<IActionResult> GetAsync([FromRoute][Required] Contracts.Game.StartGame.GetGameRequest request)
+    public async Task<IActionResult> GetAsync([FromRoute][Required] GetGameRequest request)
     {
         var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
 
-        if (coreResponse is null || coreResponse.Game is null)
+        var apiResponse = coreResponse.ToApi();
+
+        if (apiResponse is null)
             return NotFound(request.GameId);
 
-        return Ok(coreResponse.Game);
+        return Ok(apiResponse);
     }
 
     [HttpPost(ApiRoutes.Games.AddPlayer)]

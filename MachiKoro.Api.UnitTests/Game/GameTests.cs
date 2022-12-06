@@ -1,4 +1,5 @@
-﻿using MachiKoro.Api.Controllers.v1;
+﻿using MachiKoro.Api.Contracts.Game.GetGame;
+using MachiKoro.Api.Controllers.v1;
 using MachiKoro.Application.v1.Game.Commands.CreateGame;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +20,7 @@ public class GameTests
     [SetUp]
     public void SetUp()
     {
-        _mockMediator = new Mock<IMediator>(MockBehavior.Strict);
+        _mockMediator = new Mock<IMediator>();
     }
 
     [TearDown]
@@ -79,10 +80,55 @@ public class GameTests
     [Test]
     public async Task GetGameById_Should_Return_Game()
     {
+        var getGameResponse = new Application.v1.Game.Queries.GetGame.GetGameResponse
+        {
+            Game = new Domain.Models.Game.Game()
+        };
+
+        _mockMediator.Setup(x => x.Send(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(getGameResponse);
+
+        var gameController = new GameController(_mockMediator.Object)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            }
+        };
+
+        var request = new GetGameRequest
+        {
+            GameId = Guid.Parse("D84468AC-52A7-4C55-95BF-FB70D589A713")
+        };
+
+        var result = (OkObjectResult)await gameController.GetAsync(request);
+
+        Assert.AreEqual(200, result.StatusCode);
+
+        _mockMediator.Verify(x => x.Send(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameRequest>(), It.IsAny<CancellationToken>()));
     }
 
     [Test]
     public async Task GetGameById_Should_Throw_Game_Not_Found()
     {
+        _mockMediator.Setup(x => x.Send(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameResponse>());
+
+        var gameController = new GameController(_mockMediator.Object)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            }
+        };
+
+        var request = new GetGameRequest
+        {
+            GameId = Guid.Parse("D84468AC-52A7-4C55-95BF-FB70D589A713")
+        };
+
+        var result = (NotFoundObjectResult)await gameController.GetAsync(request);
+
+        Assert.AreEqual(404, result.StatusCode);
+
+        _mockMediator.Verify(x => x.Send(It.IsAny<Application.v1.Game.Queries.GetGame.GetGameRequest>(), It.IsAny<CancellationToken>()));
     }
 }
