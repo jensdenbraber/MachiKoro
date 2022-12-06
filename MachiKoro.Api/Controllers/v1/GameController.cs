@@ -3,6 +3,7 @@ using MachiKoro.Api.Mappers;
 using MachiKoro.Application;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -13,10 +14,12 @@ namespace MachiKoro.Api.Controllers.v1;
 public class GameController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ILogger _logger;
 
-    public GameController(IMediator mediator)
+    public GameController(IMediator mediator, ILogger logger)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>
@@ -30,6 +33,8 @@ public class GameController : ControllerBase
     [ProducesResponseType(typeof(Contracts.Game.CreateGame.CreateGameResponse), 201)]
     public async Task<IActionResult> CreateAsync([FromBody][Required] Contracts.Game.CreateGame.CreateGameRequest request)
     {
+        _logger.LogInformation($"{nameof(CreateAsync)}.triggered");
+
         var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
@@ -48,7 +53,9 @@ public class GameController : ControllerBase
     [ProducesResponseType(typeof(Contracts.Game.Choose.ChooseResponse), 201)]
     public async Task<IActionResult> ChooseAsync([FromBody][Required] Contracts.Game.Choose.ChooseRequest chooseRequest, [FromRoute][Required] Guid gameId)
     {
-        var getGameRequest = new Contracts.Game.GetGame.GetGameRequest
+        _logger.LogInformation($"{nameof(CreateAsync)}.triggered");
+
+        var getGameRequest = new GetGameRequest
         {
             GameId = gameId
         };
@@ -70,6 +77,8 @@ public class GameController : ControllerBase
     [Produces("application/json")]
     public async Task<IActionResult> GetAsync([FromRoute][Required] GetGameRequest request)
     {
+        _logger.LogInformation($"{nameof(GetAsync)}.triggered");
+
         var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
@@ -87,6 +96,8 @@ public class GameController : ControllerBase
     [Produces("application/json")]
     public async Task<IActionResult> AddPlayer([FromRoute][Required] Contracts.Game.AddPlayer.AddPlayerToGameRequest request)
     {
+        _logger.LogInformation($"{nameof(AddPlayer)}.triggered");
+
         var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
@@ -109,6 +120,8 @@ public class GameController : ControllerBase
     [Consumes("application/json")]
     public async Task<IActionResult> RemovePlayer([FromRoute][Required] Contracts.Game.RemovePlayer.RemovePlayerFromGameRequest request)
     {
+        _logger.LogInformation($"{nameof(RemovePlayer)}.triggered");
+
         var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
@@ -123,6 +136,8 @@ public class GameController : ControllerBase
     [Consumes("application/json")]
     public async Task<IActionResult> Delete([FromRoute][Required] Contracts.Game.DeleteGame.DeleteGameRequest request)
     {
+        _logger.LogInformation($"{nameof(Delete)}.triggered");
+
         var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
@@ -137,6 +152,8 @@ public class GameController : ControllerBase
     [Consumes("application/json")]
     public async Task<IActionResult> Start([FromRoute][Required] Contracts.Game.StartGame.StartGameRequest request)
     {
+        _logger.LogInformation($"{nameof(Start)}.triggered");
+
         var coreRequest = request.ToCore();
 
         var coreResponse = await _mediator.Send(coreRequest);
