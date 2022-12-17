@@ -11,9 +11,6 @@ public class CardDeck
     public Stack<EstablishmentBase> EstablishmentCards { get; set; }
     public List<EstablishmentBase> RevealedCards { get; set; }
 
-    public CardDeck()
-    { }
-
     public CardDeck(Guid id, Stack<EstablishmentBase> establishmentCards, List<EstablishmentBase> revealedCards, int maxRevealCards)
     {
         Id = id;

@@ -16,7 +16,7 @@ public class GameController : ControllerBase
     private readonly IMediator _mediator;
     private readonly ILogger _logger;
 
-    public GameController(IMediator mediator, ILogger logger)
+    public GameController(IMediator mediator, ILogger<GameController> logger)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -1,5 +1,4 @@
 ﻿using MachiKoro.Application.v1.Exceptions;
-using MachiKoro.Application.v1.Models;
 using MachiKoro.Domain.Interfaces;
 using MachiKoro.Persistence.Data;
 using MachiKoro.Persistence.Identity.Models;
@@ -89,35 +88,35 @@ public class IdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
-    public async Task<AuthorizeResult> AuthorizeAsync(string userName, string password, string ipAdress)
-    {
-        var user = await _userManager.FindByNameAsync(userName);
+    //public async Task<AuthorizeResult> AuthorizeAsync(string userName, string password, string ipAdress)
+    //{
+    //    var user = await _userManager.FindByNameAsync(userName);
 
-        if (user is null)
-        {
-            throw new LoginException(userName, password);
-        }
+    //    if (user is null)
+    //    {
+    //        throw new LoginException(userName, password);
+    //    }
 
-        var isCorrect = await _userManager.CheckPasswordAsync(user, password);
+    //    var isCorrect = await _userManager.CheckPasswordAsync(user, password);
 
-        if (!isCorrect)
-        {
-            throw new LoginException(userName, password);
-        }
+    //    if (!isCorrect)
+    //    {
+    //        throw new LoginException(userName, password);
+    //    }
 
-        var jwtToken = await GenerateJwtToken(user);
-        var refreshToken = GenerateRefreshToken(ipAdress, user.Id);
+    //    var jwtToken = await GenerateJwtToken(user);
+    //    var refreshToken = GenerateRefreshToken(ipAdress, user.Id);
 
-        var authorizeResult = new AuthorizeResult
-        {
-            UserId = user.Id,
-            UserName = userName,
-            Token = jwtToken,
-            RefreshToken = refreshToken.Token
-        };
+    //    var authorizeResult = new AuthorizeResult
+    //    {
+    //        UserId = user.Id,
+    //        UserName = userName,
+    //        Token = jwtToken,
+    //        RefreshToken = refreshToken.Token
+    //    };
 
-        return authorizeResult;
-    }
+    //    return authorizeResult;
+    //}
 
     public async Task<bool> DeleteUserAsync(string userId)
     {
@@ -138,44 +137,44 @@ public class IdentityService : IIdentityService
         throw new DeleteUserException(result.Errors);
     }
 
-    public async Task<RefreshTokenResult> RefreshToken(string token, string ipAddress)
-    {
-        var user = GetUserByRefreshToken(token);
-        var refreshToken = _identityDataContext.RefreshTokens.Single(x => x.Token == token);
+    //public async Task<RefreshTokenResult> RefreshToken(string token, string ipAddress)
+    //{
+    //    var user = GetUserByRefreshToken(token);
+    //    var refreshToken = _identityDataContext.RefreshTokens.Single(x => x.Token == token);
 
-        if (refreshToken.IsRevoked)
-        {
-            // revoke all descendant tokens in case this token has been compromised
-            RevokeDescendantRefreshTokens(refreshToken, user, ipAddress, $"Attempted reuse of revoked ancestor token: {token}");
-            _identityDataContext.Update(user);
-            _identityDataContext.SaveChanges();
-        }
+    //    if (refreshToken.IsRevoked)
+    //    {
+    //        // revoke all descendant tokens in case this token has been compromised
+    //        RevokeDescendantRefreshTokens(refreshToken, user, ipAddress, $"Attempted reuse of revoked ancestor token: {token}");
+    //        _identityDataContext.Update(user);
+    //        _identityDataContext.SaveChanges();
+    //    }
 
-        if (!refreshToken.IsActive)
-            throw new Exception("Invalid token");
+    //    if (!refreshToken.IsActive)
+    //        throw new Exception("Invalid token");
 
-        // replace old refresh token with a new one (rotate token)
-        var newRefreshToken = RotateRefreshToken(refreshToken, ipAddress, user.Id);
-        _identityDataContext.RefreshTokens.Add(newRefreshToken);
+    //    // replace old refresh token with a new one (rotate token)
+    //    var newRefreshToken = RotateRefreshToken(refreshToken, ipAddress, user.Id);
+    //    _identityDataContext.RefreshTokens.Add(newRefreshToken);
 
-        // remove old refresh tokens from user
-        RemoveOldRefreshTokens(user);
+    //    // remove old refresh tokens from user
+    //    RemoveOldRefreshTokens(user);
 
-        // save changes to db
-        _identityDataContext.Update(user);
-        _identityDataContext.SaveChanges();
+    //    // save changes to db
+    //    _identityDataContext.Update(user);
+    //    _identityDataContext.SaveChanges();
 
-        // generate new jwt
-        var jwtToken = await GenerateJwtToken(user);
+    //    // generate new jwt
+    //    var jwtToken = await GenerateJwtToken(user);
 
-        var refreshTokenResult = new RefreshTokenResult
-        {
-            RefreshToken = newRefreshToken.ToString(),
-            Token = jwtToken
-        };
+    //    var refreshTokenResult = new RefreshTokenResult
+    //    {
+    //        RefreshToken = newRefreshToken.ToString(),
+    //        Token = jwtToken
+    //    };
 
-        return refreshTokenResult;
-    }
+    //    return refreshTokenResult;
+    //}
 
     private ApplicationUser GetUserByRefreshToken(string token)
     {

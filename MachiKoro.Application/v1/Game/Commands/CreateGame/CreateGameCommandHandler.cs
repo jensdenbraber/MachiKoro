@@ -12,11 +12,13 @@ namespace MachiKoro.Application.v1.Game.Commands.CreateGame;
 
 public class CreateGameCommandHandler : IRequestHandler<CreateGameCommand, CreateGameResponse>
 {
+    private readonly ICardDeckBuilderService _cardDeckBuilderService;
     private readonly IGamesRepository _gameRepository;
     private readonly INotifyPlayerService _playerService;
 
-    public CreateGameCommandHandler(IGamesRepository gameRepository, INotifyPlayerService playerService)
+    public CreateGameCommandHandler(ICardDeckBuilderService cardDeckBuilderService, IGamesRepository gameRepository, INotifyPlayerService playerService)
     {
+        _cardDeckBuilderService = cardDeckBuilderService ?? throw new ArgumentNullException(nameof(cardDeckBuilderService));
         _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
         _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
     }
@@ -25,14 +27,7 @@ public class CreateGameCommandHandler : IRequestHandler<CreateGameCommand, Creat
     {
         request = request ?? throw new ArgumentNullException(nameof(request));
 
-        var player = new Domain.Models.Player.Player()
-        {
-            Id = request.PlayerId,
-            CoinAmount = 3,
-            PlayerType = PlayerType.Human,
-            EstablishmentCards = new List<Domain.Models.Cards.Establishments.Basic.EstablishmentBase>(),
-            LandmarkCards = new List<Domain.Models.Cards.Landmarks.Basic.LandMark>()
-        };
+        var player = new Domain.Models.Player.Player(request.PlayerId, PlayerType.Human, 3, new List<Domain.Models.Cards.Establishments.Basic.EstablishmentBase>(), new List<Domain.Models.Cards.Landmarks.Basic.LandMark>());
 
         var settings = new Domain.Models.Game.GameSettings();
 
@@ -42,7 +37,7 @@ public class CreateGameCommandHandler : IRequestHandler<CreateGameCommand, Creat
             MaxNumberOfPlayers = request.MaxNumberOfPlayers,
             ExpensionType = request.ExpensionType,
             Players = new CircularList<Domain.Models.Player.Player> { player },
-            CardDecks = new CardDeckBuilder(_playerService).BuildCardDecksBasicGame(),
+            CardDecks = _cardDeckBuilderService.BuildCardDecksBasicGame(),
             Settings = settings
         };
 

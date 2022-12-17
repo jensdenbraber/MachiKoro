@@ -17,13 +17,13 @@ namespace MachiKoro.Api.UnitTests.Game;
 public class GameTests
 {
     private Mock<IMediator> _mockMediator;
-    private Mock<ILogger> _mockLogger;
+    private Mock<ILogger<GameController>> _mockLogger;
 
     [SetUp]
     public void SetUp()
     {
         _mockMediator = new Mock<IMediator>();
-        _mockLogger = new Mock<ILogger>();
+        _mockLogger = new Mock<ILogger<GameController>>();
     }
 
     [TearDown]

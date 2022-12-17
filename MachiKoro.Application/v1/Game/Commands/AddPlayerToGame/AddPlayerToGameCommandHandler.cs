@@ -21,14 +21,7 @@ public class AddPlayerToGameCommandHandler : IRequestHandler<AddPlayerToGameComm
     {
         request = request ?? throw new ArgumentNullException(nameof(request));
 
-        var player = new Domain.Models.Player.Player()
-        {
-            Id = request.PlayerId,
-            CoinAmount = 3,
-            PlayerType = PlayerType.Human,
-            EstablishmentCards = new List<Domain.Models.Cards.Establishments.Basic.EstablishmentBase>(),
-            LandmarkCards = new List<Domain.Models.Cards.Landmarks.Basic.LandMark>()
-        };
+        var player = new Domain.Models.Player.Player(request.PlayerId, PlayerType.Human, 3, new List<Domain.Models.Cards.Establishments.Basic.EstablishmentBase>(), new List<Domain.Models.Cards.Landmarks.Basic.LandMark>());
 
         bool added = await _gameRepository.AddPlayerToGameAsync(player, request.GameId, cancellationToken);
 

@@ -2,6 +2,7 @@
 using MachiKoro.Application.v1.Game.Commands.Choices;
 using MachiKoro.Domain.Enums;
 using MachiKoro.Domain.Interfaces;
+using MachiKoro.Domain.Models.CardDecks;
 using MachiKoro.Domain.Models.Cards.Establishments.Basic;
 using MachiKoro.Domain.Models.Cards.Landmarks.Basic;
 using MachiKoro.Domain.Models.Game;
@@ -16,15 +17,17 @@ namespace MachiKoro.Application.v1.Services;
 
 public class GamesService
 {
+    private readonly ICardDeckService _cardDeckService;
     private readonly IStepsRepository _stepRepository;
     private readonly INotifyPlayerService _playerService;
     private readonly IGamesRepository _gamesRepository;
 
-    public GamesService(IStepsRepository stepRepository, INotifyPlayerService playerService, IGamesRepository gamesRepository)
+    public GamesService(IStepsRepository stepRepository, INotifyPlayerService playerService, IGamesRepository gamesRepository, ICardDeckService cardDeckService)
     {
         _stepRepository = stepRepository ?? throw new ArgumentNullException(nameof(stepRepository));
         _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
         _gamesRepository = gamesRepository ?? throw new ArgumentNullException(nameof(gamesRepository));
+        _cardDeckService = cardDeckService ?? throw new ArgumentNullException(nameof(cardDeckService));
     }
 
     public async Task AnalizeChoiceAsync(Guid gameId, string data, CancellationToken cancellationToken)
@@ -175,16 +178,14 @@ public class GamesService
 
         var card = GetConstructionEstablishmentsOptions<EstablishmentBase>(game).SingleOrDefault(x => x.Id == buyChoice.CardId);
 
-        if (card is EstablishmentBase)
+        if (card is not null)
         {
-            foreach (var cardDeck in game.CardDecks)
-            {
-                var isRemoved = cardDeck.RevealedCards.Remove(card as EstablishmentBase);
+            var isRemoved = _cardDeckService.RemoveCardFromCardDeck(card, out CardDeck cardDeck);
 
-                if (isRemoved)
-                {
-                    game.ActivePlayer.EstablishmentCards.Add(card as EstablishmentBase);
-                }
+            if (isRemoved)
+            {
+                game.ActivePlayer.EstablishmentCards.Add(card);
+                _cardDeckService.RevealedNextCard(cardDeck);
             }
         }
 
@@ -205,9 +206,9 @@ public class GamesService
     {
         var card = GetConstructionLandmarksOptions(game).SingleOrDefault(x => x.Id == buyChoice.CardId);
 
-        if (card is LandMark)
+        if (card is not null)
         {
-            game.ActivePlayer.LandmarkCards.SingleOrDefault(x => x == card as LandMark).Construct();
+            game.ActivePlayer.LandmarkCards.SingleOrDefault(x => x == card).Construct();
 
             if (HasPlayerWon(game.ActivePlayer))
             {
